@@ -1,6 +1,6 @@
 import {css, defineElement, html} from 'element-vir';
 import {Options24Icon, ViraIcon, ViraLink} from 'vira';
-import {ReviewVirMainPath, ReviewVirRouter} from '../../../data/routing.js';
+import {ReviewVirMainPath, type ReviewVirRouter} from '../../../data/routing.js';
 
 export const VirHeader = defineElement<{
     router: Readonly<ReviewVirRouter>;
@@ -44,7 +44,9 @@ export const VirHeader = defineElement<{
                     },
                 })}>
                     <div class="settings-link">
-                        <${ViraIcon.assign({icon: Options24Icon})}></${ViraIcon}>
+                        <${ViraIcon.assign({
+                            icon: Options24Icon,
+                        })}></${ViraIcon}>
                         Settings
                     </div>
                 </${ViraLink}>

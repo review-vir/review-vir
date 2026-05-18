@@ -1,11 +1,13 @@
-import {FullDate, getNowInUserTimezone, toRelativeString} from 'date-vir';
+import {type FullDate, getNowInUserTimezone, toRelativeString} from 'date-vir';
 import {defineElement, nothing} from 'element-vir';
 
 export const VirUpdateTime = defineElement<{updateTime: Readonly<FullDate> | undefined}>()({
     tagName: 'vir-update-time',
-    stateInitStatic: {
-        now: getNowInUserTimezone(),
-        intervalId: undefined as undefined | ReturnType<typeof globalThis.setInterval>,
+    state() {
+        return {
+            now: getNowInUserTimezone(),
+            intervalId: undefined as undefined | ReturnType<typeof globalThis.setInterval>,
+        };
     },
     init({updateState, state}) {
         if (!state.intervalId) {
@@ -30,7 +32,10 @@ export const VirUpdateTime = defineElement<{updateTime: Readonly<FullDate> | und
         }
 
         const relativeString = toRelativeString(
-            {start: state.now, end: inputs.updateTime},
+            {
+                start: state.now,
+                end: inputs.updateTime,
+            },
             {
                 years: true,
                 months: true,
@@ -41,6 +46,7 @@ export const VirUpdateTime = defineElement<{updateTime: Readonly<FullDate> | und
                 seconds: true,
             },
             {
+                decimalCount: 0,
                 useOnlyLargestUnit: true,
                 justNowThresholds: {
                     milliseconds: 100,

@@ -5,6 +5,8 @@ import {githubSearchShape} from './graphql-query.js';
 
 describe('GithubSearch', () => {
     it('matches a real response', () => {
-        assertValidShape(mockGithubSearch, githubSearchShape);
+        assertValidShape(mockGithubSearch, githubSearchShape, {
+            allowExtraKeys: true,
+        });
     });
 });

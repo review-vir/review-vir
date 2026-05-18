@@ -1,21 +1,24 @@
 import {extractErrorMessage, log, type AnyObject} from '@augment-vir/common';
 import type {AuthToken} from '@review-vir/adapter-core';
-import {assertValidShape, type ShapeDefinition} from 'object-shape-tester';
+import {assertValidShape, ShapeMismatchError, type Shape} from 'object-shape-tester';
 import type {Primitive} from 'type-fest';
 import {githubGraphqlErrorShape} from './graphql-query.js';
 
-export async function fetchGithubGraphql<Shape extends ShapeDefinition<any, boolean>>(
+export async function fetchGithubGraphql<ResponseShape extends Shape>(
     authToken: Readonly<AuthToken>,
     createQuery: (cursor: string | null) => {query: string; variables?: Record<string, Primitive>},
-    responseShape: Shape,
-    getPageInfo?: (data: Shape['runtimeType']) => {endCursor: string | null; hasNextPage: boolean},
+    responseShape: ResponseShape,
+    getPageInfo?: (data: ResponseShape['runtimeType']) => {
+        endCursor: string | null;
+        hasNextPage: boolean;
+    },
     /** This is an input so it can be mocked. */
     fetch: typeof globalThis.fetch = globalThis.fetch,
-): Promise<Shape['runtimeType'][]> {
+): Promise<ResponseShape['runtimeType'][]> {
     try {
         let nextPageCursor: null | string = null;
 
-        const responses: Shape['runtimeType'][] = [];
+        const responses: ResponseShape['runtimeType'][] = [];
 
         do {
             const queryBody = createQuery(nextPageCursor || null);
@@ -38,7 +41,17 @@ export async function fetchGithubGraphql<Shape extends ShapeDefinition<any, bool
 
             if (responseJson.errors) {
                 responseJson.errors.forEach((error: unknown) => {
-                    assertValidShape(error, githubGraphqlErrorShape);
+                    try {
+                        assertValidShape(error, githubGraphqlErrorShape, {
+                            allowExtraKeys: true,
+                        });
+                    } catch (shapeError) {
+                        if (shapeError instanceof ShapeMismatchError) {
+                            log.error('GitHub GraphQL error did not match expected shape. Raw error:');
+                            log.error(error);
+                        }
+                        throw shapeError;
+                    }
                     log.error(error);
                 });
                 throw new Error('Failed to fetch GitHub pull requests. See console for details.');
@@ -46,11 +59,24 @@ export async function fetchGithubGraphql<Shape extends ShapeDefinition<any, bool
 
             const data = responseJson.data;
 
-            assertValidShape(data, responseShape);
+            try {
+                assertValidShape(data, responseShape, {
+                    allowExtraKeys: true,
+                });
+            } catch (shapeError) {
+                if (shapeError instanceof ShapeMismatchError) {
+                    log.error('GitHub GraphQL response data did not match expected shape. Raw response:');
+                    log.error(responseJson);
+                }
+                throw shapeError;
+            }
 
             const {endCursor, hasNextPage} = getPageInfo
                 ? getPageInfo(data)
-                : {endCursor: null, hasNextPage: false};
+                : {
+                      endCursor: null,
+                      hasNextPage: false,
+                  };
 
             nextPageCursor = hasNextPage ? endCursor : null;
             responses.push(data);

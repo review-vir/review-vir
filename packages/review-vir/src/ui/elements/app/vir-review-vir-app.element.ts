@@ -1,32 +1,23 @@
 import {check} from '@augment-vir/assert';
 import {extractErrorMessage} from '@augment-vir/common';
 import {getGitAdapterGlobalVars} from '@review-vir/adapter-core';
-import {
-    asyncProp,
-    classMap,
-    css,
-    defineElementNoInputs,
-    html,
-    isAsyncError,
-    isResolved,
-    listen,
-    nothing,
-} from 'element-vir';
+import {asyncProp, classMap, css, defineElement, html, listen, nothing} from 'element-vir';
 import {countAuthTokens, loadAllAdapterAuthTokens} from '../../../data/auth-tokens.js';
 import {
-    ReviewVirFullRoute,
+    type ReviewVirFullRoute,
     ReviewVirMainPath,
     createReviewVirRouter,
     defaultReviewVirFullRoute,
 } from '../../../data/routing.js';
-import {AppSettings, loadSettings} from '../../../data/settings.js';
+import {type AppSettings, loadSettings} from '../../../data/settings.js';
 import {ChangeRouteEvent} from '../../events/change-route.event.js';
 import {VirErrorMessage} from '../common-elements/vir-error-message.element.js';
+import {VirAnnualReview} from '../main-pages/annual-review/vir-annual-review.element.js';
 import {VirCodeReview} from '../main-pages/code-review/vir-code-review.element.js';
 import {VirAuthTokenEntry} from '../main-pages/settings/auth-token-entry/vir-auth-token-entry.element.js';
-import {routeElements} from './route-elements.js';
+import {VirSettings} from '../main-pages/settings/vir-settings.element.js';
 
-export const VirReviewVirApp = defineElementNoInputs({
+export const VirReviewVirApp = defineElement()({
     tagName: 'vir-review-vir-app',
     styles: css`
         :host {
@@ -61,29 +52,33 @@ export const VirReviewVirApp = defineElementNoInputs({
             display: none;
         }
     `,
-    stateInitStatic: {
-        appSettings: asyncProp({
-            async updateCallback({
-                secretEncryptionKey,
-            }: {
-                secretEncryptionKey: string | undefined;
-            }): Promise<AppSettings> {
-                if (!secretEncryptionKey) {
-                    throw new Error('No encryption key found. Cannot run review-vir.');
-                }
+    state() {
+        return {
+            appSettings: asyncProp({
+                async updateCallback({
+                    secretEncryptionKey,
+                }: {
+                    secretEncryptionKey: string | undefined;
+                }): Promise<AppSettings> {
+                    if (!secretEncryptionKey) {
+                        throw new Error('No encryption key found. Cannot run review-vir.');
+                    }
 
-                return {
-                    ...(await loadSettings()),
-                    authTokens: await loadAllAdapterAuthTokens(secretEncryptionKey),
-                };
-            },
-        }),
-        router: createReviewVirRouter(),
-        currentRoute: undefined as Readonly<ReviewVirFullRoute> | undefined,
+                    return {
+                        ...(await loadSettings()),
+                        authTokens: await loadAllAdapterAuthTokens(secretEncryptionKey),
+                    };
+                },
+            }),
+            router: createReviewVirRouter(),
+            currentRoute: undefined as Readonly<ReviewVirFullRoute> | undefined,
+        };
     },
     init({state, updateState}) {
         state.router.listen(true, (route) => {
-            updateState({currentRoute: route});
+            updateState({
+                currentRoute: route,
+            });
         });
     },
     render({state}) {
@@ -92,16 +87,18 @@ export const VirReviewVirApp = defineElementNoInputs({
         state.appSettings.update({
             secretEncryptionKey,
         });
-        const appSettings = state.appSettings.value;
 
-        if (isAsyncError(appSettings)) {
+        if (state.appSettings.isError()) {
             return html`
-                <${VirErrorMessage}>${extractErrorMessage(appSettings)}</${VirErrorMessage}>
+                <${VirErrorMessage}>
+                    ${extractErrorMessage(state.appSettings.value)}
+                </${VirErrorMessage}>
             `;
         }
 
         const currentRoute: Readonly<ReviewVirFullRoute> =
-            (isResolved(appSettings) && countAuthTokens(appSettings.authTokens) === 0
+            (state.appSettings.isResolved() &&
+            countAuthTokens(state.appSettings.value.authTokens) === 0
                 ? {
                       ...defaultReviewVirFullRoute,
                       paths: [ReviewVirMainPath.Settings],
@@ -124,16 +121,22 @@ export const VirReviewVirApp = defineElementNoInputs({
             ></${VirCodeReview}>
         `;
 
-        const routedElement = routeElements[currentRoute.paths[0]];
-        const routedElementTemplate = routedElement
-            ? html`
-                  <${routedElement.assign({
-                      secretEncryptionKey,
-                      currentAppSettings: state.appSettings,
-                      router: state.router,
-                  })}></${routedElement}>
-              `
-            : nothing;
+        const routedElementTemplate =
+            currentRoute.paths[0] === ReviewVirMainPath.Settings
+                ? html`
+                      <${VirSettings.assign({
+                          secretEncryptionKey,
+                          currentAppSettings: state.appSettings,
+                      })}></${VirSettings}>
+                  `
+                : currentRoute.paths[0] === ReviewVirMainPath.AnnualReview
+                  ? html`
+                        <${VirAnnualReview.assign({
+                            currentAppSettings: state.appSettings,
+                            router: state.router,
+                        })}></${VirAnnualReview}>
+                    `
+                  : nothing;
 
         return html`
             <div
@@ -142,10 +145,7 @@ export const VirReviewVirApp = defineElementNoInputs({
                     state.router.setRoute(event.detail);
                 })}
                 ${listen(VirAuthTokenEntry.events.authTokensChange, (event) => {
-                    if (
-                        !isResolved(state.appSettings.value) ||
-                        isAsyncError(state.appSettings.value)
-                    ) {
+                    if (!state.appSettings.isResolved()) {
                         return;
                     }
 

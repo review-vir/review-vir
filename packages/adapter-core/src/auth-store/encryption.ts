@@ -5,8 +5,9 @@ const textDecoder = new TextDecoder();
 
 const algorithmName = 'AES-GCM';
 
-async function importKey(key: Uint8Array) {
-    return await crypto.subtle.importKey('raw', key.buffer, algorithmName, true, [
+async function importKey(key: Uint8Array<ArrayBuffer>) {
+    const hashedKey = await crypto.subtle.digest('SHA-256', key);
+    return await crypto.subtle.importKey('raw', hashedKey, algorithmName, true, [
         'encrypt',
         'decrypt',
     ]);
@@ -57,10 +58,10 @@ export async function decrypt({
     return decoded;
 }
 
-function ensureUint8Array(input: string | Uint8Array): Uint8Array {
+function ensureUint8Array(input: string | Uint8Array): Uint8Array<ArrayBuffer> {
     if (check.isString(input)) {
-        return textEncoder.encode(input);
+        return Uint8Array.from(textEncoder.encode(input));
     } else {
-        return input;
+        return Uint8Array.from(input);
     }
 }

@@ -22,7 +22,7 @@ import {
     renderAsync,
     type AsyncProp,
 } from 'element-vir';
-import {LoaderAnimated24Icon, ViraButton, ViraButtonStyle, ViraIcon} from 'vira';
+import {LoaderAnimated24Icon, ViraButton, ViraColorVariant, ViraEmphasis, ViraIcon} from 'vira';
 import {GitServiceName} from '../../../../data/all-adapters.js';
 import {defaultReviewVirFullRoute} from '../../../../data/routing.js';
 import type {AppSettings} from '../../../../data/settings.js';
@@ -43,22 +43,18 @@ export const VirSettings = defineElement<{
             padding: 8px 24px;
         }
 
-        .save-settings {
-            ${ViraButton.cssVars['vira-button-primary-color'].name} : limegreen;
-            ${ViraButton.cssVars['vira-button-primary-active-color'].name} : green;
-            ${ViraButton.cssVars['vira-button-primary-hover-color'].name} : mediumseagreen;
-        }
-
         .actions {
             display: flex;
             align-items: center;
             gap: 8px;
         }
     `,
-    stateInitStatic: {
-        saveError: undefined as string | undefined,
-        isSaving: false,
-        editedSettings: undefined as undefined | AppSettings,
+    state() {
+        return {
+            saveError: undefined as string | undefined,
+            isSaving: false,
+            editedSettings: undefined as undefined | AppSettings,
+        };
     },
     render({inputs, state, updateState, dispatch, events}) {
         const authTokensEntry = renderAsync(
@@ -136,7 +132,9 @@ export const VirSettings = defineElement<{
                 }
 
                 /** Artificially make it look like something more interesting is happening 😉. */
-                await wait({seconds: 1});
+                await wait({
+                    seconds: 1,
+                });
 
                 dispatch(new events.settingsChange(state.editedSettings));
                 updateState({
@@ -160,8 +158,9 @@ export const VirSettings = defineElement<{
             <section class="actions">
                 <${ViraButton.assign({
                     text: 'Cancel',
-                    disabled: state.isSaving,
-                    buttonStyle: ViraButtonStyle.Outline,
+                    isDisabled: state.isSaving,
+                    color: ViraColorVariant.Danger,
+                    buttonEmphasis: ViraEmphasis.Subtle,
                 })}
                     ${listen('click', () => {
                         updateState({
@@ -172,9 +171,9 @@ export const VirSettings = defineElement<{
                 ></${ViraButton}>
                 <${ViraButton.assign({
                     text: 'Save',
-                    disabled: !state.editedSettings || state.isSaving,
+                    isDisabled: !state.editedSettings || state.isSaving,
+                    color: ViraColorVariant.Positive,
                 })}
-                    class="save-settings"
                     title=${ifDefined(saveButtonTitle)}
                     ${listen('click', async () => {
                         await saveSettings();

@@ -1,17 +1,17 @@
 import {copyThroughJson, filterOutIndexes, makeWritable} from '@augment-vir/common';
-import {AuthToken} from '@review-vir/adapter-core';
+import {type AuthToken} from '@review-vir/adapter-core';
 import {css, defineElement, defineElementEvent, html, listen} from 'element-vir';
 import {
     CloseX24Icon,
     ViraButton,
-    ViraButtonStyle,
+    ViraColorVariant,
     ViraIcon,
     ViraInput,
     ViraInputType,
     noNativeFormStyles,
     noNativeSpacing,
 } from 'vira';
-import {GitServiceName} from '../../../../../data/all-adapters.js';
+import {type GitServiceName} from '../../../../../data/all-adapters.js';
 import {serviceAuthTokenDescriptions} from './token-descriptions.js';
 
 export type AuthTokenEntryError = {
@@ -128,7 +128,9 @@ export const VirServiceAuthTokens = defineElement<{
                                     dispatch(new events.authTokensChange(newAuthTokens));
                                 })}
                             >
-                                <${ViraIcon.assign({icon: CloseX24Icon})}></${ViraIcon}>
+                                <${ViraIcon.assign({
+                                    icon: CloseX24Icon,
+                                })}></${ViraIcon}>
                             </button>
                         </div>
                     </label>
@@ -156,13 +158,16 @@ export const VirServiceAuthTokens = defineElement<{
             <section class="tokens">${authTokenTemplates}</section>
             <${ViraButton.assign({
                 text: 'Add Token',
-                disabled: inputs.disabled,
-                buttonStyle: ViraButtonStyle.Outline,
+                isDisabled: inputs.disabled,
+                color: ViraColorVariant.Positive,
             })}
                 ${listen('click', () => {
                     dispatch(
                         new events.authTokensChange(
-                            inputs.authTokens.concat({authTokenName: '', authTokenSecret: ''}),
+                            inputs.authTokens.concat({
+                                authTokenName: '',
+                                authTokenSecret: '',
+                            }),
                         ),
                     );
                 })}

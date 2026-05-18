@@ -293,7 +293,9 @@ export const VirPullRequest = defineElement<{
 
         const statusIconTemplate = statusIconSvg
             ? html`
-                  <${ViraIcon.assign({icon: statusIconSvg})}
+                  <${ViraIcon.assign({
+                      icon: statusIconSvg,
+                  })}
                       class="status-icon"
                       title=${ifDefined(statusIconTitle)}
                   ></${ViraIcon}>

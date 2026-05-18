@@ -1,5 +1,5 @@
 import {arrayToObject, type ArrayElement} from '@augment-vir/common';
-import {GitAdapterDefinition, type GitData} from '@review-vir/adapter-core';
+import {type GitAdapterDefinition, type GitData} from '@review-vir/adapter-core';
 import {GithubAdapter} from '@review-vir/github-adapter';
 
 export const allGitAdapters = [

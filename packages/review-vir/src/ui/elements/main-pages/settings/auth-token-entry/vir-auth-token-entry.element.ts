@@ -1,7 +1,7 @@
 import {getEnumValues} from '@augment-vir/common';
 import {css, defineElement, defineElementEvent, html, listen} from 'element-vir';
 import {GitServiceName} from '../../../../../data/all-adapters.js';
-import {ServiceAuthTokens} from '../../../../../data/auth-tokens.js';
+import {type ServiceAuthTokens} from '../../../../../data/auth-tokens.js';
 import {VirServiceAuthTokens} from './vir-service-auth-tokens.element.js';
 
 export const VirAuthTokenEntry = defineElement<{

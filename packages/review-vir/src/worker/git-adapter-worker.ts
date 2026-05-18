@@ -7,7 +7,7 @@ import {
 } from '@review-vir/adapter-core';
 import {gitAdaptersByServiceName, GitServiceName} from '../data/all-adapters.js';
 import {savePullRequestDataCache} from '../data/cache-store.js';
-import {WorkerMessage, WorkerMessageType} from './worker-messages.js';
+import {WorkerMessageType, type WorkerMessage} from './worker-messages.js';
 
 const maxQueryCost: Readonly<Record<GitServiceName, number>> = {
     [GitServiceName.GitHub]: 3,
@@ -59,7 +59,7 @@ self.addEventListener('message', (event) => {
     } else if (message.type === WorkerMessageType.StartAutoUpdates) {
         if (!adapter) {
             throw new Error(
-                `Cannot start auto updates without first setting up the worker adapter.`,
+                'Cannot start auto updates without first setting up the worker adapter.',
             );
         }
 

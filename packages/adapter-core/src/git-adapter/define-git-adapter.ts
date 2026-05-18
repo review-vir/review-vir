@@ -1,4 +1,4 @@
-import {FetchGitDataFunction, GitAdapter} from './git-adapter.js';
+import {type FetchGitDataFunction, GitAdapter} from './git-adapter.js';
 
 export type GitAdapterDefinition<ServiceName extends string = string> = (new (
     /** Used to load auth tokens. */
@@ -35,5 +35,5 @@ export function defineGitAdapter<const ServiceName extends string>({
         ) {
             super(serviceName, fetchGitData, queryCostMax, secretEncryptionKey);
         }
-    } as GitAdapterDefinition<ServiceName>;
+    };
 }

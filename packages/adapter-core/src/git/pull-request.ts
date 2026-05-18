@@ -1,5 +1,5 @@
 import {fullDateShape} from 'date-vir';
-import {defineShape, enumShape, indexedKeys, or, unknownShape} from 'object-shape-tester';
+import {defineShape, enumShape, recordShape, unionShape, unknownShape} from 'object-shape-tester';
 import {gitBranchShape} from './git-branch.js';
 import {gitUserShape} from './git-user.js';
 
@@ -37,26 +37,20 @@ export enum PullRequestDisplayStatus {
     UnresolvedComments = 'unresolved-comments',
 }
 
-const pullRequestChecksShape = defineShape(
-    {
-        successCount: 0,
-        failCount: 0,
-        inProgressCount: 0,
-        totalCount: 0,
-    },
-    true,
-);
+const pullRequestChecksShape = defineShape({
+    successCount: 0,
+    failCount: 0,
+    inProgressCount: 0,
+    totalCount: 0,
+});
 export type PullRequestChecks = typeof pullRequestChecksShape.runtimeType;
 
-export const pullRequestReviewShape = defineShape(
-    {
-        user: gitUserShape,
-        isPrimaryReviewer: false,
-        isCodeOwner: false,
-        reviewStatus: enumShape(PullRequestReviewStatus),
-    },
-    true,
-);
+export const pullRequestReviewShape = defineShape({
+    user: gitUserShape,
+    isPrimaryReviewer: false,
+    isCodeOwner: false,
+    reviewStatus: enumShape(PullRequestReviewStatus),
+});
 export type PullRequestReview = typeof pullRequestReviewShape.runtimeType;
 
 export const pullRequestShape = defineShape({
@@ -78,18 +72,18 @@ export const pullRequestShape = defineShape({
     dates: {
         created: fullDateShape,
         lastUpdated: fullDateShape,
-        closed: or(undefined, fullDateShape),
+        closed: unionShape(undefined, fullDateShape),
     },
     status: {
         displayStatus: enumShape(PullRequestDisplayStatus),
-        checksStatus: or(pullRequestChecksShape, undefined),
+        checksStatus: unionShape(pullRequestChecksShape, undefined),
         comments: {
             resolved: 0,
             total: 0,
         },
         commitCount: 0,
         mergeStatus: enumShape(PullRequestMergeStatus),
-        mergedBy: or(undefined, gitUserShape),
+        mergedBy: unionShape(undefined, gitUserShape),
         pullRequestLabels: [
             {
                 name: '',
@@ -110,15 +104,13 @@ export const pullRequestShape = defineShape({
         changedFiles: 0,
     },
     users: {
-        reviewers: indexedKeys({
+        reviewers: recordShape({
             keys: '',
             values: pullRequestReviewShape,
-            required: true,
         }),
-        assignees: indexedKeys({
+        assignees: recordShape({
             keys: '',
             values: gitUserShape,
-            required: true,
         }),
     },
     raw: unknownShape(),

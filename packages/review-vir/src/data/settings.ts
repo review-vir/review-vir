@@ -1,13 +1,6 @@
-import localForage from 'localforage-esm';
-import {
-    assertValidShape,
-    defineShape,
-    exact,
-    isValidShape,
-    optional,
-    or,
-} from 'object-shape-tester';
-import {ServiceAuthTokens} from './auth-tokens.js';
+import {LocalDbClient} from 'local-db-client';
+import {assertValidShape, defineShape, exactShape, optionalShape} from 'object-shape-tester';
+import {type ServiceAuthTokens} from './auth-tokens.js';
 
 export enum UiColorMode {
     Dark = 'dark',
@@ -22,33 +15,34 @@ export type AppSettings = {
 const nonTokenSettingsShape = defineShape({
     userSettings: {
         /** The other modes aren't supported yet. */
-        uiColorMode: exact(UiColorMode.Light),
+        uiColorMode: exactShape(UiColorMode.Light),
     },
 
-    lastSelectedOrg: optional(or(undefined, 'org name')),
+    lastSelectedOrg: optionalShape('org name', {
+        alsoUndefined: true,
+    }),
 });
 
-export const reviewVirSettingsStore = localForage.createInstance({
-    description: 'Settings for review-vir.',
-    name: 'review-vir-settings',
-    storeName: 'review-vir-settings',
-});
-
-const savedSettingsKey = 'saved-settings';
+const settingsClientPromise = LocalDbClient.createClient(
+    {
+        savedSettings: nonTokenSettingsShape,
+    },
+    {
+        storeName: 'review-vir-settings',
+    },
+);
 
 export async function loadSettings() {
-    const savedSettings = await reviewVirSettingsStore.getItem(savedSettingsKey);
-
-    if (isValidShape(savedSettings, nonTokenSettingsShape)) {
-        return savedSettings;
-    } else {
-        return nonTokenSettingsShape.defaultValue;
-    }
+    const client = await settingsClientPromise;
+    return client.value.savedSettings || nonTokenSettingsShape.default;
 }
 
 export async function saveSettings(
     newSettings: Readonly<Omit<AppSettings, 'authTokens'>>,
 ): Promise<void> {
-    assertValidShape(newSettings, nonTokenSettingsShape);
-    await reviewVirSettingsStore.setItem(savedSettingsKey, newSettings);
+    assertValidShape(newSettings, nonTokenSettingsShape, {
+        allowExtraKeys: true,
+    });
+    const client = await settingsClientPromise;
+    await client.set.savedSettings(newSettings);
 }

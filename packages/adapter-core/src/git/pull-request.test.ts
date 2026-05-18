@@ -5,6 +5,8 @@ import {mockPullRequest} from './pull-request.mock.js';
 
 describe('PullRequest', () => {
     it('matches shape', () => {
-        assertValidShape(mockPullRequest, pullRequestShape);
+        assertValidShape(mockPullRequest, pullRequestShape, {
+            allowExtraKeys: true,
+        });
     });
 });

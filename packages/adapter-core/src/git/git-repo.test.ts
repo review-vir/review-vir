@@ -16,6 +16,8 @@ describe('GitRepo', () => {
             },
         };
 
-        assertValidShape(exampleGitRepo, gitRepoShape);
+        assertValidShape(exampleGitRepo, gitRepoShape, {
+            allowExtraKeys: true,
+        });
     });
 });

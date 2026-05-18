@@ -1,6 +1,6 @@
-import {arrayToObject, getObjectTypedValues, Values} from '@augment-vir/common';
-import {AuthToken, loadServiceAuthTokens} from '@review-vir/adapter-core';
-import {allGitAdapters, GitServiceName} from './all-adapters.js';
+import {arrayToObject, getObjectTypedValues, type Values} from '@augment-vir/common';
+import {type AuthToken, loadServiceAuthTokens} from '@review-vir/adapter-core';
+import {allGitAdapters, type GitServiceName} from './all-adapters.js';
 
 export type ServiceAuthTokens = Readonly<
     Record<GitServiceName, ReadonlyArray<Readonly<AuthToken>>>

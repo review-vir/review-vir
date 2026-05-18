@@ -2,13 +2,11 @@ import {
     countChainedPullRequests,
     getGitAdapterGlobalVars,
     type ChainedPullRequest,
-    type GitUpdatesStoppedReason,
     type PullRequestsByOwner,
 } from '@review-vir/adapter-core';
 import {isDateAfter, type FullDate} from 'date-vir';
 import {classMap, css, defineElement, html, type TemplateResult} from 'element-vir';
 import {LoaderAnimated24Icon, ViraIcon} from 'vira';
-import {GitServiceName} from '../../../../data/all-adapters.js';
 import {
     GitDataLoader,
     GitDataUpdated,
@@ -17,7 +15,11 @@ import {
     GitUpdateStartEvent,
 } from '../../../../data/git-loader.js';
 import {organizeGitData} from '../../../../data/organize-git-data.js';
-import {ReviewVirFullRoute, ReviewVirMainPath, ReviewVirRouter} from '../../../../data/routing.js';
+import {
+    ReviewVirMainPath,
+    type ReviewVirFullRoute,
+    type ReviewVirRouter,
+} from '../../../../data/routing.js';
 import {ChangeRouteEvent} from '../../../events/change-route.event.js';
 import {VirHeader} from '../../common-elements/vir-header.element.js';
 import {VirOrgReviewers} from './vir-org-reviewers.element.js';
@@ -82,25 +84,23 @@ export const VirCodeReview = defineElement<{
             gap: 4px;
         }
     `,
-    stateInitStatic: {
-        gitLoader: undefined as GitDataLoader | undefined,
-        errorMessage: undefined as string | undefined,
-        pausedAdapters: {} as Partial<
-            Record<
-                GitServiceName,
-                {
-                    reason: GitUpdatesStoppedReason;
-                    message: string;
-                }
-            >
-        >,
-        data: undefined as undefined | PullRequestsByOwner,
-        isUpdating: true,
+    state() {
+        return {
+            gitLoader: undefined as GitDataLoader | undefined,
+            errorMessage: undefined as string | undefined,
+            pausedAdapters: {},
+            data: undefined as undefined | PullRequestsByOwner,
+            isUpdating: true,
+        };
     },
     init({state, updateState, inputs}) {
-        const gitLoader = new GitDataLoader(inputs.secretEncryptionKey, {seconds: 10});
+        const gitLoader = new GitDataLoader(inputs.secretEncryptionKey, {
+            seconds: 10,
+        });
         gitLoader.listen(GitErrorEvent, (event) => {
-            updateState({errorMessage: event.detail.message});
+            updateState({
+                errorMessage: event.detail.message,
+            });
         });
         gitLoader.listen(GitUpdatesPausedEvent, (event) => {
             updateState({
@@ -253,7 +253,7 @@ function expandChainedPullRequests(
         return [
             html`
                 <${VirPullRequest.assign({
-                    pullRequest: pullRequest,
+                    pullRequest,
                     isChild,
                 })}></${VirPullRequest}>
             `,

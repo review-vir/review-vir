@@ -1,19 +1,25 @@
 import {assert} from '@augment-vir/assert';
-import {AnyObject, randomString} from '@augment-vir/common';
+import {type AnyObject, randomString} from '@augment-vir/common';
 import {describe, it} from '@augment-vir/test';
 import {
     loadServiceAuthTokens,
-    reviewVirAuthTokensStore,
+    reviewVirAuthTokensClientPromise,
     saveServiceAuthTokens,
 } from './auth-access.js';
 import {type AuthToken} from './auth-tokens.js';
 
 function runAuthTokenTest(testCallback: () => Promise<void>) {
     return async () => {
-        await reviewVirAuthTokensStore.clear();
+        const client = await reviewVirAuthTokensClientPromise;
+        await client.clear();
         await testCallback();
-        await reviewVirAuthTokensStore.clear();
+        await client.clear();
     };
+}
+
+async function getStoredServiceNames(): Promise<string[]> {
+    const client = await reviewVirAuthTokensClientPromise;
+    return Object.keys(client.value.encryptedTokens || {});
 }
 
 const mockEncryptionKey = randomString(32);
@@ -64,7 +70,7 @@ describe(loadServiceAuthTokens.name, () => {
             serviceName: mockServiceName,
         });
 
-        assert.isNotEmpty(await reviewVirAuthTokensStore.keys());
+        assert.isNotEmpty(await getStoredServiceNames());
 
         assert.isEmpty(
             await loadServiceAuthTokens({
@@ -73,7 +79,7 @@ describe(loadServiceAuthTokens.name, () => {
             }),
         );
 
-        assert.isEmpty(await reviewVirAuthTokensStore.keys());
+        assert.isEmpty(await getStoredServiceNames());
     });
     it('handles invalid saved token', async () => {
         await saveServiceAuthTokens({
@@ -89,7 +95,7 @@ describe(loadServiceAuthTokens.name, () => {
             serviceName: mockServiceName,
         });
 
-        assert.isNotEmpty(await reviewVirAuthTokensStore.keys());
+        assert.isNotEmpty(await getStoredServiceNames());
 
         assert.isEmpty(
             await loadServiceAuthTokens({
@@ -98,7 +104,7 @@ describe(loadServiceAuthTokens.name, () => {
             }),
         );
 
-        assert.isEmpty(await reviewVirAuthTokensStore.keys());
+        assert.isEmpty(await getStoredServiceNames());
     });
     it(
         'loads saved tokens',
@@ -152,13 +158,13 @@ describe(saveServiceAuthTokens.name, () => {
             serviceName: mockServiceName,
         });
 
-        assert.isLengthExactly(await reviewVirAuthTokensStore.keys(), 1);
+        assert.isLengthExactly(await getStoredServiceNames(), 1);
 
         await saveServiceAuthTokens({
             authTokens: [],
             secretEncryptionKey: mockEncryptionKey,
             serviceName: mockServiceName,
         });
-        assert.isEmpty(await reviewVirAuthTokensStore.keys());
+        assert.isEmpty(await getStoredServiceNames());
     });
 });

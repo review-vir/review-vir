@@ -4,7 +4,9 @@ import {defineGitAdapter} from './define-git-adapter.js';
 
 export const MockGitAdapter = defineGitAdapter({
     async fetchGitData() {
-        await wait({milliseconds: 100});
+        await wait({
+            milliseconds: 100,
+        });
 
         return {
             queryCost: 0,

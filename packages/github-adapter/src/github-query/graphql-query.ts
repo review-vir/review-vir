@@ -1,11 +1,17 @@
-import {defineShape, enumShape, or, unknownShape} from 'object-shape-tester';
+import {defineShape, enumShape, optionalShape, unionShape, unknownShape} from 'object-shape-tester';
 
 export const githubGraphqlErrorShape = defineShape({
-    extensions: unknownShape(),
-    locations: [{line: 0, column: 0}],
+    extensions: optionalShape(unknownShape()),
+    locations: optionalShape([
+        {
+            line: 0,
+            column: 0,
+        },
+    ]),
     message: '',
-    path: [or('', 0)],
-    type: or('', undefined),
+    path: optionalShape([unionShape('', 0)]),
+    type: optionalShape(''),
+    code: optionalShape(''),
 });
 
 /**
@@ -67,168 +73,153 @@ export const pendingCheckRunConclusions = [
     GithubGraphqlCheckRunConclusion.Waiting,
 ] as const satisfies ReadonlyArray<GithubGraphqlCheckRunConclusion>;
 
-const githubUserSearchResponseShape = defineShape(
-    {
-        login: '',
-        avatarUrl: or(undefined, ''),
-        teamAvatarUrl: or(undefined, ''),
-        url: '',
-    },
-    true,
-);
+const githubUserSearchResponseShape = defineShape({
+    login: '',
+    avatarUrl: unionShape(undefined, ''),
+    teamAvatarUrl: unionShape(undefined, ''),
+    url: '',
+});
 export type GithubUserSearchResponse = typeof githubUserSearchResponseShape.runtimeType;
 
-const githubRunCheckStateShape = defineShape(
-    {
-        count: 0,
-        state: enumShape(GithubGraphqlCheckRunConclusion),
-    },
-    true,
-);
+const githubRunCheckStateShape = defineShape({
+    count: 0,
+    state: enumShape(GithubGraphqlCheckRunConclusion),
+});
 export type GithubRunCheckState = typeof githubRunCheckStateShape.runtimeType;
 
-const githubReviewShape = defineShape(
-    {
-        state: enumShape(GithubGraphqlReviewState),
-        author: githubUserSearchResponseShape,
-        submittedAt: '',
-    },
-    true,
-);
+const githubReviewShape = defineShape({
+    state: enumShape(GithubGraphqlReviewState),
+    author: githubUserSearchResponseShape,
+    submittedAt: '',
+});
 
-export const githubPullRequestShape = defineShape(
-    {
-        additions: 0,
-        assignees: {
-            nodes: [
-                githubUserSearchResponseShape,
-            ],
-        },
-        author: githubUserSearchResponseShape,
-        baseRef: {
-            name: '',
-        },
-        bodyText: '',
-        mergeable: enumShape(GithubMergeableState),
-        headRef: {
-            name: '',
-        },
-        labels: or(
-            /** `null` means no labels */
-            null,
-            {
-                nodes: [
-                    {
-                        name: '',
-                        color: '',
-                    },
-                ],
-            },
-        ),
-        baseRepository: {
-            name: '',
-            owner: githubUserSearchResponseShape,
-            isArchived: false,
-            isPrivate: false,
-            url: '',
-        },
-        headRepository: {
-            name: '',
-            owner: githubUserSearchResponseShape,
-            isArchived: false,
-            isPrivate: false,
-            url: '',
-        },
-        changedFiles: 0,
-        closedAt: or(null, ''),
-        commits: {
-            nodes: [
-                or(
-                    /** `null` indicates missing the permissions to read "Contents". */
-                    null,
-                    {
-                        commit: {
-                            statusCheckRollup: or(
-                                /** `null` indicates lack of permissions to read "Commit statuses". */
-                                null,
-                                {
-                                    contexts: {
-                                        checkRunCountsByState: [githubRunCheckStateShape],
-                                    },
-                                },
-                            ),
-                        },
-                    },
-                ),
-            ],
-            totalCount: 0,
-        },
-        createdAt: '',
-        deletions: 0,
-        id: '',
-        isDraft: false,
-        mergedAt: or(null, ''),
-        mergedBy: or(null, githubUserSearchResponseShape),
-        number: 0,
-        reviewThreads: {
+export const githubPullRequestShape = defineShape({
+    additions: 0,
+    assignees: {
+        nodes: [
+            githubUserSearchResponseShape,
+        ],
+    },
+    author: githubUserSearchResponseShape,
+    baseRef: {
+        name: '',
+    },
+    bodyText: '',
+    mergeable: enumShape(GithubMergeableState),
+    headRef: {
+        name: '',
+    },
+    labels: unionShape(
+        /** `null` means no labels */
+        null,
+        {
             nodes: [
                 {
-                    isResolved: false,
+                    name: '',
+                    color: '',
                 },
             ],
         },
-        /**
-         * Indicates reviews that have been left. Note that this includes previous reviews from
-         * users that currently need to re-review. Compare each of these entries with the
-         * `reviewRequests` field before using them.
-         */
-        latestOpinionatedReviews: {
-            nodes: [githubReviewShape],
-        },
-        /** Indicates requests for review that have not been met. */
-        reviewRequests: {
-            nodes: [
-                {
-                    requestedReviewer: githubUserSearchResponseShape,
-                },
-            ],
-        },
-        title: '',
-        updatedAt: '',
+    ),
+    baseRepository: {
+        name: '',
+        owner: githubUserSearchResponseShape,
+        isArchived: false,
+        isPrivate: false,
         url: '',
     },
-    true,
-);
+    headRepository: {
+        name: '',
+        owner: githubUserSearchResponseShape,
+        isArchived: false,
+        isPrivate: false,
+        url: '',
+    },
+    changedFiles: 0,
+    closedAt: unionShape(null, ''),
+    commits: {
+        nodes: [
+            unionShape(
+                /** `null` indicates missing the permissions to read "Contents". */
+                null,
+                {
+                    commit: {
+                        statusCheckRollup: unionShape(
+                            /** `null` indicates lack of permissions to read "Commit statuses". */
+                            null,
+                            {
+                                contexts: {
+                                    checkRunCountsByState: [githubRunCheckStateShape],
+                                },
+                            },
+                        ),
+                    },
+                },
+            ),
+        ],
+        totalCount: 0,
+    },
+    createdAt: '',
+    deletions: 0,
+    id: '',
+    isDraft: false,
+    mergedAt: unionShape(null, ''),
+    mergedBy: unionShape(null, githubUserSearchResponseShape),
+    number: 0,
+    reviewThreads: {
+        nodes: [
+            {
+                isResolved: false,
+            },
+        ],
+    },
+    /**
+     * Indicates reviews that have been left. Note that this includes previous reviews from users
+     * that currently need to re-review. Compare each of these entries with the `reviewRequests`
+     * field before using them.
+     */
+    latestOpinionatedReviews: {
+        nodes: [githubReviewShape],
+    },
+    /** Indicates requests for review that have not been met. */
+    reviewRequests: {
+        nodes: [
+            {
+                requestedReviewer: githubUserSearchResponseShape,
+            },
+        ],
+    },
+    title: '',
+    updatedAt: '',
+    url: '',
+});
 export type GithubPullRequest = typeof githubPullRequestShape.runtimeType;
 
 /**
  * This shape is comes straight from an actual GitHub response to the below GraphQL query. If the
  * query changes, this must change too.
  */
-export const githubSearchShape = defineShape(
-    {
-        rateLimit: {
-            cost: 1,
-            limit: 5000,
-            nodeCount: 0,
-            remaining: 0,
-            resetAt: '',
-            used: 0,
-        },
-        viewer: githubUserSearchResponseShape,
-        search: {
-            issueCount: 0,
-            pageInfo: {
-                endCursor: or('', null),
-                hasNextPage: false,
-            },
-            nodes: [
-                githubPullRequestShape,
-            ],
-        },
+export const githubSearchShape = defineShape({
+    rateLimit: {
+        cost: 1,
+        limit: 5000,
+        nodeCount: 0,
+        remaining: 0,
+        resetAt: '',
+        used: 0,
     },
-    true,
-);
+    viewer: githubUserSearchResponseShape,
+    search: {
+        issueCount: 0,
+        pageInfo: {
+            endCursor: unionShape('', null),
+            hasNextPage: false,
+        },
+        nodes: [
+            githubPullRequestShape,
+        ],
+    },
+});
 
 export type GithubSearch = typeof githubSearchShape.runtimeType;
 

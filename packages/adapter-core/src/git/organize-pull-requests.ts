@@ -1,7 +1,7 @@
 import {getOrSet, log, mapObjectValues, type Values} from '@augment-vir/common';
-import {FullDate, getNowInUserTimezone, isDateAfter} from 'date-vir';
-import {GitUser} from './git-user.js';
-import {PullRequest, PullRequestMergeStatus} from './pull-request.js';
+import {type FullDate, getNowInUserTimezone, isDateAfter} from 'date-vir';
+import {type GitUser} from './git-user.js';
+import {type PullRequest, PullRequestMergeStatus} from './pull-request.js';
 
 export type PullRequestsByStatus = {
     /** Pull Request for which the current user is a reviewer. */

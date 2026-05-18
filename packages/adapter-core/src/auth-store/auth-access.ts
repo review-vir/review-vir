@@ -1,7 +1,7 @@
 import {assertWrap, check} from '@augment-vir/assert';
-import {awaitedForEach} from '@augment-vir/common';
-import localForage from 'localforage-esm';
-import {isValidShape} from 'object-shape-tester';
+import {pickObjectKeys} from '@augment-vir/common';
+import {LocalDbClient} from 'local-db-client';
+import {checkValidShape, classShape, defineShape, recordShape} from 'object-shape-tester';
 import {
     assertValidAuthToken,
     authTokenShape,
@@ -11,11 +11,24 @@ import {
 import {decrypt, encrypt} from './encryption.js';
 import {getGitAdapterGlobalVars} from './global-vars.js';
 
-export const reviewVirAuthTokensStore = localForage.createInstance({
-    description: 'Store for review-vir auth tokens.',
-    name: 'review-vir-auth-tokens',
-    storeName: 'review-vir-auth-tokens',
+const encryptedAuthTokenShape = defineShape({
+    data: classShape(Uint8Array),
+    publicInitVector: classShape(Uint8Array),
 });
+
+const encryptedAuthTokensByServiceShape = recordShape({
+    keys: '',
+    values: [encryptedAuthTokenShape],
+});
+
+export const reviewVirAuthTokensClientPromise = LocalDbClient.createClient(
+    {
+        encryptedTokens: encryptedAuthTokensByServiceShape,
+    },
+    {
+        storeName: 'review-vir-auth-tokens',
+    },
+);
 
 async function decryptToken(
     secretEncryptionKey: string,
@@ -29,7 +42,11 @@ async function decryptToken(
 
     const authToken = JSON.parse(decryptedJson);
 
-    return isValidShape(authToken, authTokenShape) ? authToken : undefined;
+    return checkValidShape(authToken, authTokenShape, {
+        allowExtraKeys: true,
+    })
+        ? authToken
+        : undefined;
 }
 
 export async function loadServiceAuthTokens({
@@ -44,10 +61,12 @@ export async function loadServiceAuthTokens({
         const serviceAuthTokensFromDevFile: ReadonlyArray<Readonly<AuthToken>> | undefined =
             getGitAdapterGlobalVars().devAuthTokens?.[serviceName];
 
+        const client = await reviewVirAuthTokensClientPromise;
+        const allEncryptedTokens = client.value.encryptedTokens || {};
         const encryptedTokens: ReadonlyArray<Readonly<EncryptedAuthToken>> | undefined =
-            (await reviewVirAuthTokensStore.getItem(serviceName)) || undefined;
+            allEncryptedTokens[serviceName];
 
-        if (!encryptedTokens) {
+        if (!encryptedTokens?.length) {
             if (serviceAuthTokensFromDevFile?.length) {
                 return serviceAuthTokensFromDevFile;
             } else {
@@ -69,7 +88,12 @@ export async function loadServiceAuthTokens({
         return decryptedServiceTokens;
     } catch {
         console.error('Failed to load auth tokens. Wiping store.');
-        await reviewVirAuthTokensStore.removeItem(serviceName);
+        const client = await reviewVirAuthTokensClientPromise;
+        const remaining = {
+            ...client.value.encryptedTokens,
+        };
+        delete remaining[serviceName];
+        await client.set.encryptedTokens(remaining);
         return [];
     }
 }
@@ -105,6 +129,11 @@ export async function saveServiceAuthTokens({
         throw new Error('Missing encryption key.');
     }
 
+    const client = await reviewVirAuthTokensClientPromise;
+    const allTokens = {
+        ...client.value.encryptedTokens,
+    };
+
     if (authTokens?.length) {
         const encryptedAuthTokens = await Promise.all(
             authTokens.map(async (authToken): Promise<Readonly<EncryptedAuthToken>> => {
@@ -115,22 +144,19 @@ export async function saveServiceAuthTokens({
             }),
         );
 
-        await reviewVirAuthTokensStore.setItem(serviceName, encryptedAuthTokens);
+        allTokens[serviceName] = encryptedAuthTokens;
     } else {
-        await reviewVirAuthTokensStore.removeItem(serviceName);
+        delete allTokens[serviceName];
     }
+
+    await client.set.encryptedTokens(allTokens);
 }
 
 export async function removeUnusedServiceAuthTokens(supportedServiceNames: ReadonlyArray<string>) {
-    const currentKeys = await reviewVirAuthTokensStore.keys();
-
-    const unusedKeys = currentKeys.filter(
-        (currentKey) => !supportedServiceNames.includes(currentKey),
-    );
-
-    await awaitedForEach(unusedKeys, async (unusedKey) => {
-        await reviewVirAuthTokensStore.removeItem(unusedKey);
-    });
+    const client = await reviewVirAuthTokensClientPromise;
+    const allTokens = client.value.encryptedTokens || {};
+    const filteredTokens = pickObjectKeys(allTokens, supportedServiceNames);
+    await client.set.encryptedTokens(filteredTokens);
 }
 
 assertWrap.isString('hi');

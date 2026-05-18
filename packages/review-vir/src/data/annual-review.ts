@@ -2,7 +2,7 @@ import {log, type ArrayElement, type Overwrite} from '@augment-vir/common';
 import {fetchGithubGraphql} from '@review-vir/github-adapter';
 import {createFullDateInUserTimezone, type FullDate} from 'date-vir';
 import {defineShape} from 'object-shape-tester';
-import {ServiceAuthTokens} from './auth-tokens.js';
+import {type ServiceAuthTokens} from './auth-tokens.js';
 
 const currentYear = new Date().getFullYear();
 
@@ -19,7 +19,10 @@ const annualReviewDataShape = defineShape({
         used: -1,
     },
     search: {
-        pageInfo: {endCursor: '', hasNextPage: false},
+        pageInfo: {
+            endCursor: '',
+            hasNextPage: false,
+        },
         issueCount: -1,
         nodes: [
             {

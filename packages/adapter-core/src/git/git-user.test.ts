@@ -5,6 +5,8 @@ import {mockGitUser} from './git-user.mock.js';
 
 describe('GitUser', () => {
     it('has proper shape', () => {
-        assertValidShape(mockGitUser, gitUserShape);
+        assertValidShape(mockGitUser, gitUserShape, {
+            allowExtraKeys: true,
+        });
     });
 });

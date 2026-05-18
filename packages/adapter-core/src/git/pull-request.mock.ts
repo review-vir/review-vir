@@ -1,7 +1,11 @@
 import {getNowInUtcTimezone, utcTimezone, type FullDate} from 'date-vir';
 import {mockGitBranch} from './git-branch.mock.js';
 import {mockGitUser} from './git-user.mock.js';
-import {PullRequest, PullRequestDisplayStatus, PullRequestMergeStatus} from './pull-request.js';
+import {
+    PullRequestDisplayStatus,
+    PullRequestMergeStatus,
+    type PullRequest,
+} from './pull-request.js';
 
 export const mockPullRequestDate: FullDate = {
     year: 2024,

@@ -1,19 +1,10 @@
 import {extractErrorMessage} from '@augment-vir/common';
-import {
-    asyncProp,
-    AsyncProp,
-    css,
-    defineElement,
-    html,
-    isAsyncError,
-    isResolved,
-    renderAsync,
-} from 'element-vir';
+import {asyncProp, type AsyncProp, css, defineElement, html, renderAsync} from 'element-vir';
 import {LoaderAnimated24Icon, ViraIcon} from 'vira';
 import {fetchAnnualReview} from '../../../../data/annual-review.js';
-import {ServiceAuthTokens} from '../../../../data/auth-tokens.js';
-import {ReviewVirRouter} from '../../../../data/routing.js';
-import {AppSettings} from '../../../../data/settings.js';
+import {type ServiceAuthTokens} from '../../../../data/auth-tokens.js';
+import {type ReviewVirRouter} from '../../../../data/routing.js';
+import {type AppSettings} from '../../../../data/settings.js';
 import {VirErrorMessage} from '../../common-elements/vir-error-message.element.js';
 import {VirHeader} from '../../common-elements/vir-header.element.js';
 import {VirAnnualReviewPullRequest} from './vir-annual-review-pull-request.element.js';
@@ -43,18 +34,17 @@ export const VirAnnualReview = defineElement<{
             gap: 8px;
         }
     `,
-    stateInitStatic: {
-        annualReview: asyncProp({
-            updateCallback({authTokens}: {authTokens: ServiceAuthTokens}) {
-                return fetchAnnualReview(authTokens);
-            },
-        }),
+    state() {
+        return {
+            annualReview: asyncProp({
+                updateCallback({authTokens}: {authTokens: ServiceAuthTokens}) {
+                    return fetchAnnualReview(authTokens);
+                },
+            }),
+        };
     },
     render({inputs, state}) {
-        if (
-            isResolved(inputs.currentAppSettings.value) &&
-            !isAsyncError(inputs.currentAppSettings.value)
-        ) {
+        if (inputs.currentAppSettings.isResolved()) {
             state.annualReview.update({
                 authTokens: inputs.currentAppSettings.value.authTokens,
             });
@@ -64,7 +54,9 @@ export const VirAnnualReview = defineElement<{
             state.annualReview,
             html`
                 <div class="loading">
-                    <${ViraIcon.assign({icon: LoaderAnimated24Icon})}></${ViraIcon}>
+                    <${ViraIcon.assign({
+                        icon: LoaderAnimated24Icon,
+                    })}></${ViraIcon}>
                     Loading annual review...
                 </div>
             `,
@@ -89,7 +81,9 @@ export const VirAnnualReview = defineElement<{
         );
 
         return html`
-            <${VirHeader.assign({router: inputs.router})}></${VirHeader}>
+            <${VirHeader.assign({
+                router: inputs.router,
+            })}></${VirHeader}>
             ${dataTemplate}
         `;
     },

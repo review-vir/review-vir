@@ -1,5 +1,5 @@
 import {check} from '@augment-vir/assert';
-import {FullRoute, SpaRouter} from 'spa-router-vir';
+import {type FullSpaRoute, SpaRouter} from 'spa-router-vir';
 
 export enum ReviewVirMainPath {
     Settings = 'settings',
@@ -10,11 +10,14 @@ export enum ReviewVirMainPath {
 export type ValidReviewVirPaths =
     | [ReviewVirMainPath.Settings]
     | [ReviewVirMainPath.AnnualReview]
-    | [ReviewVirMainPath.CodeReview, /** Organization name. */ string]
+    | [
+          ReviewVirMainPath.CodeReview,
+          /** Organization name. */ string,
+      ]
     | [ReviewVirMainPath.CodeReview];
 
 export type ReviewVirFullRoute = Required<
-    Readonly<FullRoute<ValidReviewVirPaths, undefined, undefined>>
+    Readonly<FullSpaRoute<ValidReviewVirPaths, undefined, undefined>>
 >;
 
 export const defaultReviewVirFullRoute: Readonly<ReviewVirFullRoute> = {

@@ -24,7 +24,9 @@ describe(createChainedPullRequests.name, () => {
                         prId: '2',
                     },
                     dates: {
-                        lastUpdated: calculateRelativeDate(mockPullRequestDate, {days: -2}),
+                        lastUpdated: calculateRelativeDate(mockPullRequestDate, {
+                            days: -2,
+                        }),
                     },
                     branches: {
                         headBranch: {
@@ -37,7 +39,9 @@ describe(createChainedPullRequests.name, () => {
                         prId: '3',
                     },
                     dates: {
-                        lastUpdated: calculateRelativeDate(mockPullRequestDate, {days: -1}),
+                        lastUpdated: calculateRelativeDate(mockPullRequestDate, {
+                            days: -1,
+                        }),
                     },
                     branches: {
                         headBranch: {
@@ -50,7 +54,9 @@ describe(createChainedPullRequests.name, () => {
                         prId: '1',
                     },
                     dates: {
-                        lastUpdated: calculateRelativeDate(mockPullRequestDate, {days: -3}),
+                        lastUpdated: calculateRelativeDate(mockPullRequestDate, {
+                            days: -3,
+                        }),
                     },
                     branches: {
                         headBranch: {
@@ -321,7 +327,9 @@ describe(organizePullRequests.name, () => {
                         },
                     },
                     dates: {
-                        lastUpdated: calculateRelativeDate(mockPullRequestDate, {days: 1}),
+                        lastUpdated: calculateRelativeDate(mockPullRequestDate, {
+                            days: 1,
+                        }),
                     },
                     currentUser: {
                         isPrimaryReviewer: false,

@@ -13,7 +13,9 @@ const mockEncryptionKey = randomString(16);
 describe(GitAdapter.name, () => {
     const FailingMockGitAdapter = defineGitAdapter({
         async fetchGitData() {
-            await wait({milliseconds: 10});
+            await wait({
+                milliseconds: 10,
+            });
             throw new Error('Intentional failure.');
         },
         serviceName: 'mock git failure',
@@ -61,7 +63,10 @@ describe(GitAdapter.name, () => {
             });
         });
 
-        return {instance, events};
+        return {
+            instance,
+            events,
+        };
     }
 
     it('does not start updating automatically', async () => {
@@ -69,7 +74,9 @@ describe(GitAdapter.name, () => {
         assert.instanceOf(instance, GitAdapter);
         assert.isFalse(instance.isUpdating);
 
-        await wait({seconds: 1});
+        await wait({
+            seconds: 1,
+        });
 
         assert.isEmpty(events);
     });
@@ -80,7 +87,9 @@ describe(GitAdapter.name, () => {
 
         instance.startAutoUpdates(
             /** If this test becomes flaky, try increasing this number. */
-            {seconds: 1},
+            {
+                seconds: 1,
+            },
         );
 
         assert.isTrue(instance.isUpdating);
@@ -99,14 +108,18 @@ describe(GitAdapter.name, () => {
 
         instance.startAutoUpdates(
             /** If this test becomes flaky, try increasing this number. */
-            {seconds: 1},
+            {
+                seconds: 1,
+            },
         );
 
         await waitUntil.isLengthExactly(2, () => events);
 
         instance.stopAutoUpdates();
 
-        await wait({seconds: 5});
+        await wait({
+            seconds: 5,
+        });
 
         assert.isLengthExactly(events, 2);
 
@@ -227,7 +240,9 @@ describe(GitAdapter.name, () => {
     it('fails without auth tokens', async () => {
         const NoAuthAdapter = defineGitAdapter({
             async fetchGitData() {
-                await wait({milliseconds: 100});
+                await wait({
+                    milliseconds: 100,
+                });
 
                 return {
                     queryCost: 0,
@@ -262,7 +277,9 @@ describe(GitAdapter.name, () => {
     it('handles a query error', async () => {
         const FailingMockGitAdapter = defineGitAdapter({
             async fetchGitData() {
-                await wait({milliseconds: 10});
+                await wait({
+                    milliseconds: 10,
+                });
                 throw new Error('Intentional failure.');
             },
             serviceName: 'mock git failure',
@@ -288,7 +305,9 @@ describe(GitAdapter.name, () => {
     it('skips an updates if they take too long', async () => {
         const LongRunningAdapter = defineGitAdapter({
             async fetchGitData() {
-                await wait({seconds: 1});
+                await wait({
+                    seconds: 1,
+                });
                 return {
                     data: [],
                     queryCost: 1,

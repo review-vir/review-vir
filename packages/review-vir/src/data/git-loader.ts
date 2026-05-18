@@ -1,9 +1,13 @@
 import {extractErrorMessage, log, mapObjectValues} from '@augment-vir/common';
-import {GitUpdatesStoppedReason} from '@review-vir/adapter-core';
+import {type GitUpdatesStoppedReason} from '@review-vir/adapter-core';
 import type {AtLeastOneDuration} from 'date-vir';
 import {defineTypedCustomEvent, defineTypedEvent, ListenTarget} from 'typed-event-target';
-import {WorkerMessage, WorkerMessageType} from '../worker/worker-messages.js';
-import {AllServiceGitData, gitAdaptersByServiceName, GitServiceName} from './all-adapters.js';
+import {type WorkerMessage, WorkerMessageType} from '../worker/worker-messages.js';
+import {
+    type AllServiceGitData,
+    gitAdaptersByServiceName,
+    type GitServiceName,
+} from './all-adapters.js';
 import {getAllPullRequestDataCache, getPullRequestDataCache} from './cache-store.js';
 
 export class GitErrorEvent extends defineTypedCustomEvent<{message: string}>()('git-error') {}
@@ -35,7 +39,13 @@ export class GitDataLoader extends ListenTarget<
             .then((cacheResult) => {
                 if (!this.data) {
                     this.data = cacheResult;
-                    this.dispatch(new GitDataUpdated({detail: {data: this.data}}));
+                    this.dispatch(
+                        new GitDataUpdated({
+                            detail: {
+                                data: this.data,
+                            },
+                        }),
+                    );
                 }
             })
             .catch((error: unknown) => {
@@ -86,7 +96,13 @@ export class GitDataLoader extends ListenTarget<
                         }
                         this.data[serviceName] = newData;
 
-                        this.dispatch(new GitDataUpdated({detail: {data: this.data}}));
+                        this.dispatch(
+                            new GitDataUpdated({
+                                detail: {
+                                    data: this.data,
+                                },
+                            }),
+                        );
                     }
                 } else if (message.type === WorkerMessageType.UpdateStarted) {
                     this.updatesInProgress[serviceName] = true;

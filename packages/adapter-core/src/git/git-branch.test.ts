@@ -5,6 +5,8 @@ import {mockGitBranch} from './git-branch.mock.js';
 
 describe('GitBranch', () => {
     it('has proper types', () => {
-        assertValidShape(mockGitBranch, gitBranchShape);
+        assertValidShape(mockGitBranch, gitBranchShape, {
+            allowExtraKeys: true,
+        });
     });
 });

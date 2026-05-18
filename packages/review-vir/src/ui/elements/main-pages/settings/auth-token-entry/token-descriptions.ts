@@ -1,5 +1,5 @@
 import {GithubAdapter} from '@review-vir/github-adapter';
-import {HTMLTemplateResult, html} from 'element-vir';
+import {type HTMLTemplateResult, html} from 'element-vir';
 import type {GitServiceName} from '../../../../../data/all-adapters.js';
 
 export type Permission = {label: string; value: string};
@@ -20,10 +20,22 @@ export const serviceAuthTokenDescriptions: Record<
             with the following permissions:
         `,
         permissions: [
-            {label: 'Commit statuses', value: 'Read-only'},
-            {label: 'Contents', value: 'Read-only'},
-            {label: 'Metadata', value: 'Read-only'},
-            {label: 'Pull requests', value: 'Read-only'},
+            {
+                label: 'Commit statuses',
+                value: 'Read-only',
+            },
+            {
+                label: 'Contents',
+                value: 'Read-only',
+            },
+            {
+                label: 'Metadata',
+                value: 'Read-only',
+            },
+            {
+                label: 'Pull requests',
+                value: 'Read-only',
+            },
         ],
     },
 };

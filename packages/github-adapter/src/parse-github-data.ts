@@ -1,11 +1,11 @@
 import {check} from '@augment-vir/assert';
 import {arrayToObject, typedObjectFromEntries} from '@augment-vir/common';
 import {
-    GitUser,
-    PullRequest,
     PullRequestDisplayStatus,
     PullRequestMergeStatus,
     PullRequestReviewStatus,
+    type GitUser,
+    type PullRequest,
     type PullRequestChecks,
     type PullRequestReview,
 } from '@review-vir/adapter-core';
@@ -48,7 +48,13 @@ export function parseGithubPullRequest(
     });
     const pullRequestUsers: PullRequest['users'] = {
         assignees: groupUsersByUserName(assignees.length ? assignees : authors),
-        reviewers: parseReviews({codeOwners, primaryReviewers}, raw),
+        reviewers: parseReviews(
+            {
+                codeOwners,
+                primaryReviewers,
+            },
+            raw,
+        ),
     };
 
     const mergeStatus: PullRequestMergeStatus = raw.mergedAt
@@ -99,7 +105,7 @@ export function parseGithubPullRequest(
         },
         status: {
             checksStatus: parseStates(
-                raw.commits.nodes[0]?.commit?.statusCheckRollup?.contexts?.checkRunCountsByState,
+                raw.commits.nodes[0]?.commit.statusCheckRollup?.contexts.checkRunCountsByState,
             ),
             comments: parseComments(raw.reviewThreads.nodes),
             commitCount: raw.commits.totalCount,
@@ -150,7 +156,10 @@ function parseComments(
             accum.total++;
             return accum;
         },
-        {resolved: 0, total: 0},
+        {
+            resolved: 0,
+            total: 0,
+        },
     );
 }
 
@@ -196,36 +205,48 @@ function parseReviews(
     );
 
     return typedObjectFromEntries(
-        allUsernames.map((username): [string, PullRequestReview] => {
-            const user = pendingReviewers[username] || latestOpinionatedReviews[username]?.author;
-
-            if (!user) {
-                throw new Error(`Failed to find user '${username}'`);
-            }
-
-            const reviewStatus: PullRequestReviewStatus = check.hasKey(pendingReviewers, username)
-                ? PullRequestReviewStatus.Pending
-                : latestOpinionatedReviews[username]?.state === GithubGraphqlReviewState.Approved
-                  ? PullRequestReviewStatus.Accepted
-                  : latestOpinionatedReviews[username]?.state ===
-                      GithubGraphqlReviewState.ChangesRequested
-                    ? PullRequestReviewStatus.Rejected
-                    : PullRequestReviewStatus.Pending;
-
-            return [
+        allUsernames.map(
+            (
                 username,
-                {
-                    user: {
-                        avatarUrl: user.avatarUrl || '',
-                        profileUrl: user.avatarUrl || '',
-                        username,
+            ): [
+                string,
+                PullRequestReview,
+            ] => {
+                const user =
+                    pendingReviewers[username] || latestOpinionatedReviews[username]?.author;
+
+                if (!user) {
+                    throw new Error(`Failed to find user '${username}'`);
+                }
+
+                const reviewStatus: PullRequestReviewStatus = check.hasKey(
+                    pendingReviewers,
+                    username,
+                )
+                    ? PullRequestReviewStatus.Pending
+                    : latestOpinionatedReviews[username]?.state ===
+                        GithubGraphqlReviewState.Approved
+                      ? PullRequestReviewStatus.Accepted
+                      : latestOpinionatedReviews[username]?.state ===
+                          GithubGraphqlReviewState.ChangesRequested
+                        ? PullRequestReviewStatus.Rejected
+                        : PullRequestReviewStatus.Pending;
+
+                return [
+                    username,
+                    {
+                        user: {
+                            avatarUrl: user.avatarUrl || '',
+                            profileUrl: user.avatarUrl || '',
+                            username,
+                        },
+                        isPrimaryReviewer: primaryReviewers.includes(username),
+                        isCodeOwner: codeOwners.includes(username),
+                        reviewStatus,
                     },
-                    isPrimaryReviewer: primaryReviewers.includes(username),
-                    isCodeOwner: codeOwners.includes(username),
-                    reviewStatus,
-                },
-            ];
-        }),
+                ];
+            },
+        ),
     );
 }
 

@@ -1,4 +1,4 @@
-import {GitUser, PullRequestReview} from '@review-vir/adapter-core';
+import {type GitUser, type PullRequestReview} from '@review-vir/adapter-core';
 import {css, defineElement, html} from 'element-vir';
 import {VirUser} from './vir-user.element.js';
 

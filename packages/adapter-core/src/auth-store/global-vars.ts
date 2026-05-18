@@ -1,5 +1,5 @@
 import type {AnyObject} from '@augment-vir/common';
-import {AuthToken} from './auth-tokens.js';
+import {type AuthToken} from './auth-tokens.js';
 
 declare let VITE_INJECTED_SECRETS_FILE:
     | {authTokens?: {[ServiceName in string]: AuthToken[]}}

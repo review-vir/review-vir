@@ -1,6 +1,6 @@
-import {css, defineElementNoInputs, html} from 'element-vir';
+import {css, defineElement, html} from 'element-vir';
 
-export const VirErrorMessage = defineElementNoInputs({
+export const VirErrorMessage = defineElement()({
     tagName: 'vir-error-message',
     styles: css`
         :host {

@@ -9,8 +9,8 @@ import {
     StatusSuccess24Icon,
     ViraIcon,
     viraIconCssVars,
-    ViraIconSvg,
     ViraImage,
+    type ViraIconSvg,
 } from 'vira';
 import {sharedColors} from '../../../styles/color.js';
 import {avatarSize} from '../../../styles/size.js';

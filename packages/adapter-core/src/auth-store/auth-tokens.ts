@@ -1,12 +1,9 @@
 import {assertValidShape, defineShape} from 'object-shape-tester';
 
-export const authTokenShape = defineShape(
-    {
-        authTokenName: '',
-        authTokenSecret: '',
-    },
-    true,
-);
+export const authTokenShape = defineShape({
+    authTokenName: '',
+    authTokenSecret: '',
+});
 export type AuthToken = typeof authTokenShape.runtimeType;
 
 export class AuthTokenValidationError extends Error {
@@ -24,7 +21,9 @@ export function assertValidAuthToken(
     input: unknown,
     serviceName: string,
 ): asserts input is AuthToken {
-    assertValidShape(input, authTokenShape);
+    assertValidShape(input, authTokenShape, {
+        allowExtraKeys: true,
+    });
     if (!input.authTokenName) {
         throw new AuthTokenValidationError('Empty auth token name', serviceName);
     } else if (!input.authTokenSecret) {
@@ -36,6 +35,6 @@ export function assertValidAuthToken(
 }
 
 export type EncryptedAuthToken = {
-    data: Uint8Array;
-    publicInitVector: Uint8Array;
+    data: Uint8Array<ArrayBuffer>;
+    publicInitVector: Uint8Array<ArrayBuffer>;
 };
