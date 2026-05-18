@@ -1,6 +1,6 @@
 import {check} from '@augment-vir/assert';
 import {ensureError, wrapPromiseInTimeout, type MaybePromise} from '@augment-vir/common';
-import {convertDuration, type AnyDuration} from 'date-vir';
+import {convertDuration, toLocaleString, type AnyDuration} from 'date-vir';
 import {TypedListenTarget} from 'typed-event-target';
 import {loadServiceAuthTokens} from '../auth-store/auth-access.js';
 import type {AuthToken} from '../auth-store/auth-tokens.js';
@@ -13,6 +13,7 @@ import {
     GitUpdateStartEvent,
     type GitAdapterEvents,
 } from './git-adapter.event.js';
+import {RateLimitedError} from './rate-limited.error.js';
 
 export type FetchGitDataResult = {
     queryCost: number;
@@ -109,10 +110,25 @@ export class GitAdapter extends TypedListenTarget<GitAdapterEvents> {
 
         this.setNextUpdate();
 
-        await this.updateData();
+        try {
+            await this.updateData();
+        } catch {
+            /** Already dispatched via GitUpdateDoneEvent; swallow to avoid an unhandled rejection. */
+        }
     }
 
     public startAutoUpdates(interval: Readonly<AnyDuration>) {
+        /**
+         * Reset interval state on each start so a Resume after a pause (e.g. rate-limited) gets a
+         * fresh window — otherwise carried-over failure counts or query-cost peaks would re-trip
+         * `validateInterval` immediately.
+         */
+        this.intervalState = {
+            highestQueryCost: 0,
+            queryFailureCount: 0,
+            queryCount: 0,
+        };
+        globalThis.clearTimeout(this.nextIntervalTimeout);
         this.updateInterval = interval;
         void this.updateOnInterval();
     }
@@ -168,6 +184,25 @@ export class GitAdapter extends TypedListenTarget<GitAdapterEvents> {
         } catch (caught) {
             this.intervalState.queryFailureCount++;
             const error = ensureError(caught);
+            if (error instanceof RateLimitedError) {
+                this.updateInterval = undefined;
+                globalThis.clearTimeout(this.nextIntervalTimeout);
+                const resetSuffix = error.resetAt
+                    ? ` Resets at ${toLocaleString(error.resetAt, {
+                          dateStyle: 'short',
+                          timeStyle: 'short',
+                      })}.`
+                    : '';
+                this.dispatch(
+                    new GitUpdatesStoppedEvent({
+                        detail: {
+                            reason: GitUpdatesStoppedReason.RateLimited,
+                            message: `Rate limit hit, turning off auto-updates for '${this.serviceName}'.${resetSuffix}`,
+                            resetAt: error.resetAt,
+                        },
+                    }),
+                );
+            }
             this.dispatch(
                 new GitUpdateDoneEvent({
                     detail: {

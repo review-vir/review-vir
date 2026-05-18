@@ -5,6 +5,7 @@ export * from './auth-store/global-vars.js';
 export * from './git-adapter/define-git-adapter.js';
 export * from './git-adapter/git-adapter.event.js';
 export * from './git-adapter/git-adapter.js';
+export * from './git-adapter/rate-limited.error.js';
 export * from './git/git-branch.js';
 export * from './git/git-data.js';
 export * from './git/git-repo.js';

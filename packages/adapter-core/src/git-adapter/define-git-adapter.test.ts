@@ -1,12 +1,17 @@
 import {assert, waitUntil} from '@augment-vir/assert';
 import {extractErrorMessage, randomString, wait} from '@augment-vir/common';
 import {describe, it} from '@augment-vir/test';
-import {getNowInUserTimezone} from 'date-vir';
+import {createUtcFullDate, getNowInUserTimezone} from 'date-vir';
 import {saveServiceAuthTokens} from '../auth-store/auth-access.js';
 import {defineGitAdapter, type GitAdapterDefinition} from './define-git-adapter.js';
 import {MockGitAdapter} from './define-git-adapter.mock.js';
-import {gitAdapterEvents} from './git-adapter.event.js';
+import {
+    gitAdapterEvents,
+    GitUpdatesStoppedEvent,
+    GitUpdatesStoppedReason,
+} from './git-adapter.event.js';
 import {GitAdapter} from './git-adapter.js';
+import {RateLimitedError} from './rate-limited.error.js';
 
 const mockEncryptionKey = randomString(16);
 
@@ -299,6 +304,57 @@ describe(GitAdapter.name, () => {
                 message: 'Intentional failure.',
             },
         ]);
+        instance.destroy();
+    });
+
+    it('stops auto updating when the adapter throws RateLimitedError', async () => {
+        const resetAt = createUtcFullDate(1_779_136_132_000);
+        const RateLimitedAdapter = defineGitAdapter({
+            async fetchGitData() {
+                await wait({
+                    milliseconds: 10,
+                });
+                throw new RateLimitedError('API rate limit already exceeded.', resetAt);
+            },
+            serviceName: 'mock git rate limited',
+        });
+
+        const {instance, events} = await setupInstance(Infinity, RateLimitedAdapter);
+        const stoppedEvents: GitUpdatesStoppedEvent[] = [];
+        instance.listen(GitUpdatesStoppedEvent, (event) => {
+            stoppedEvents.push(event);
+        });
+
+        instance.startAutoUpdates({
+            milliseconds: 100,
+        });
+
+        await waitUntil.isTruthy(() =>
+            events.find((event) => event.type === gitAdapterEvents.GitUpdatesStoppedEvent.name),
+        );
+
+        /** Wait long enough that, if auto-updates were still running, more events would land. */
+        await wait({
+            seconds: 1,
+        });
+
+        assert.deepEquals(
+            events.map((event) => event.type),
+            [
+                gitAdapterEvents.GitUpdateStartEvent.name,
+                gitAdapterEvents.GitUpdatesStoppedEvent.name,
+                gitAdapterEvents.GitUpdateDoneEvent.name,
+            ],
+        );
+        assert.isLengthAtLeast(stoppedEvents, 1);
+        assert.strictEquals(stoppedEvents[0].detail.reason, GitUpdatesStoppedReason.RateLimited);
+        assert.deepEquals(stoppedEvents[0].detail.resetAt, resetAt);
+        assert.strictEquals(
+            events.find((event) => event.type === gitAdapterEvents.GitUpdateDoneEvent.name)
+                ?.message,
+            'API rate limit already exceeded.',
+        );
+
         instance.destroy();
     });
 

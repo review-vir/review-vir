@@ -1,12 +1,15 @@
+import {omitObjectKeys} from '@augment-vir/common';
 import {
     countChainedPullRequests,
     getGitAdapterGlobalVars,
     type ChainedPullRequest,
+    type GitUpdatesStoppedReason,
     type PullRequestsByOwner,
 } from '@review-vir/adapter-core';
 import {isDateAfter, type FullDate} from 'date-vir';
-import {classMap, css, defineElement, html, type TemplateResult} from 'element-vir';
+import {classMap, css, defineElement, html, listen, type TemplateResult} from 'element-vir';
 import {LoaderAnimated24Icon, ViraIcon} from 'vira';
+import type {GitServiceName} from '../../../../data/all-adapters.js';
 import {
     GitDataLoader,
     GitDataUpdated,
@@ -21,11 +24,19 @@ import {
     type ReviewVirRouter,
 } from '../../../../data/routing.js';
 import {ChangeRouteEvent} from '../../../events/change-route.event.js';
+import {VirErrorMessage} from '../../common-elements/vir-error-message.element.js';
 import {VirHeader} from '../../common-elements/vir-header.element.js';
+import {VirPausedBanner} from '../../common-elements/vir-paused-banner.element.js';
 import {VirOrgReviewers} from './vir-org-reviewers.element.js';
 import {VirOrgSelector} from './vir-org-selector.element.js';
 import {pullRequestMaxWidth, VirPullRequest} from './vir-pull-request.element.js';
 import {VirUpdateTime} from './vir-update-time.element.js';
+
+type PausedAdapter = {
+    message: string;
+    reason: GitUpdatesStoppedReason;
+    resetAt: FullDate | undefined;
+};
 
 const offlineModeUseMockResponse = false as boolean;
 
@@ -88,14 +99,15 @@ export const VirCodeReview = defineElement<{
         return {
             gitLoader: undefined as GitDataLoader | undefined,
             errorMessage: undefined as string | undefined,
-            pausedAdapters: {},
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+            pausedAdapters: {} as Partial<Record<GitServiceName, PausedAdapter>>,
             data: undefined as undefined | PullRequestsByOwner,
             isUpdating: true,
         };
     },
     init({state, updateState, inputs}) {
         const gitLoader = new GitDataLoader(inputs.secretEncryptionKey, {
-            seconds: 10,
+            seconds: 60,
         });
         gitLoader.listen(GitErrorEvent, (event) => {
             updateState({
@@ -109,6 +121,7 @@ export const VirCodeReview = defineElement<{
                     [event.detail.serviceName]: {
                         message: event.detail.message,
                         reason: event.detail.reason,
+                        resetAt: event.detail.resetAt,
                     },
                 },
             });
@@ -116,6 +129,7 @@ export const VirCodeReview = defineElement<{
         gitLoader.listen(GitUpdateStartEvent, () => {
             updateState({
                 isUpdating: true,
+                errorMessage: undefined,
             });
         });
         gitLoader.listen(GitDataUpdated, (event) => {
@@ -126,6 +140,10 @@ export const VirCodeReview = defineElement<{
         });
 
         gitLoader.startAutoUpdates();
+
+        updateState({
+            gitLoader,
+        });
     },
     cleanup({state, updateState}) {
         state.gitLoader?.destroy();
@@ -133,7 +151,7 @@ export const VirCodeReview = defineElement<{
             gitLoader: undefined,
         });
     },
-    render({state, inputs, dispatch}) {
+    render({state, inputs, dispatch, updateState}) {
         const latestData: PullRequestsByOwner =
             (offlineModeUseMockResponse
                 ? (getGitAdapterGlobalVars().mockResponse as PullRequestsByOwner)
@@ -214,6 +232,37 @@ export const VirCodeReview = defineElement<{
             </section>
         `;
 
+        const pausedEntries = Object.entries(state.pausedAdapters) as ReadonlyArray<
+            readonly [
+                GitServiceName,
+                PausedAdapter,
+            ]
+        >;
+        const pausedBanners = pausedEntries.map(
+            ([
+                serviceName,
+                paused,
+            ]) => html`
+                <${VirPausedBanner.assign({
+                    serviceName,
+                    message: paused.message,
+                    resetAt: paused.resetAt,
+                })}
+                    ${listen(VirPausedBanner.events.resume, () => {
+                        if (!state.gitLoader) {
+                            return;
+                        }
+                        updateState({
+                            pausedAdapters: omitObjectKeys(state.pausedAdapters, [
+                                serviceName,
+                            ]),
+                        });
+                        state.gitLoader.restartService(serviceName);
+                    })}
+                ></${VirPausedBanner}>
+            `,
+        );
+
         return html`
             <${VirHeader.assign({
                 router: inputs.router,
@@ -232,6 +281,12 @@ export const VirCodeReview = defineElement<{
                     })}></${VirUpdateTime}>
                 </div>
             </${VirHeader}>
+            ${pausedBanners}
+            ${state.errorMessage
+                ? html`
+                      <${VirErrorMessage}>${state.errorMessage}</${VirErrorMessage}>
+                  `
+                : ''}
             <main>
                 ${allOrgNames.length
                     ? mainTemplate

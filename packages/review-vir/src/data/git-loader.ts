@@ -1,6 +1,11 @@
-import {extractErrorMessage, log, mapObjectValues} from '@augment-vir/common';
+import {
+    extractErrorMessage,
+    log,
+    mapObjectValues,
+    type PartialWithUndefined,
+} from '@augment-vir/common';
 import {type GitUpdatesStoppedReason} from '@review-vir/adapter-core';
-import type {AtLeastOneDuration} from 'date-vir';
+import type {AtLeastOneDuration, FullDate} from 'date-vir';
 import {defineTypedCustomEvent, defineTypedEvent, ListenTarget} from 'typed-event-target';
 import {type WorkerMessage, WorkerMessageType} from '../worker/worker-messages.js';
 import {
@@ -12,11 +17,15 @@ import {getAllPullRequestDataCache, getPullRequestDataCache} from './cache-store
 
 export class GitErrorEvent extends defineTypedCustomEvent<{message: string}>()('git-error') {}
 export class GitUpdateStartEvent extends defineTypedEvent('git-update-start') {}
-export class GitUpdatesPausedEvent extends defineTypedCustomEvent<{
-    serviceName: GitServiceName;
-    message: string;
-    reason: GitUpdatesStoppedReason;
-}>()('git-updates-paused') {}
+export class GitUpdatesPausedEvent extends defineTypedCustomEvent<
+    {
+        serviceName: GitServiceName;
+        message: string;
+        reason: GitUpdatesStoppedReason;
+    } & PartialWithUndefined<{
+        resetAt: FullDate;
+    }>
+>()('git-updates-paused') {}
 export class GitDataUpdated extends defineTypedCustomEvent<{
     data: AllServiceGitData;
 }>()('git-data-updated') {}
@@ -75,6 +84,7 @@ export class GitDataLoader extends ListenTarget<
                                 reason: message.reason,
                                 message: message.message,
                                 serviceName,
+                                resetAt: message.resetAt,
                             },
                         }),
                     );
@@ -123,5 +133,14 @@ export class GitDataLoader extends ListenTarget<
                 } satisfies WorkerMessage),
             );
         });
+    }
+
+    public restartService(serviceName: GitServiceName) {
+        this.adapterWorkers[serviceName].postMessage(
+            JSON.stringify({
+                type: WorkerMessageType.StartAutoUpdates,
+                updateInterval: this.updateInterval,
+            } satisfies WorkerMessage),
+        );
     }
 }

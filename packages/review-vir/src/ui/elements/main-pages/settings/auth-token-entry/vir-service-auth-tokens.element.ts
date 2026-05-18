@@ -3,8 +3,10 @@ import {type AuthToken} from '@review-vir/adapter-core';
 import {css, defineElement, defineElementEvent, html, listen} from 'element-vir';
 import {
     CloseX24Icon,
+    Plus24Icon,
     ViraButton,
     ViraColorVariant,
+    ViraEmphasis,
     ViraIcon,
     ViraInput,
     ViraInputType,
@@ -42,10 +44,11 @@ export const VirServiceAuthTokens = defineElement<{
             flex-wrap: wrap;
         }
 
-        p {
-            ${noNativeSpacing};
+        .more-tokens {
+            align-self: center;
         }
 
+        p,
         h2 {
             ${noNativeSpacing};
         }
@@ -159,8 +162,11 @@ export const VirServiceAuthTokens = defineElement<{
             <${ViraButton.assign({
                 text: 'Add Token',
                 isDisabled: inputs.disabled,
+                icon: Plus24Icon,
                 color: ViraColorVariant.Positive,
+                buttonEmphasis: ViraEmphasis.Subtle,
             })}
+                class="more-tokens"
                 ${listen('click', () => {
                     dispatch(
                         new events.authTokensChange(

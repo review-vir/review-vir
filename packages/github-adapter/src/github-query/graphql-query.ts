@@ -75,8 +75,8 @@ export const pendingCheckRunConclusions = [
 
 const githubUserSearchResponseShape = defineShape({
     login: '',
-    avatarUrl: unionShape(undefined, ''),
-    teamAvatarUrl: unionShape(undefined, ''),
+    avatarUrl: optionalShape(''),
+    teamAvatarUrl: optionalShape(''),
     url: '',
 });
 export type GithubUserSearchResponse = typeof githubUserSearchResponseShape.runtimeType;

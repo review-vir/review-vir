@@ -1,8 +1,32 @@
 import {extractErrorMessage, log, type AnyObject} from '@augment-vir/common';
-import type {AuthToken} from '@review-vir/adapter-core';
+import {RateLimitedError, type AuthToken} from '@review-vir/adapter-core';
+import {createFullDateInUserTimezone} from 'date-vir';
 import {assertValidShape, ShapeMismatchError, type Shape} from 'object-shape-tester';
 import type {Primitive} from 'type-fest';
 import {githubGraphqlErrorShape} from './graphql-query.js';
+
+function extractRateLimitResetDate(headers: Readonly<Headers>) {
+    const rawReset = headers.get('x-ratelimit-reset');
+    if (!rawReset) {
+        return undefined;
+    }
+    const resetSeconds = Number(rawReset);
+    if (!Number.isFinite(resetSeconds)) {
+        return undefined;
+    }
+    return createFullDateInUserTimezone(resetSeconds * 1000);
+}
+
+function isRateLimitError(error: AnyObject) {
+    return error.type === 'RATE_LIMIT' || error.code === 'graphql_rate_limit';
+}
+
+function isRateLimitHttpResponse(response: Readonly<Response>) {
+    return (
+        response.status === 429 ||
+        (response.status === 403 && response.headers.get('x-ratelimit-remaining') === '0')
+    );
+}
 
 export async function fetchGithubGraphql<ResponseShape extends Shape>(
     authToken: Readonly<AuthToken>,
@@ -33,6 +57,12 @@ export async function fetchGithubGraphql<ResponseShape extends Shape>(
                 body: JSON.stringify(queryBody),
             });
             if (!rawResponse.ok) {
+                if (isRateLimitHttpResponse(rawResponse)) {
+                    throw new RateLimitedError(
+                        `GitHub API rate limit exceeded: ${rawResponse.status} ${rawResponse.statusText}`,
+                        extractRateLimitResetDate(rawResponse.headers),
+                    );
+                }
                 throw new Error(
                     `GitHub API fetch failed: ${rawResponse.status}, ${rawResponse.statusText}`,
                 );
@@ -47,13 +77,22 @@ export async function fetchGithubGraphql<ResponseShape extends Shape>(
                         });
                     } catch (shapeError) {
                         if (shapeError instanceof ShapeMismatchError) {
-                            log.error('GitHub GraphQL error did not match expected shape. Raw error:');
+                            log.error(
+                                'GitHub GraphQL error did not match expected shape. Raw error:',
+                            );
                             log.error(error);
                         }
                         throw shapeError;
                     }
                     log.error(error);
                 });
+                const rateLimitError = responseJson.errors.find(isRateLimitError);
+                if (rateLimitError) {
+                    throw new RateLimitedError(
+                        rateLimitError.message || 'GitHub API rate limit exceeded.',
+                        extractRateLimitResetDate(rawResponse.headers),
+                    );
+                }
                 throw new Error('Failed to fetch GitHub pull requests. See console for details.');
             }
 
@@ -65,7 +104,9 @@ export async function fetchGithubGraphql<ResponseShape extends Shape>(
                 });
             } catch (shapeError) {
                 if (shapeError instanceof ShapeMismatchError) {
-                    log.error('GitHub GraphQL response data did not match expected shape. Raw response:');
+                    log.error(
+                        'GitHub GraphQL response data did not match expected shape. Raw response:',
+                    );
                     log.error(responseJson);
                 }
                 throw shapeError;

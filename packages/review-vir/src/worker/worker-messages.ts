@@ -1,5 +1,6 @@
+import type {PartialWithUndefined} from '@augment-vir/common';
 import type {GitUpdatesStoppedReason} from '@review-vir/adapter-core';
-import type {AtLeastOneDuration} from 'date-vir';
+import type {AtLeastOneDuration, FullDate} from 'date-vir';
 import type {GitServiceName} from '../data/all-adapters.js';
 
 export enum WorkerMessageType {
@@ -27,8 +28,10 @@ export type WorkerMessage =
           type: WorkerMessageType.DataUpdated;
           error: string | undefined;
       }
-    | {
+    | ({
           type: WorkerMessageType.UpdatesStopped;
           message: string;
           reason: GitUpdatesStoppedReason;
-      };
+      } & PartialWithUndefined<{
+          resetAt: FullDate;
+      }>);

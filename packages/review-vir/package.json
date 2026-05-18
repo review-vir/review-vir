@@ -19,6 +19,7 @@
     "dependencies": {
         "@augment-vir/assert": "^31.70.0",
         "@augment-vir/common": "^31.70.0",
+        "@electrovir/color": "^1.7.9",
         "@review-vir/adapter-core": "^3.0.0",
         "@review-vir/common": "^3.0.0",
         "@review-vir/github-adapter": "^3.0.0",

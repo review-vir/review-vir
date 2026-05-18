@@ -34,5 +34,10 @@ export async function getAllPullRequestDataCache(): Promise<AllServiceGitData> {
 
 export async function getPullRequestDataCache(serviceName: GitServiceName): Promise<GitData[]> {
     const client = await cacheClientPromise;
-    return [...(client.value[serviceName] || [])];
+    /**
+     * Reload from IndexedDB rather than reading `client.value` — the worker thread that wrote the
+     * data has its own LocalDbClient instance with its own in-memory cache; the main thread's
+     * instance won't see cross-thread writes until it reloads.
+     */
+    return [...((await client.load[serviceName]()) || [])];
 }
