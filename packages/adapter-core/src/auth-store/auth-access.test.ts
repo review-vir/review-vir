@@ -305,7 +305,7 @@ describe('legacy auth token migration', () => {
                 authTokenSecret: randomString(32),
             };
             const goodLegacy = await seedLegacyToken(mockServiceName, goodToken);
-            /** A blob with the right shape but a corrupted ciphertext won't decrypt. */
+            /** A blob with the right shape but a corrupted cipher text won't decrypt. */
             const corruptedLegacy: EncryptedAuthToken = {
                 data: new Uint8Array([
                     0,
