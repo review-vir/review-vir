@@ -8,7 +8,17 @@ import {
 } from '@review-vir/adapter-core';
 import {isDateAfter, type FullDate} from 'date-vir';
 import {classMap, css, defineElement, html, listen, type TemplateResult} from 'element-vir';
-import {LoaderAnimated24Icon, ViraIcon} from 'vira';
+import {
+    Copy24Icon,
+    createSizedIcon,
+    LoaderAnimated24Icon,
+    StatusSuccess24Icon,
+    ViraButton,
+    ViraColorVariant,
+    ViraEmphasis,
+    ViraIcon,
+    ViraSize,
+} from 'vira';
 import type {GitServiceName} from '../../../../data/all-adapters.js';
 import {
     GitDataLoader,
@@ -103,6 +113,8 @@ export const VirCodeReview = defineElement<{
             pausedAdapters: {} as Partial<Record<GitServiceName, PausedAdapter>>,
             data: undefined as undefined | PullRequestsByOwner,
             isUpdating: true,
+            showCopiedSuccess: false,
+            copyResetTimeoutId: undefined as undefined | ReturnType<typeof globalThis.setTimeout>,
         };
     },
     init({state, updateState, inputs}) {
@@ -147,8 +159,10 @@ export const VirCodeReview = defineElement<{
     },
     cleanup({state, updateState}) {
         state.gitLoader?.destroy();
+        globalThis.clearTimeout(state.copyResetTimeoutId);
         updateState({
             gitLoader: undefined,
+            copyResetTimeoutId: undefined,
         });
     },
     render({state, inputs, dispatch, updateState}) {
@@ -273,12 +287,43 @@ export const VirCodeReview = defineElement<{
                     })}
                         class=${classMap({
                             hidden: !state.isUpdating,
+                            dim: true,
                         })}
                     ></${ViraIcon}>
-                    Updated:
-                    <${VirUpdateTime.assign({
-                        updateTime: earliestUpdateDate,
-                    })}></${VirUpdateTime}>
+                    <span>Updated:</span>
+                    <span>
+                        <${VirUpdateTime.assign({
+                            updateTime: earliestUpdateDate,
+                        })}></${VirUpdateTime}>
+                    </span>
+                    <${ViraButton.assign({
+                        icon: createSizedIcon(
+                            state.showCopiedSuccess ? StatusSuccess24Icon : Copy24Icon,
+                            16,
+                        ),
+                        buttonEmphasis: ViraEmphasis.Subtle,
+                        buttonSize: ViraSize.Small,
+                        color: state.showCopiedSuccess
+                            ? ViraColorVariant.Positive
+                            : ViraColorVariant.Plain,
+                    })}
+                        title="copy current JSON"
+                        ${listen('click', async () => {
+                            await globalThis.navigator.clipboard.writeText(
+                                JSON.stringify(latestData, undefined, 4),
+                            );
+                            globalThis.clearTimeout(state.copyResetTimeoutId);
+                            updateState({
+                                showCopiedSuccess: true,
+                                copyResetTimeoutId: globalThis.setTimeout(() => {
+                                    updateState({
+                                        showCopiedSuccess: false,
+                                        copyResetTimeoutId: undefined,
+                                    });
+                                }, 1500),
+                            });
+                        })}
+                    ></${ViraButton}>
                 </div>
             </${VirHeader}>
             ${pausedBanners}
