@@ -101,3 +101,33 @@ export async function decryptLegacy({
     );
     return textDecoder.decode(decrypted);
 }
+
+/**
+ * Test-only helper: produces a blob in the pre-SHA-256 (raw-bytes) format that `decryptLegacy` can
+ * round-trip. Mirrors `encrypt`; useful for exercising the migration without standing up the old
+ * binary. Do not call from production code.
+ *
+ * @deprecated Only used for tests
+ */
+export async function encryptLegacy({
+    data,
+    secretEncryptionKey,
+}: {
+    data: string | Uint8Array;
+    secretEncryptionKey: string | Uint8Array;
+}) {
+    const publicInitVector = globalThis.crypto.getRandomValues(new Uint8Array(12));
+    const encrypted = await crypto.subtle.encrypt(
+        {
+            name: algorithmName,
+            iv: publicInitVector,
+        },
+        await importLegacyKey(ensureUint8Array(secretEncryptionKey)),
+        ensureUint8Array(data),
+    );
+
+    return {
+        encryptedData: new Uint8Array(encrypted),
+        publicInitVector,
+    };
+}
