@@ -13,6 +13,18 @@ async function importKey(key: Uint8Array<ArrayBuffer>) {
     ]);
 }
 
+/**
+ * Used only by the one-time legacy auth-token migration. Mirrors the pre-SHA-256 key derivation
+ * that the old encrypt/decrypt path used so previously-stored tokens can be unsealed and
+ * re-encrypted under the current derivation. Do not call from new code.
+ */
+async function importLegacyKey(key: Uint8Array<ArrayBuffer>) {
+    return await crypto.subtle.importKey('raw', key.buffer, algorithmName, true, [
+        'encrypt',
+        'decrypt',
+    ]);
+}
+
 export async function encrypt({
     data,
     secretEncryptionKey,
@@ -64,4 +76,28 @@ function ensureUint8Array(input: string | Uint8Array): Uint8Array<ArrayBuffer> {
     } else {
         return Uint8Array.from(input);
     }
+}
+
+/**
+ * Used only by the one-time legacy auth-token migration. Decrypts blobs produced by the previous
+ * encryption path (raw-bytes importKey). Do not call from new code.
+ */
+export async function decryptLegacy({
+    encryptedData,
+    secretEncryptionKey,
+    publicInitVector,
+}: {
+    encryptedData: string | Uint8Array;
+    secretEncryptionKey: string | Uint8Array;
+    publicInitVector: string | Uint8Array;
+}): Promise<string> {
+    const decrypted = await crypto.subtle.decrypt(
+        {
+            name: algorithmName,
+            iv: ensureUint8Array(publicInitVector),
+        },
+        await importLegacyKey(ensureUint8Array(secretEncryptionKey)),
+        ensureUint8Array(encryptedData),
+    );
+    return textDecoder.decode(decrypted);
 }

@@ -7,7 +7,6 @@ import {
     ViraButton,
     ViraColorVariant,
     ViraEmphasis,
-    ViraIcon,
     ViraInput,
     ViraInputType,
     noNativeFormStyles,
@@ -44,8 +43,8 @@ export const VirServiceAuthTokens = defineElement<{
             flex-wrap: wrap;
         }
 
-        .more-tokens {
-            align-self: center;
+        .add-token-button {
+            align-self: flex-start;
         }
 
         p,
@@ -119,24 +118,26 @@ export const VirServiceAuthTokens = defineElement<{
                                     modifyAuthToken('authTokenSecret', event.detail);
                                 })}
                             ></${ViraInput}>
-                            <button
-                                ?disabled=${inputs.disabled}
-                                class="delete"
-                                ${listen('click', () => {
-                                    const newAuthTokens = filterOutIndexes(
-                                        copyThroughJson(inputs.authTokens),
-                                        [authTokenIndex],
-                                    );
-
-                                    dispatch(new events.authTokensChange(newAuthTokens));
-                                })}
-                            >
-                                <${ViraIcon.assign({
-                                    icon: CloseX24Icon,
-                                })}></${ViraIcon}>
-                            </button>
                         </div>
                     </label>
+                    <div>
+                        <p>&nbsp;</p>
+                        <${ViraButton.assign({
+                            isDisabled: inputs.disabled,
+                            icon: CloseX24Icon,
+                            color: ViraColorVariant.Danger,
+                            buttonEmphasis: ViraEmphasis.Subtle,
+                        })}
+                            ${listen('click', () => {
+                                const newAuthTokens = filterOutIndexes(
+                                    copyThroughJson(inputs.authTokens),
+                                    [authTokenIndex],
+                                );
+
+                                dispatch(new events.authTokensChange(newAuthTokens));
+                            })}
+                        ></${ViraButton}>
+                    </div>
                 </div>
             `;
         });
@@ -166,7 +167,7 @@ export const VirServiceAuthTokens = defineElement<{
                 color: ViraColorVariant.Positive,
                 buttonEmphasis: ViraEmphasis.Subtle,
             })}
-                class="more-tokens"
+                class="add-token-button"
                 ${listen('click', () => {
                     dispatch(
                         new events.authTokensChange(
