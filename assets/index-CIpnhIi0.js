@@ -355,7 +355,34 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                 fill="none"
             />
         </svg>
-    `}),uF=EP({name:`Document24Icon`,svgTemplate:J`
+    `}),uF=EP({name:`Copy24Icon`,svgTemplate:J`
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            xml:space="preserve"
+            style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+        >
+            <path
+                d="M16 6v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6q.2-1.8 2-2h8a2 2 0 0 1 2 2"
+                stroke="none"
+                fill=${Y[`vira-icon-fill-color`].value}
+            />
+            <path
+                d="M21 11v8a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2v-8q.2-1.8 2-2h8a2 2 0 0 1 2 2"
+                stroke=${Y[`vira-icon-stroke-color`].value}
+                stroke-width=${Y[`vira-icon-stroke-width`].value}
+                fill=${Y[`vira-icon-fill-color`].value}
+            />
+            <path
+                d="M7 16H6a2 2 0 0 1-2-2V6q.2-1.8 2-2h8a2 2 0 0 1 2 2v1"
+                stroke=${Y[`vira-icon-stroke-color`].value}
+                stroke-width=${Y[`vira-icon-stroke-width`].value}
+                fill="none"
+            />
+        </svg>
+    `}),dF=EP({name:`Document24Icon`,svgTemplate:J`
         <svg
             xmlns="http://www.w3.org/2000/svg"
             xml:space="preserve"
@@ -377,7 +404,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                 fill="none"
             />
         </svg>
-    `}),dF=EP({name:`EyeClosed24Icon`,svgTemplate:J`
+    `}),fF=EP({name:`EyeClosed24Icon`,svgTemplate:J`
         <svg
             xmlns="http://www.w3.org/2000/svg"
             fill=${Y[`vira-icon-fill-color`].value}
@@ -392,7 +419,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                 d="M4 20 20 4M18.4 8.54C20 10.28 21 12 21 12s-4.03 7-9 7a6.53 6.53 0 0 1-3.16-.9M5.6 15.46C4 13.72 3 12 3 12s4.03-7 9-7c1.11 0 2.18.35 3.16.9"
             />
         </svg>
-    `}),fF=EP({name:`EyeOpen24Icon`,svgTemplate:J`
+    `}),pF=EP({name:`EyeOpen24Icon`,svgTemplate:J`
         <svg
             xmlns="http://www.w3.org/2000/svg"
             fill=${Y[`vira-icon-fill-color`].value}
@@ -407,7 +434,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                 d="M12 5c5 0 9 7 9 7s-4 7-9 7-9-7-9-7 4-7 9-7Zm0 4a3 3 0 1 1 0 6 3 3 0 0 1 0-6Z"
             />
         </svg>
-    `}),pF=EP({name:`Loader24Icon`,svgTemplate:J`
+    `}),mF=EP({name:`Loader24Icon`,svgTemplate:J`
         <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -422,7 +449,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                 stroke-width=${Y[`vira-icon-stroke-width`].value}
             />
         </svg>
-    `}),mF=EP({name:`LoaderAnimated24Icon`,svgTemplate:J`
+    `}),hF=EP({name:`LoaderAnimated24Icon`,svgTemplate:J`
         <style>
             ${q`
     @keyframes loader-animated-spin {
@@ -440,8 +467,8 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
     }
 `}
         </style>
-        ${pF.svgTemplate}
-    `}),hF=EP({name:`Options24Icon`,svgTemplate:J`
+        ${mF.svgTemplate}
+    `}),gF=EP({name:`Options24Icon`,svgTemplate:J`
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <g
                 fill=${Y[`vira-icon-fill-color`].value}
@@ -462,7 +489,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                 stroke-width=${Y[`vira-icon-stroke-width`].value}
             />
         </svg>
-    `}),gF=EP({name:`Pencil24Icon`,svgTemplate:J`
+    `}),_F=EP({name:`Pencil24Icon`,svgTemplate:J`
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <path
                 d="M20.041 4.966c.303-.418.097-1.085-.459-1.489l-1.771-1.285c-.557-.404-1.255-.393-1.558.025L5.12 17.561l-.167 4.215 3.955-1.467S19.965 5.071 20.041 4.966"
@@ -478,7 +505,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                 fill="none"
             />
         </svg>
-    `}),_F=EP({name:`Plus24Icon`,svgTemplate:J`
+    `}),vF=EP({name:`Plus24Icon`,svgTemplate:J`
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <path
                 d="M12 5v14M5 12h14"
@@ -487,7 +514,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                 stroke-width=${Y[`vira-icon-stroke-width`].value}
             />
         </svg>
-    `}),vF=EP({name:`Shield24Icon`,svgTemplate:J`
+    `}),yF=EP({name:`Shield24Icon`,svgTemplate:J`
         <svg
             xmlns="http://www.w3.org/2000/svg"
             xml:space="preserve"
@@ -502,7 +529,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                 fill=${Y[`vira-icon-fill-color`].value}
             />
         </svg>
-    `}),yF=EP({name:`Star24Icon`,svgTemplate:J`
+    `}),bF=EP({name:`Star24Icon`,svgTemplate:J`
         <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -517,7 +544,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                 fill=${Y[`vira-icon-fill-color`].value}
             />
         </svg>
-    `}),bF=EP({name:`StatusFailure24Icon`,svgTemplate:J`
+    `}),xF=EP({name:`StatusFailure24Icon`,svgTemplate:J`
         <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -542,7 +569,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                 style="stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:2"
             />
         </svg>
-    `}),xF=EP({name:`StatusInProgress24Icon`,svgTemplate:J`
+    `}),SF=EP({name:`StatusInProgress24Icon`,svgTemplate:J`
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <circle
                 cx="12"
@@ -580,7 +607,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                 stroke-width="calc(${Y[`vira-icon-stroke-width`].value} - 1px)"
             />
         </svg>
-    `}),SF=EP({name:`StatusSuccess24Icon`,svgTemplate:J`
+    `}),CF=EP({name:`StatusSuccess24Icon`,svgTemplate:J`
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <circle
                 cx="12"
@@ -598,7 +625,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                 stroke-width=${Y[`vira-icon-stroke-width`].value}
             />
         </svg>
-    `}),CF={value:q`transparent`};function wF(e){let t=GP[e][`behind-bg`],n=GP[e].foreground,r=GP[e][`on-self`];return{[ZP.Standard]:{idle:{backgroundColor:t[Q.NonBodyText].background,textColor:t[Q.NonBodyText].foreground,borderColor:t[Q.BodyText].background},hover:{backgroundColor:t[Q.Header].background,textColor:t[Q.Header].foreground,borderColor:t[Q.BodyText].background},active:{backgroundColor:t[Q.BodyText].background,textColor:t[Q.BodyText].foreground,borderColor:t[Q.BodyText].background}},[ZP.Subtle]:{idle:{backgroundColor:CF,textColor:n[Q.NonBodyText].foreground,borderColor:CF},hover:{backgroundColor:r[Q.BodyText].background,textColor:r[Q.BodyText].foreground,borderColor:r[Q.BodyText].foreground},active:{backgroundColor:r[Q.NonBodyText].background,textColor:r[Q.NonBodyText].foreground,borderColor:r[Q.NonBodyText].foreground}}}}var TF={[ZP.Standard]:{idle:{backgroundColor:Z.colors[kP].foreground,textColor:Z.colors[kP].background,borderColor:Z.colors[kP].foreground},hover:{backgroundColor:Z.colors[`vira-grey-behind-bg-non-body`].background,textColor:Z.colors[`vira-grey-behind-bg-non-body`].foreground,borderColor:Z.colors[kP].foreground},active:{backgroundColor:Z.colors[`vira-grey-behind-bg-body`].background,textColor:Z.colors[`vira-grey-behind-bg-body`].foreground,borderColor:Z.colors[kP].foreground}},[ZP.Subtle]:{idle:{backgroundColor:CF,textColor:Z.colors[kP].foreground,borderColor:CF},hover:{backgroundColor:Z.colors[`vira-grey-on-self-body`].background,textColor:Z.colors[`vira-grey-on-self-body`].foreground,borderColor:Z.colors[`vira-grey-on-self-body`].foreground},active:{backgroundColor:Z.colors[`vira-grey-on-self-non-body`].background,textColor:Z.colors[`vira-grey-on-self-non-body`].foreground,borderColor:Z.colors[`vira-grey-on-self-non-body`].foreground}}},EF={[ZP.Standard]:{idle:{backgroundColor:Z.colors[kP].background,textColor:Z.colors[kP].foreground,borderColor:FP[`vira-form-border-color`]},hover:{backgroundColor:Z.colors[`vira-grey-behind-fg-small-body`].background,textColor:Z.colors[`vira-grey-behind-fg-small-body`].foreground,borderColor:FP[`vira-form-border-color`]},active:{backgroundColor:Z.colors[`vira-grey-behind-fg-body`].background,textColor:Z.colors[`vira-grey-behind-fg-body`].foreground,borderColor:FP[`vira-form-border-color`]}},[ZP.Subtle]:wF(UP.grey)[ZP.Subtle]},DF=iF()({tagName:`vira-button`,hostClasses:{"vira-button-with-menu-caret":({inputs:e})=>!!e.showMenuCaret,"vira-button-size-large":({inputs:e})=>e.buttonSize===YP.Large,"vira-button-size-medium":({inputs:e})=>!e.buttonSize||e.buttonSize===YP.Medium,"vira-button-size-small":({inputs:e})=>e.buttonSize===YP.Small,"vira-button-emphasis-standard":({inputs:e})=>!e.buttonEmphasis||e.buttonEmphasis===ZP.Standard,"vira-button-emphasis-subtle":({inputs:e})=>e.buttonEmphasis===ZP.Subtle,...cl(y(qP),e=>{let t=qP[e];return{key:`vira-button-color-${t}`,value:({inputs:n})=>n.color===e||n.color===t}},{useRequired:!0}),"vira-button-color-plain":({inputs:e})=>!e.color||e.color===KP.Plain,"vira-button-color-neutral":({inputs:e})=>e.color===KP.Neutral,...cl(JP,e=>({key:`vira-button-color-${e}`,value:({inputs:t})=>t.color===e}),{useRequired:!0}),"vira-button-disabled":({inputs:e})=>!!e.isDisabled,"vira-button-icon-only":({inputs:e})=>!e.text&&!!e.icon},cssVars:{"vira-button-text-color":`transparent`,"vira-button-background-color":`transparent`,"vira-button-border-color":`transparent`,"vira-button-hover-text-color":`transparent`,"vira-button-hover-background-color":`transparent`,"vira-button-hover-border-color":`transparent`,"vira-button-active-text-color":`transparent`,"vira-button-active-background-color":`transparent`,"vira-button-active-border-color":`transparent`,"vira-button-disabled-text-color":Z.colors[`vira-grey-behind-bg-decoration`].foreground.value,"vira-button-disabled-background-color":Z.colors[`vira-grey-behind-bg-decoration`].background.value,"vira-button-disabled-border-color":Z.colors[`vira-grey-behind-bg-decoration`].background.value,"vira-button-border-width":`1px`,"vira-button-border-radius":FP[`vira-form-radius`].value},styles:({hostClasses:e,cssVars:t})=>{function n(e,n,r){return q`
+    `});function wF(e,t){return{...e,size:t}}var TF={value:q`transparent`};function EF(e){let t=GP[e][`behind-bg`],n=GP[e].foreground,r=GP[e][`on-self`];return{[ZP.Standard]:{idle:{backgroundColor:t[Q.NonBodyText].background,textColor:t[Q.NonBodyText].foreground,borderColor:t[Q.BodyText].background},hover:{backgroundColor:t[Q.Header].background,textColor:t[Q.Header].foreground,borderColor:t[Q.BodyText].background},active:{backgroundColor:t[Q.BodyText].background,textColor:t[Q.BodyText].foreground,borderColor:t[Q.BodyText].background}},[ZP.Subtle]:{idle:{backgroundColor:TF,textColor:n[Q.NonBodyText].foreground,borderColor:TF},hover:{backgroundColor:r[Q.BodyText].background,textColor:r[Q.BodyText].foreground,borderColor:r[Q.BodyText].foreground},active:{backgroundColor:r[Q.NonBodyText].background,textColor:r[Q.NonBodyText].foreground,borderColor:r[Q.NonBodyText].foreground}}}}var DF={[ZP.Standard]:{idle:{backgroundColor:Z.colors[kP].foreground,textColor:Z.colors[kP].background,borderColor:Z.colors[kP].foreground},hover:{backgroundColor:Z.colors[`vira-grey-behind-bg-non-body`].background,textColor:Z.colors[`vira-grey-behind-bg-non-body`].foreground,borderColor:Z.colors[kP].foreground},active:{backgroundColor:Z.colors[`vira-grey-behind-bg-body`].background,textColor:Z.colors[`vira-grey-behind-bg-body`].foreground,borderColor:Z.colors[kP].foreground}},[ZP.Subtle]:{idle:{backgroundColor:TF,textColor:Z.colors[kP].foreground,borderColor:TF},hover:{backgroundColor:Z.colors[`vira-grey-on-self-body`].background,textColor:Z.colors[`vira-grey-on-self-body`].foreground,borderColor:Z.colors[`vira-grey-on-self-body`].foreground},active:{backgroundColor:Z.colors[`vira-grey-on-self-non-body`].background,textColor:Z.colors[`vira-grey-on-self-non-body`].foreground,borderColor:Z.colors[`vira-grey-on-self-non-body`].foreground}}},OF={[ZP.Standard]:{idle:{backgroundColor:Z.colors[kP].background,textColor:Z.colors[kP].foreground,borderColor:FP[`vira-form-border-color`]},hover:{backgroundColor:Z.colors[`vira-grey-behind-fg-small-body`].background,textColor:Z.colors[`vira-grey-behind-fg-small-body`].foreground,borderColor:FP[`vira-form-border-color`]},active:{backgroundColor:Z.colors[`vira-grey-behind-fg-body`].background,textColor:Z.colors[`vira-grey-behind-fg-body`].foreground,borderColor:FP[`vira-form-border-color`]}},[ZP.Subtle]:EF(UP.grey)[ZP.Subtle]},kF=iF()({tagName:`vira-button`,hostClasses:{"vira-button-with-menu-caret":({inputs:e})=>!!e.showMenuCaret,"vira-button-size-large":({inputs:e})=>e.buttonSize===YP.Large,"vira-button-size-medium":({inputs:e})=>!e.buttonSize||e.buttonSize===YP.Medium,"vira-button-size-small":({inputs:e})=>e.buttonSize===YP.Small,"vira-button-emphasis-standard":({inputs:e})=>!e.buttonEmphasis||e.buttonEmphasis===ZP.Standard,"vira-button-emphasis-subtle":({inputs:e})=>e.buttonEmphasis===ZP.Subtle,...cl(y(qP),e=>{let t=qP[e];return{key:`vira-button-color-${t}`,value:({inputs:n})=>n.color===e||n.color===t}},{useRequired:!0}),"vira-button-color-plain":({inputs:e})=>!e.color||e.color===KP.Plain,"vira-button-color-neutral":({inputs:e})=>e.color===KP.Neutral,...cl(JP,e=>({key:`vira-button-color-${e}`,value:({inputs:t})=>t.color===e}),{useRequired:!0}),"vira-button-disabled":({inputs:e})=>!!e.isDisabled,"vira-button-icon-only":({inputs:e})=>!e.text&&!!e.icon},cssVars:{"vira-button-text-color":`transparent`,"vira-button-background-color":`transparent`,"vira-button-border-color":`transparent`,"vira-button-hover-text-color":`transparent`,"vira-button-hover-background-color":`transparent`,"vira-button-hover-border-color":`transparent`,"vira-button-active-text-color":`transparent`,"vira-button-active-background-color":`transparent`,"vira-button-active-border-color":`transparent`,"vira-button-disabled-text-color":Z.colors[`vira-grey-behind-bg-decoration`].foreground.value,"vira-button-disabled-background-color":Z.colors[`vira-grey-behind-bg-decoration`].background.value,"vira-button-disabled-border-color":Z.colors[`vira-grey-behind-bg-decoration`].background.value,"vira-button-border-width":`1px`,"vira-button-border-radius":FP[`vira-form-radius`].value},styles:({hostClasses:e,cssVars:t})=>{function n(e,n,r){return q`
                 ${e}${n} {
                     ${t[`vira-button-background-color`].name}: ${r.idle.backgroundColor.value};
                     ${t[`vira-button-text-color`].name}: ${r.idle.textColor.value};
@@ -612,7 +639,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                     ${t[`vira-button-active-text-color`].name}: ${r.active.textColor.value};
                     ${t[`vira-button-active-border-color`].name}: ${r.active.borderColor.value};
                 }
-            `}function r(){return TA(QP.flatMap(t=>{let r=e[`vira-button-emphasis-${t}`].selector,i=y(qP).map(i=>{let a=qP[i],o=wF(a)[t],s=e[`vira-button-color-${a}`].selector;return n(s,r,o)}),a=n(e[`vira-button-color-plain`].selector,r,TF[t]),o=n(e[`vira-button-color-neutral`].selector,r,EF[t]),s=JP.map(i=>{let a=wF(i)[t],o=e[`vira-button-color-${i}`].selector;return n(o,r,a)});return[...i,a,o,...s]}).join(`
+            `}function r(){return TA(QP.flatMap(t=>{let r=e[`vira-button-emphasis-${t}`].selector,i=y(qP).map(i=>{let a=qP[i],o=EF(a)[t],s=e[`vira-button-color-${a}`].selector;return n(s,r,o)}),a=n(e[`vira-button-color-plain`].selector,r,DF[t]),o=n(e[`vira-button-color-neutral`].selector,r,OF[t]),s=JP.map(i=>{let a=EF(i)[t],o=e[`vira-button-color-${i}`].selector;return n(o,r,a)});return[...i,a,o,...s]}).join(`
 `))}function i(){return TA(XP.map(t=>q`
                     ${e[`vira-button-size-${t}`].selector} {
                         font-size: ${FP[`vira-form-${t}-text-size`].value};
@@ -743,10 +770,10 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
             <button ?disabled=${e.isDisabled}>
                 ${t}${n}${r}
             </button>
-        `}});function OF(e){return q`
+        `}});function AF(e){return q`
         color: ${e.foreground.value};
         background-color: ${e.background.value};
-    `}function kF({input:e,matcher:t}){return!e||!t?!0:e.length>1?e.split(``).every(e=>kF({input:e,matcher:t})):t instanceof RegExp?!!e.match(t):t.includes(e)}function AF({value:e,allowed:t,blocked:n}){let r=String(e),i=t?kF({input:r,matcher:t}):!0,a=n?kF({input:r,matcher:n}):!1;return i&&!a}function jF(e){let t=String(e.value);if(!e.value)return{filtered:t,blocked:``};let{filtered:n,blocked:r}=t.split(``).reduce((t,n)=>(AF({...e,value:n})?t.filtered.push(n):t.blocked.push(n),t),{filtered:[],blocked:[]});return{filtered:n.join(``),blocked:r.join(``)}}function MF({inputs:e,previousValue:t,event:n,elementConstructor:r,inputBlockedCallback:i,newValueCallback:a}){let o=aF(n,r||HTMLInputElement),s=M.hasKey(n,`data`)&&el.isString(n.data)||``;if(s){let{blocked:t}=jF({value:s,allowed:e.allowedInputs,blocked:e.blockedInputs});t.length&&i(t)}let c=jF({value:o.value,allowed:e.allowedInputs,blocked:e.blockedInputs}).filtered;o.value!==c&&(o.value=c),t!==c&&a(c)}var NF;(function(e){e.Default=`text`,e.Password=`password`,e.Email=`email`,e.Number=`number`})(NF||={});var PF=iF()({tagName:`vira-input`,cssVars:{"vira-input-padding-horizontal":`10px`,"vira-input-padding-vertical":`6px`},styles:({hostClasses:e,cssVars:t})=>q`
+    `}function jF({input:e,matcher:t}){return!e||!t?!0:e.length>1?e.split(``).every(e=>jF({input:e,matcher:t})):t instanceof RegExp?!!e.match(t):t.includes(e)}function MF({value:e,allowed:t,blocked:n}){let r=String(e),i=t?jF({input:r,matcher:t}):!0,a=n?jF({input:r,matcher:n}):!1;return i&&!a}function NF(e){let t=String(e.value);if(!e.value)return{filtered:t,blocked:``};let{filtered:n,blocked:r}=t.split(``).reduce((t,n)=>(MF({...e,value:n})?t.filtered.push(n):t.blocked.push(n),t),{filtered:[],blocked:[]});return{filtered:n.join(``),blocked:r.join(``)}}function PF({inputs:e,previousValue:t,event:n,elementConstructor:r,inputBlockedCallback:i,newValueCallback:a}){let o=aF(n,r||HTMLInputElement),s=M.hasKey(n,`data`)&&el.isString(n.data)||``;if(s){let{blocked:t}=NF({value:s,allowed:e.allowedInputs,blocked:e.blockedInputs});t.length&&i(t)}let c=NF({value:o.value,allowed:e.allowedInputs,blocked:e.blockedInputs}).filtered;o.value!==c&&(o.value=c),t!==c&&a(c)}var FF;(function(e){e.Default=`text`,e.Password=`password`,e.Email=`email`,e.Number=`number`})(FF||={});var IF=iF()({tagName:`vira-input`,cssVars:{"vira-input-padding-horizontal":`10px`,"vira-input-padding-vertical":`6px`},styles:({hostClasses:e,cssVars:t})=>q`
             :host {
                 position: relative;
                 display: inline-flex;
@@ -957,13 +984,13 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                     display: none;
                 }
             }
-        `,events:{valueChange:hM(),inputBlocked:hM()},state(){return{forcedInputWidth:0,showPassword:!1,randomId:fl(32)}},hostClasses:{"vira-input-disabled":({inputs:e})=>!!e.disabled,"vira-input-fit-text":({inputs:e})=>!!e.fitText,"vira-input-clear-button-shown":({inputs:e})=>!!e.showClearButton,"vira-input-error":({inputs:e})=>!!e.hasError},render:({inputs:e,dispatch:t,state:n,updateState:r,events:i,host:a})=>{let{filtered:o}=jF({value:e.value,allowed:e.allowedInputs,blocked:e.blockedInputs}),s=e.icon?J`
+        `,events:{valueChange:hM(),inputBlocked:hM()},state(){return{forcedInputWidth:0,showPassword:!1,randomId:fl(32)}},hostClasses:{"vira-input-disabled":({inputs:e})=>!!e.disabled,"vira-input-fit-text":({inputs:e})=>!!e.fitText,"vira-input-clear-button-shown":({inputs:e})=>!!e.showClearButton,"vira-input-error":({inputs:e})=>!!e.hasError},render:({inputs:e,dispatch:t,state:n,updateState:r,events:i,host:a})=>{let{filtered:o}=NF({value:e.value,allowed:e.allowedInputs,blocked:e.blockedInputs}),s=e.icon?J`
                   <${$.assign({icon:e.icon})}
                       class="left-side-icon"
                   ></${$}>
               `:pj,c=e.fitText?q`
                   width: ${n.forcedInputWidth}px;
-              `:pj,l=IM(`mousedown`,e=>{let t=aF(e,HTMLElement,{useOriginalTarget:!0}),n=qc.instanceOf(a.shadowRoot.querySelector(`input`),HTMLInputElement);t!==n&&(e.preventDefault(),n.focus())}),u=e.disableBrowserHelps||e.type===NF.Password,d=J`
+              `:pj,l=IM(`mousedown`,e=>{let t=aF(e,HTMLElement,{useOriginalTarget:!0}),n=qc.instanceOf(a.shadowRoot.querySelector(`input`),HTMLInputElement);t!==n&&(e.preventDefault(),n.focus())}),u=e.disableBrowserHelps||e.type===FF.Password,d=J`
             <span class="input-wrapper" ${e.label?pj:l}>
                 ${s}
                 ${HM(!!e.fitText,J`
@@ -979,7 +1006,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                     id=${Vj(e.label?n.randomId:void 0)}
                     aria-label=${Vj(e.label||void 0)}
                     autofocus=${!1}
-                    type=${FF(e.type,n.showPassword)}
+                    type=${LF(e.type,n.showPassword)}
                     style=${c}
                     autocomplete=${Vj(u?`off`:void 0)}
                     autocorrect=${Vj(u?`off`:void 0)}
@@ -987,7 +1014,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                     spellcheck=${Vj(u?`false`:void 0)}
                     ?disabled=${e.disabled}
                     .value=${o}
-                    ${IM(`input`,n=>{MF({inputs:e,previousValue:o,event:n,inputBlockedCallback(e){t(new i.inputBlocked(e))},newValueCallback(e){t(new i.valueChange(e))}})})}
+                    ${IM(`input`,n=>{PF({inputs:e,previousValue:o,event:n,inputBlockedCallback(e){t(new i.inputBlocked(e))},newValueCallback(e){t(new i.valueChange(e))}})})}
                     placeholder=${Vj(e.placeholder||void 0)}
                     ${FM(e.attributePassthrough)}
                 />
@@ -1002,14 +1029,14 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                             <${$.assign({icon:cF})}></${$}>
                         </button>
                     `)}
-                ${HM(e.type===NF.Password,J`
+                ${HM(e.type===FF.Password,J`
                         <button
                             class="show-password-button"
                             title="show password"
                             ${IM(`mousedown`,e=>{e.stopImmediatePropagation(),e.preventDefault()})}
                             ${IM(`click`,()=>{r({showPassword:!n.showPassword})})}
                         >
-                            <${$.assign({icon:n.showPassword?fF:dF})}></${$}>
+                            <${$.assign({icon:n.showPassword?pF:fF})}></${$}>
                         </button>
                     `)}
                 ${HM(!!e.suffix,J`
@@ -1030,7 +1057,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                     <span class="input-label">${e.label}</span>
                     ${d}
                 </label>
-            `:d}});function FF(e,t){return e===NF.Password&&t?NF.Default:e||NF.Default}var IF=iF()({tagName:`vira-image`,state(){return{loadedUrls:{},erroredUrls:{}}},hostClasses:{"vira-image-height-constrained":({inputs:e})=>e.dominantDimension===`height`},slotNames:[`loading`,`error`],events:{imageLoad:hM(),imageError:hM()},styles:({hostClasses:e})=>q`
+            `:d}});function LF(e,t){return e===FF.Password&&t?FF.Default:e||FF.Default}var RF=iF()({tagName:`vira-image`,state(){return{loadedUrls:{},erroredUrls:{}}},hostClasses:{"vira-image-height-constrained":({inputs:e})=>e.dominantDimension===`height`},slotNames:[`loading`,`error`],events:{imageLoad:hM(),imageError:hM()},styles:({hostClasses:e})=>q`
         :host {
             display: inline-flex;
             overflow: hidden;
@@ -1078,13 +1105,13 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
         }
     `,render({inputs:e,state:t,updateState:n,dispatch:r,events:i,slotNames:a}){let o=e.imageUrl,s=t.erroredUrls[o]?J`
                   <slot class="status-wrapper" name=${a.error}>
-                      <${$.assign({icon:bF})}
+                      <${$.assign({icon:xF})}
                           class="error"
                       ></${$}>
                   </slot>
               `:t.loadedUrls[o]?void 0:J`
                     <slot class="status-wrapper" name=${a.loading}>
-                        <${$.assign({icon:mF})}></${$}>
+                        <${$.assign({icon:hF})}></${$}>
                     </slot>
                 `;return J`
             ${HM(!!s,s)}
@@ -1094,7 +1121,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                 ${IM(`error`,async a=>{e._debugLoadDelay&&await No(e._debugLoadDelay),n({erroredUrls:{...t.erroredUrls,[o]:!0}}),r(new i.imageError(a.error))})}
                 src=${o}
             />
-        `}}),LF=iF()({tagName:`vira-link`,state(){return{cleanupListeners:void 0}},hostClasses:{"vira-link-link-styles":({inputs:e})=>!e.disableLinkStyles},styles:({hostClasses:e})=>q`
+        `}}),zF=iF()({tagName:`vira-link`,state(){return{cleanupListeners:void 0}},hostClasses:{"vira-link-link-styles":({inputs:e})=>!e.disableLinkStyles},styles:({hostClasses:e})=>q`
         :host {
             display: inline;
             text-decoration: underline;
@@ -1141,7 +1168,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                 >
                     <slot></slot>
                 </a>
-            `}}),RF=new Date().getFullYear(),zF=W({viewer:{login:``},rateLimit:{cost:-1,limit:-1,nodeCount:-1,remaining:-1,resetAt:``,used:-1},search:{pageInfo:{endCursor:``,hasNextPage:!1},issueCount:-1,nodes:[{number:-1,id:``,title:``,url:``,createdAt:``,additions:-1,deletions:-1,changedFiles:-1}]}});async function BF(e){let t=1;return(await Promise.all(e.GitHub.map(async e=>_N(e,n=>(Ll.faint(`Loading ${e.authTokenName} annual review page ${t}...`),t++,{query:`
+            `}}),BF=new Date().getFullYear(),VF=W({viewer:{login:``},rateLimit:{cost:-1,limit:-1,nodeCount:-1,remaining:-1,resetAt:``,used:-1},search:{pageInfo:{endCursor:``,hasNextPage:!1},issueCount:-1,nodes:[{number:-1,id:``,title:``,url:``,createdAt:``,additions:-1,deletions:-1,changedFiles:-1}]}});async function HF(e){let t=1;return(await Promise.all(e.GitHub.map(async e=>_N(e,n=>(Ll.faint(`Loading ${e.authTokenName} annual review page ${t}...`),t++,{query:`
                             query ($cursor: String, $search: String!) {
                                 viewer {
                                     login
@@ -1174,7 +1201,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                                     }
                                 }
                             }
-                        `,variables:{cursor:n,search:`is:pr assignee:@me is:merged created:>${RF}-01-01 sort:created-desc`}}),zF,({search:e})=>e.pageInfo)))).reduce((e,t)=>(e.push(...t.flatMap(e=>e.search.nodes)),e),[]).map(e=>(e.createdAt=mk(e.createdAt),e))}var VF=DM()({tagName:`vir-header`,styles:q`
+                        `,variables:{cursor:n,search:`is:pr assignee:@me is:merged created:>${BF}-01-01 sort:created-desc`}}),VF,({search:e})=>e.pageInfo)))).reduce((e,t)=>(e.push(...t.flatMap(e=>e.search.nodes)),e),[]).map(e=>(e.createdAt=mk(e.createdAt),e))}var UF=DM()({tagName:`vir-header`,styles:q`
         header {
             display: flex;
             justify-content: space-between;
@@ -1201,14 +1228,14 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                 <div>
                     <slot></slot>
                 </div>
-                <${LF.assign({route:{router:e.router,route:{paths:[_P.Settings]}}})}>
+                <${zF.assign({route:{router:e.router,route:{paths:[_P.Settings]}}})}>
                     <div class="settings-link">
-                        <${$.assign({icon:hF})}></${$}>
+                        <${$.assign({icon:gF})}></${$}>
                         Settings
                     </div>
-                </${LF}>
+                </${zF}>
             </header>
-        `}}),HF={error:`red`,inProgress:`dodgerblue`,codeOwner:`dodgerblue`,primary:`orange`,success:`#00ad14`},UF=DM()({tagName:`vir-annual-review-pull-request`,styles:q`
+        `}}),WF={error:`red`,inProgress:`dodgerblue`,codeOwner:`dodgerblue`,primary:`orange`,success:`#00ad14`},GF=DM()({tagName:`vir-annual-review-pull-request`,styles:q`
         :host {
             border-radius: 8px;
             border: 1px solid lightgrey;
@@ -1219,10 +1246,10 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
         }
 
         .delete {
-            color: ${TA(HF.error)};
+            color: ${TA(WF.error)};
         }
         .add {
-            color: ${TA(HF.success)};
+            color: ${TA(WF.success)};
         }
 
         .stat,
@@ -1241,9 +1268,9 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
     `,render({inputs:e}){return J`
             <div class="date">${kk(e.pullRequest.createdAt,`MMMM d`)}</div>
             <div class="title">
-                <${LF.assign({link:{newTab:!0,url:e.pullRequest.url}})}>
+                <${zF.assign({link:{newTab:!0,url:e.pullRequest.url}})}>
                     ${e.pullRequest.title}
-                </${LF}>
+                </${zF}>
             </div>
             <div class="stats">
                 <span
@@ -1262,11 +1289,11 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                     class="stat"
                     title="${e.pullRequest.changedFiles} file${e.pullRequest.changedFiles===1?``:`s`} changed"
                 >
-                    <${$.assign({icon:uF})}></${$}>
+                    <${$.assign({icon:dF})}></${$}>
                     ${e.pullRequest.changedFiles}
                 </span>
             </div>
-        `}}),WF=DM()({tagName:`vir-annual-review`,styles:q`
+        `}}),KF=DM()({tagName:`vir-annual-review`,styles:q`
         :host {
             display: flex;
             flex-direction: column;
@@ -1285,23 +1312,23 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
             flex-direction: column;
             gap: 8px;
         }
-    `,state(){return{annualReview:AM({updateCallback({authTokens:e}){return BF(e)}})}},render({inputs:e,state:t}){e.currentAppSettings.isResolved()&&t.annualReview.update({authTokens:e.currentAppSettings.value.authTokens});let n=VM(t.annualReview,J`
+    `,state(){return{annualReview:AM({updateCallback({authTokens:e}){return HF(e)}})}},render({inputs:e,state:t}){e.currentAppSettings.isResolved()&&t.annualReview.update({authTokens:e.currentAppSettings.value.authTokens});let n=VM(t.annualReview,J`
                 <div class="loading">
-                    <${$.assign({icon:mF})}></${$}>
+                    <${$.assign({icon:hF})}></${$}>
                     Loading annual review...
                 </div>
             `,e=>J`
                     <section class="pull-request-list">${e.map(e=>J`
-                        <${UF.assign({pullRequest:e})}></${UF}>
+                        <${GF.assign({pullRequest:e})}></${GF}>
                     `)}</section>
                 `,e=>J`
                     <${TP}>${x(e)}</${TP}>
                 `);return J`
-            <${VF.assign({router:e.router})}></${VF}>
+            <${UF.assign({router:e.router})}></${UF}>
             ${n}
-        `}}),GF=function(e){return e.SetupWorker=`setup-worker`,e.UpdateStarted=`update-started`,e.StartAutoUpdates=`start-auto-updates`,e.DataUpdated=`data-updated`,e.UpdatesStopped=`updates-stopped`,e}({}),KF=wE.createClient(Hl(NN,()=>W([$k])),{storeName:`review-vir-data-cache`});async function qF(){let e=await KF;return Hl(NN,t=>[...e.value[t]||[]])}async function JF(e){return[...await(await KF).load[e]()||[]]}var YF=class extends tu()(`git-error`){},XF=class extends nu(`git-update-start`){},ZF=class extends tu()(`git-updates-paused`){},QF=class extends tu()(`git-data-updated`){},$F=class extends iu{updateInterval;data;adapterWorkers;updatesInProgress={};constructor(e,t){super(),this.updateInterval=t,qF().then(e=>{this.data||(this.data=e,this.dispatch(new QF({detail:{data:this.data}})))}).catch(e=>{Ll.error(`Failed to load cached data: ${x(e)}`)}),this.adapterWorkers=Hl(MN,t=>{let n=new Worker(new URL(`/review-vir/assets/git-adapter-worker-CXjmowdQ.js`,``+import.meta.url),{type:`module`});return n.postMessage(JSON.stringify({type:GF.SetupWorker,serviceName:t,secretEncryptionKey:e})),n.addEventListener(`message`,async e=>{let n=JSON.parse(e.data);if(n.type===GF.UpdatesStopped)this.dispatch(new ZF({detail:{reason:n.reason,message:n.message,serviceName:t,resetAt:n.resetAt}}));else if(n.type===GF.DataUpdated)if(this.updatesInProgress[t]=!1,n.error)this.dispatch(new YF({detail:{message:n.error}}));else{let e=await JF(t);this.data||=Hl(MN,()=>[]),this.data[t]=e,this.dispatch(new QF({detail:{data:this.data}}))}else n.type===GF.UpdateStarted&&(this.updatesInProgress[t]=!0,this.dispatch(new XF))}),n})}startAutoUpdates(){Object.values(this.adapterWorkers).forEach(e=>{e.postMessage(JSON.stringify({type:GF.StartAutoUpdates,updateInterval:this.updateInterval}))})}restartService(e){this.adapterWorkers[e].postMessage(JSON.stringify({type:GF.StartAutoUpdates,updateInterval:this.updateInterval}))}};function eI(e){return tA(Object.values(e).flat().flatMap(e=>e.pullRequests))}var tI=DM()({tagName:`vir-paused-banner`,styles:q`
+        `}}),qF=function(e){return e.SetupWorker=`setup-worker`,e.UpdateStarted=`update-started`,e.StartAutoUpdates=`start-auto-updates`,e.DataUpdated=`data-updated`,e.UpdatesStopped=`updates-stopped`,e}({}),JF=wE.createClient(Hl(NN,()=>W([$k])),{storeName:`review-vir-data-cache`});async function YF(){let e=await JF;return Hl(NN,t=>[...e.value[t]||[]])}async function XF(e){return[...await(await JF).load[e]()||[]]}var ZF=class extends tu()(`git-error`){},QF=class extends nu(`git-update-start`){},$F=class extends tu()(`git-updates-paused`){},eI=class extends tu()(`git-data-updated`){},tI=class extends iu{updateInterval;data;adapterWorkers;updatesInProgress={};constructor(e,t){super(),this.updateInterval=t,YF().then(e=>{this.data||(this.data=e,this.dispatch(new eI({detail:{data:this.data}})))}).catch(e=>{Ll.error(`Failed to load cached data: ${x(e)}`)}),this.adapterWorkers=Hl(MN,t=>{let n=new Worker(new URL(`/review-vir/assets/git-adapter-worker-CXjmowdQ.js`,``+import.meta.url),{type:`module`});return n.postMessage(JSON.stringify({type:qF.SetupWorker,serviceName:t,secretEncryptionKey:e})),n.addEventListener(`message`,async e=>{let n=JSON.parse(e.data);if(n.type===qF.UpdatesStopped)this.dispatch(new $F({detail:{reason:n.reason,message:n.message,serviceName:t,resetAt:n.resetAt}}));else if(n.type===qF.DataUpdated)if(this.updatesInProgress[t]=!1,n.error)this.dispatch(new ZF({detail:{message:n.error}}));else{let e=await XF(t);this.data||=Hl(MN,()=>[]),this.data[t]=e,this.dispatch(new eI({detail:{data:this.data}}))}else n.type===qF.UpdateStarted&&(this.updatesInProgress[t]=!0,this.dispatch(new QF))}),n})}startAutoUpdates(){Object.values(this.adapterWorkers).forEach(e=>{e.postMessage(JSON.stringify({type:qF.StartAutoUpdates,updateInterval:this.updateInterval}))})}restartService(e){this.adapterWorkers[e].postMessage(JSON.stringify({type:qF.StartAutoUpdates,updateInterval:this.updateInterval}))}};function nI(e){return tA(Object.values(e).flat().flatMap(e=>e.pullRequests))}var rI=DM()({tagName:`vir-paused-banner`,styles:q`
         :host {
-            ${OF(Z.colors[`vira-red-on-self-body`])};
+            ${AF(Z.colors[`vira-red-on-self-body`])};
             display: flex;
             flex-direction: column;
             gap: 4px;
@@ -1320,17 +1347,17 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
             <div class="header">Auto-updates paused for ${e.serviceName}</div>
             <div>${e.message}${a}</div>
             <div>
-                <${DF.assign({text:`Resume now`,isDisabled:!i,color:KP.Positive})}
+                <${kF.assign({text:`Resume now`,isDisabled:!i,color:KP.Positive})}
                     ${IM(`click`,()=>{n(new r.resume)})}
-                ></${DF}>
+                ></${kF}>
             </div>
-        `}}),nI=DM()({tagName:`vir-org-reviewers`,styles:q`
+        `}}),iI=DM()({tagName:`vir-org-reviewers`,styles:q`
         :host {
             display: flex;
             flex-direction: column;
         }
 
-        ${IF} {
+        ${RF} {
             max-height: ${24}px;
             max-width: ${24}px;
             min-height: ${24}px;
@@ -1349,10 +1376,10 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                 <span
                     title="${e.user.username} is primary or code owner of ${e.count} open pull requests."
                 >
-                    <${IF.assign({imageUrl:e.user.avatarUrl})}></${IF}>
+                    <${RF.assign({imageUrl:e.user.avatarUrl})}></${RF}>
                     ${e.count}
                 </span>
-            `:pj)}}),rI=DM()({tagName:`vir-org-selector`,styles:q`
+            `:pj)}}),aI=DM()({tagName:`vir-org-selector`,styles:q`
         :host {
             display: flex;
             flex-direction: column;
@@ -1405,22 +1432,22 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
             min-height: ${24}px;
             min-width: ${24}px;
         }
-    `,render({inputs:e,dispatch:t}){let n=iI(e.pullRequestsByOrg);return Object.entries(n).sort((e,t)=>e[0].localeCompare(t[0])).map(([n,{logoUrl:r,pullRequestCount:i}])=>J`
+    `,render({inputs:e,dispatch:t}){let n=oI(e.pullRequestsByOrg);return Object.entries(n).sort((e,t)=>e[0].localeCompare(t[0])).map(([n,{logoUrl:r,pullRequestCount:i}])=>J`
                         <button
                             class="org-selector ${Bj({selected:e.selectedOrgName===n})}"
                             ${IM(`click`,()=>{t(new wP({paths:[_P.CodeReview,n]}))})}
                         >
                             <div class="title">
-                                <${IF.assign({imageUrl:r})}
+                                <${RF.assign({imageUrl:r})}
                                     class="org-logo"
-                                ></${IF}>
+                                ></${RF}>
                                 ${n}
                             </div>
                             <div class="pull-request-count">
                                 ${i} pull request${i>1?`s`:``}
                             </div>
                         </button>
-                    `)}});function iI(e){return Tl(e,(e,{owner:t,totalCount:n})=>{if(n)return{key:e,value:{pullRequestCount:n,logoUrl:t.avatarUrl}}})}var aI=DM()({tagName:`vir-user`,hostClasses:{"vir-user-faded":({inputs:e})=>e.fadedAvatar},styles:({hostClasses:e})=>q`
+                    `)}});function oI(e){return Tl(e,(e,{owner:t,totalCount:n})=>{if(n)return{key:e,value:{pullRequestCount:n,logoUrl:t.avatarUrl}}})}var sI=DM()({tagName:`vir-user`,hostClasses:{"vir-user-faded":({inputs:e})=>e.fadedAvatar},styles:({hostClasses:e})=>q`
         :host {
             ${Y[`vira-icon-fill-color`].name}: white;
         }
@@ -1430,11 +1457,11 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
             align-items: center;
         }
 
-        ${e[`vir-user-faded`].selector} ${IF} {
+        ${e[`vir-user-faded`].selector} ${RF} {
             opacity: 0.75;
         }
 
-        ${IF} {
+        ${RF} {
             max-height: ${24}px;
             max-width: ${24}px;
             min-height: ${24}px;
@@ -1444,11 +1471,11 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
         }
 
         ${$} {
-            color: ${TA(HF.error)};
+            color: ${TA(WF.error)};
         }
 
         ${$}.success {
-            color: ${TA(HF.success)};
+            color: ${TA(WF.success)};
         }
 
         .avatar-border {
@@ -1476,26 +1503,26 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
         }
 
         .is-primary .avatar-border {
-            border-color: ${TA(HF.primary)};
+            border-color: ${TA(WF.primary)};
         }
         .is-code-owner .avatar-border {
-            border-color: ${TA(HF.codeOwner)};
+            border-color: ${TA(WF.codeOwner)};
         }
 
         .placeholder {
             visibility: hidden;
         }
-    `,render({inputs:e}){let t=`user`in e.user?e.user:void 0,n=`user`in e.user?e.user.user:e.user,r=t==null||t.reviewStatus===Yk.Pending?void 0:t.reviewStatus===Yk.Accepted?SF:bF,i=!!e.show.statusSpace&&!r,a=t==null||t.reviewStatus===Yk.Pending?void 0:t.reviewStatus===Yk.Accepted?`${n.username} has accepted this pull request.`:`${n.username} has requested changes on this pull request.`,o=r||i?J`
-                      <${$.assign({icon:i?bF:r,fitContainer:!0})}
+    `,render({inputs:e}){let t=`user`in e.user?e.user:void 0,n=`user`in e.user?e.user.user:e.user,r=t==null||t.reviewStatus===Yk.Pending?void 0:t.reviewStatus===Yk.Accepted?CF:xF,i=!!e.show.statusSpace&&!r,a=t==null||t.reviewStatus===Yk.Pending?void 0:t.reviewStatus===Yk.Accepted?`${n.username} has accepted this pull request.`:`${n.username} has requested changes on this pull request.`,o=r||i?J`
+                      <${$.assign({icon:i?xF:r,fitContainer:!0})}
                           class="status-icon ${Bj({success:t?.reviewStatus===Yk.Accepted,placeholder:i})}"
                           title=${Vj(a)}
                       ></${$}>
                   `:pj,s=J`
             <div class="avatar-and-review-wrapper">
                 <div class="avatar">
-                    <${IF.assign({imageUrl:n.avatarUrl})}
+                    <${RF.assign({imageUrl:n.avatarUrl})}
                         title=${n.username}
-                    ></${IF}>
+                    ></${RF}>
                 </div>
                 <div class="avatar-border"></div>
                 ${o}
@@ -1508,28 +1535,28 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                 ${e.show.avatar?s:pj}
                 ${e.show.username?c:pj}
             </a>
-        `}}),oI=DM()({tagName:`vir-users`,hostClasses:{"vir-users-overlap-icons":({inputs:e})=>e.overlap},styles:({hostClasses:e})=>q`
+        `}}),cI=DM()({tagName:`vir-users`,hostClasses:{"vir-users-overlap-icons":({inputs:e})=>e.overlap},styles:({hostClasses:e})=>q`
         :host {
             display: flex;
             align-items: center;
             align-items: flex-start;
         }
 
-        ${aI} {
+        ${sI} {
             font-size: 20px;
         }
 
-        ${e[`vir-users-overlap-icons`].selector} ${aI} + ${aI} {
+        ${e[`vir-users-overlap-icons`].selector} ${sI} + ${sI} {
             margin-left: -10px;
         }
     `,render({inputs:e}){return J`
             ${e.users.toSorted((e,t)=>{let n=`user`in e?e.user:e,r=`user`in t?t.user:t;return n.username.localeCompare(r.username)}).map((t,n)=>J`
-                <${aI.assign({user:t,show:{avatar:!0,username:!1,statusSpace:e.holdStatusSpace},fadedAvatar:e.fadedAvatar})}
+                <${sI.assign({user:t,show:{avatar:!0,username:!1,statusSpace:e.holdStatusSpace},fadedAvatar:e.fadedAvatar})}
                     style="z-index: ${n}"
-                ></${aI}>
+                ></${sI}>
             `)}
-        `}}),sI=cl(Fe(Xk),e=>({key:`vir-pull-request-status-${e}`,value:({inputs:t})=>t.pullRequest.status.displayStatus===e})),cI={[Xk.Draft]:{icon:gF,borderColor:void 0,iconColor:void 0,description:`This pull request is a draft.`},[Xk.ReadyToMerge]:{icon:SF,borderColor:HF.success,iconColor:void 0,description:`This pull request is ready to merge!`},[Xk.Waiting]:{icon:xF,borderColor:void 0,iconColor:HF.inProgress,description:`This pull request is waiting for reviews or builds to finish.`},[Xk.PrimaryReviewer]:{icon:yF,borderColor:`orange`,iconColor:void 0,description:`You are a primary reviewer of this pull request!`},[Xk.CodeOwner]:{icon:vF,borderColor:`dodgerblue`,iconColor:void 0,description:`You are a code owner reviewer of this pull request!`},[Xk.MergeConflicts]:{icon:bF,borderColor:void 0,iconColor:HF.error,description:`This pull request has merge conflicts.`},[Xk.BuildFailureInProgress]:{icon:void 0,borderColor:void 0,iconColor:void 0,description:void 0},[Xk.BuildFailureFinished]:{icon:void 0,borderColor:void 0,iconColor:void 0,description:void 0},[Xk.UnresolvedComments]:{icon:sF,borderColor:void 0,iconColor:HF.error,description:`This pull request has unresolved comments.`}},lI=il(cI).map(([e,t])=>{let n=t.iconColor||t.borderColor,r=[t.borderColor?`--vir-pull-request-border-color: ${t.borderColor};`:``,n?`--vir-pull-request-icon-color: ${n};`:``].join(``);return r?`${`:host(.vir-pull-request-status-${e})`} {${r}}`:``}).join(`
-`),uI=DM()({tagName:`vir-pull-request`,hostClasses:{...sI,"vir-pull-request-reviewed":({inputs:e})=>!e.pullRequest.currentUser.isAssignee&&e.pullRequest.currentUser.hasReviewed},cssVars:{"vir-pull-request-border-color":`#cbcbcb`,"vir-pull-request-icon-color":`#cbcbcb`},styles:({hostClasses:e,cssVars:t})=>q`
+        `}}),lI=cl(Fe(Xk),e=>({key:`vir-pull-request-status-${e}`,value:({inputs:t})=>t.pullRequest.status.displayStatus===e})),uI={[Xk.Draft]:{icon:_F,borderColor:void 0,iconColor:void 0,description:`This pull request is a draft.`},[Xk.ReadyToMerge]:{icon:CF,borderColor:WF.success,iconColor:void 0,description:`This pull request is ready to merge!`},[Xk.Waiting]:{icon:SF,borderColor:void 0,iconColor:WF.inProgress,description:`This pull request is waiting for reviews or builds to finish.`},[Xk.PrimaryReviewer]:{icon:bF,borderColor:`orange`,iconColor:void 0,description:`You are a primary reviewer of this pull request!`},[Xk.CodeOwner]:{icon:yF,borderColor:`dodgerblue`,iconColor:void 0,description:`You are a code owner reviewer of this pull request!`},[Xk.MergeConflicts]:{icon:xF,borderColor:void 0,iconColor:WF.error,description:`This pull request has merge conflicts.`},[Xk.BuildFailureInProgress]:{icon:void 0,borderColor:void 0,iconColor:void 0,description:void 0},[Xk.BuildFailureFinished]:{icon:void 0,borderColor:void 0,iconColor:void 0,description:void 0},[Xk.UnresolvedComments]:{icon:sF,borderColor:void 0,iconColor:WF.error,description:`This pull request has unresolved comments.`}},dI=il(uI).map(([e,t])=>{let n=t.iconColor||t.borderColor,r=[t.borderColor?`--vir-pull-request-border-color: ${t.borderColor};`:``,n?`--vir-pull-request-icon-color: ${n};`:``].join(``);return r?`${`:host(.vir-pull-request-status-${e})`} {${r}}`:``}).join(`
+`),fI=DM()({tagName:`vir-pull-request`,hostClasses:{...lI,"vir-pull-request-reviewed":({inputs:e})=>!e.pullRequest.currentUser.isAssignee&&e.pullRequest.currentUser.hasReviewed},cssVars:{"vir-pull-request-border-color":`#cbcbcb`,"vir-pull-request-icon-color":`#cbcbcb`},styles:({hostClasses:e,cssVars:t})=>q`
         :host {
             display: flex;
             width: 100%;
@@ -1567,10 +1594,10 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                 .vir-pull-request-status-${TA(Xk.BuildFailureInProgress)}
             )
             .status-failures {
-            border-color: ${TA(HF.inProgress)};
+            border-color: ${TA(WF.inProgress)};
         }
 
-        ${TA(lI)}
+        ${TA(dI)}
 
         ${e[`vir-pull-request-reviewed`].selector}, :host(
                 .vir-pull-request-status-${TA(Xk.Draft)}
@@ -1626,7 +1653,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                         flex-shrink: 0;
                         color: red;
                         border-radius: 50%;
-                        border: 1px solid ${TA(HF.error)};
+                        border: 1px solid ${TA(WF.error)};
                     }
 
                     & .assignees {
@@ -1668,7 +1695,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                 }
             }
         }
-    `,render({inputs:e}){let t=cI[e.pullRequest.status.displayStatus].icon,n=e.pullRequest.status.checksStatus?.failCount||0,r=cI[e.pullRequest.status.displayStatus].description,i=`${n} build failure${n===1?``:`s`} and builds are ${e.pullRequest.status.displayStatus===Xk.BuildFailureFinished?`finished`:`still in progress`}.`,a=t?J`
+    `,render({inputs:e}){let t=uI[e.pullRequest.status.displayStatus].icon,n=e.pullRequest.status.checksStatus?.failCount||0,r=uI[e.pullRequest.status.displayStatus].description,i=`${n} build failure${n===1?``:`s`} and builds are ${e.pullRequest.status.displayStatus===Xk.BuildFailureFinished?`finished`:`still in progress`}.`,a=t?J`
                   <${$.assign({icon:t})}
                       class="status-icon"
                       title=${Vj(r)}
@@ -1686,9 +1713,9 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                     <div class="left">
                         <div class="top-row">
                             ${a}
-                            <${oI.assign({overlap:!0,users:Object.values(e.pullRequest.users.assignees),fadedAvatar:!1})}
+                            <${cI.assign({overlap:!0,users:Object.values(e.pullRequest.users.assignees),fadedAvatar:!1})}
                                 class="assignees"
-                            ></${oI}>
+                            ></${cI}>
                             <span class="labels">${s}</span>
                             <span class="stats">
                                 <span
@@ -1704,7 +1731,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                                 <span
                                     title="${e.pullRequest.changes.changedFiles} file${e.pullRequest.changes.changedFiles===1?``:`s`} changed"
                                 >
-                                    <${$.assign({icon:uF})}></${$}>
+                                    <${$.assign({icon:dF})}></${$}>
                                     ${e.pullRequest.changes.changedFiles}
                                 </span>
                                 <span
@@ -1721,26 +1748,26 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                                 </span>
                             </span>
                         </div>
-                        <${LF.assign({link:{newTab:!0,url:e.pullRequest.id.htmlUrl}})}
+                        <${zF.assign({link:{newTab:!0,url:e.pullRequest.id.htmlUrl}})}
                             class="title"
                         >
                             <span class="pull-request-number">
                                 #${e.pullRequest.id.prNumber}:
                             </span>
                             ${e.pullRequest.id.title}
-                        </${LF}>
+                        </${zF}>
                     </div>
                     <div class="right">
-                        <${oI.assign({overlap:!0,users:Object.values(e.pullRequest.users.reviewers),holdStatusSpace:!0,fadedAvatar:!0})}></${oI}>
+                        <${cI.assign({overlap:!0,users:Object.values(e.pullRequest.users.reviewers),holdStatusSpace:!0,fadedAvatar:!0})}></${cI}>
                     </div>
                 </div>
                 <div class="branches">
-                    <${LF.assign({link:{newTab:!0,url:e.pullRequest.branches.targetBranch.repo.htmlUrl}})}
+                    <${zF.assign({link:{newTab:!0,url:e.pullRequest.branches.targetBranch.repo.htmlUrl}})}
                         class="repo-name"
                         title="This pull request is in the ${e.pullRequest.branches.targetBranch.repo.repoName} repository."
                     >
                         ${e.pullRequest.branches.targetBranch.repo.repoName}
-                    </${LF}>
+                    </${zF}>
                     <span class="branch-name">
                         ${e.pullRequest.branches.targetBranch.branchName}
                     </span>
@@ -1750,7 +1777,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                     </span>
                 </div>
             </div>
-        `}}),dI=DM()({tagName:`vir-update-time`,state(){return{now:Sk(),intervalId:void 0}},init({updateState:e,state:t}){t.intervalId||e({intervalId:globalThis.setInterval(()=>{e({now:Sk()})},3e3)})},cleanup({updateState:e,state:t}){globalThis.clearInterval(t.intervalId),e({intervalId:void 0})},render({inputs:e,state:t}){return e.updateTime?Mk({start:t.now,end:e.updateTime},{years:!0,months:!0,days:!0,hours:!0,minutes:!0,seconds:!0},{decimalCount:0,useOnlyLargestUnit:!0,justNowThresholds:{milliseconds:100,minutes:.5,seconds:3}}):pj}}),fI=DM()({tagName:`vir-code-review`,styles:q`
+        `}}),pI=DM()({tagName:`vir-update-time`,state(){return{now:Sk(),intervalId:void 0}},init({updateState:e,state:t}){t.intervalId||e({intervalId:globalThis.setInterval(()=>{e({now:Sk()})},3e3)})},cleanup({updateState:e,state:t}){globalThis.clearInterval(t.intervalId),e({intervalId:void 0})},render({inputs:e,state:t}){return e.updateTime?Mk({start:t.now,end:e.updateTime},{years:!0,months:!0,days:!0,hours:!0,minutes:!0,seconds:!0},{decimalCount:0,useOnlyLargestUnit:!0,justNowThresholds:{milliseconds:100,minutes:.5,seconds:3}}):pj}}),mI=DM()({tagName:`vir-code-review`,styles:q`
         :host {
             container-type: inline-size;
             display: flex;
@@ -1798,37 +1825,43 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
             align-items: center;
             gap: 4px;
         }
-    `,state(){return{gitLoader:void 0,errorMessage:void 0,pausedAdapters:{},data:void 0,isUpdating:!0}},init({state:e,updateState:t,inputs:n}){let r=new $F(n.secretEncryptionKey,{seconds:60});r.listen(YF,e=>{t({errorMessage:e.detail.message})}),r.listen(ZF,n=>{t({pausedAdapters:{...e.pausedAdapters,[n.detail.serviceName]:{message:n.detail.message,reason:n.detail.reason,resetAt:n.detail.resetAt}}})}),r.listen(XF,()=>{t({isUpdating:!0,errorMessage:void 0})}),r.listen(QF,e=>{t({isUpdating:Object.values(r.updatesInProgress).some(e=>e),data:eI(e.detail.data)})}),r.startAutoUpdates(),t({gitLoader:r})},cleanup({state:e,updateState:t}){e.gitLoader?.destroy(),t({gitLoader:void 0})},render({state:e,inputs:t,dispatch:n,updateState:r}){let i=e.data||{},a=Object.values(i).reduce((e,{earliestUpdateDate:t})=>!e||xk({fullDate:e,relativeTo:t})?t:e,void 0),o=Object.keys(i).sort(),s=t.currentRoute.paths[1]||o[0]||``;t.currentRoute.paths[0]===_P.CodeReview&&o.length&&!t.currentRoute.paths[1]&&n(new wP({paths:[_P.CodeReview,s]}));let c=i[s],l=c?.pullRequests||{assigned:[],reviewer:[]},u=eA(l.reviewer),d=J`
+    `,state(){return{gitLoader:void 0,errorMessage:void 0,pausedAdapters:{},data:void 0,isUpdating:!0,showCopiedSuccess:!1,copyResetTimeoutId:void 0}},init({state:e,updateState:t,inputs:n}){let r=new tI(n.secretEncryptionKey,{seconds:60});r.listen(ZF,e=>{t({errorMessage:e.detail.message})}),r.listen($F,n=>{t({pausedAdapters:{...e.pausedAdapters,[n.detail.serviceName]:{message:n.detail.message,reason:n.detail.reason,resetAt:n.detail.resetAt}}})}),r.listen(QF,()=>{t({isUpdating:!0,errorMessage:void 0})}),r.listen(eI,e=>{t({isUpdating:Object.values(r.updatesInProgress).some(e=>e),data:nI(e.detail.data)})}),r.startAutoUpdates(),t({gitLoader:r})},cleanup({state:e,updateState:t}){e.gitLoader?.destroy(),globalThis.clearTimeout(e.copyResetTimeoutId),t({gitLoader:void 0,copyResetTimeoutId:void 0})},render({state:e,inputs:t,dispatch:n,updateState:r}){let i=e.data||{},a=Object.values(i).reduce((e,{earliestUpdateDate:t})=>!e||xk({fullDate:e,relativeTo:t})?t:e,void 0),o=Object.keys(i).sort(),s=t.currentRoute.paths[1]||o[0]||``;t.currentRoute.paths[0]===_P.CodeReview&&o.length&&!t.currentRoute.paths[1]&&n(new wP({paths:[_P.CodeReview,s]}));let c=i[s],l=c?.pullRequests||{assigned:[],reviewer:[]},u=eA(l.reviewer),d=J`
             <div class="org-panel">
-                <${rI.assign({pullRequestsByOrg:i,selectedOrgName:s})}></${rI}>
-                <${nI.assign({reviewers:c?.reviewers||{}})}></${nI}>
+                <${aI.assign({pullRequestsByOrg:i,selectedOrgName:s})}></${aI}>
+                <${iI.assign({reviewers:c?.reviewers||{}})}></${iI}>
             </div>
             <section class="pull-request-list">
                 <h2>Reviewer (${u.notReviewed} / ${u.total})</h2>
-                ${l.reviewer.length?pI(l.reviewer):J`
+                ${l.reviewer.length?hI(l.reviewer):J`
                           <p class="nothing">None.</p>
                       `}
             </section>
             <section class="pull-request-list">
                 <h2>Assignee (${eA(l.assigned).total})</h2>
-                ${l.assigned.length?pI(l.assigned):J`
+                ${l.assigned.length?hI(l.assigned):J`
                           <p class="nothing">None.</p>
                       `}
             </section>
         `,f=Object.entries(e.pausedAdapters).map(([t,n])=>J`
-                <${tI.assign({serviceName:t,message:n.message,resetAt:n.resetAt})}
-                    ${IM(tI.events.resume,()=>{e.gitLoader&&(r({pausedAdapters:Wl(e.pausedAdapters,[t])}),e.gitLoader.restartService(t))})}
-                ></${tI}>
+                <${rI.assign({serviceName:t,message:n.message,resetAt:n.resetAt})}
+                    ${IM(rI.events.resume,()=>{e.gitLoader&&(r({pausedAdapters:Wl(e.pausedAdapters,[t])}),e.gitLoader.restartService(t))})}
+                ></${rI}>
             `);return J`
-            <${VF.assign({router:t.router})}>
+            <${UF.assign({router:t.router})}>
                 <div class="updates">
-                    <${$.assign({icon:mF})}
-                        class=${Bj({hidden:!e.isUpdating})}
+                    <${$.assign({icon:hF})}
+                        class=${Bj({hidden:!e.isUpdating,dim:!0})}
                     ></${$}>
-                    Updated:
-                    <${dI.assign({updateTime:a})}></${dI}>
+                    <span>Updated:</span>
+                    <span>
+                        <${pI.assign({updateTime:a})}></${pI}>
+                    </span>
+                    <${kF.assign({icon:wF(e.showCopiedSuccess?CF:uF,16),buttonEmphasis:ZP.Subtle,buttonSize:YP.Small,color:e.showCopiedSuccess?KP.Positive:KP.Plain})}
+                        title="copy current JSON"
+                        ${IM(`click`,async()=>{await globalThis.navigator.clipboard.writeText(JSON.stringify(i,void 0,4)),globalThis.clearTimeout(e.copyResetTimeoutId),r({showCopiedSuccess:!0,copyResetTimeoutId:globalThis.setTimeout(()=>{r({showCopiedSuccess:!1,copyResetTimeoutId:void 0})},1500)})})}
+                    ></${kF}>
                 </div>
-            </${VF}>
+            </${UF}>
             ${f}
             ${e.errorMessage?J`
                       <${TP}>${e.errorMessage}</${TP}>
@@ -1838,15 +1871,15 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                           <p class="nothing">No pull requests to display.</p>
                       `}
             </main>
-        `}});function pI(e,t=!1){return e.flatMap(({children:e,pullRequest:n})=>{let r=pI(e,!0);return[J`
-                <${uI.assign({pullRequest:n,isChild:t})}></${uI}>
-            `,...r]})}var mI={[AN.serviceName]:{intro:J`
+        `}});function hI(e,t=!1){return e.flatMap(({children:e,pullRequest:n})=>{let r=hI(e,!0);return[J`
+                <${fI.assign({pullRequest:n,isChild:t})}></${fI}>
+            `,...r]})}var gI={[AN.serviceName]:{intro:J`
             You will need a
             <a href="https://github.com/settings/tokens?type=beta">
                 Fine-grained Personal Access Token
             </a>
             with the following permissions:
-        `,permissions:[{label:`Commit statuses`,value:`Read-only`},{label:`Contents`,value:`Read-only`},{label:`Metadata`,value:`Read-only`},{label:`Pull requests`,value:`Read-only`}]}},hI=DM()({tagName:`vir-service-auth-tokens`,styles:q`
+        `,permissions:[{label:`Commit statuses`,value:`Read-only`},{label:`Contents`,value:`Read-only`},{label:`Metadata`,value:`Read-only`},{label:`Pull requests`,value:`Read-only`}]}},_I=DM()({tagName:`vir-service-auth-tokens`,styles:q`
         :host,
         .tokens {
             box-sizing: border-box;
@@ -1897,26 +1930,26 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                 <div class="auth-token-entry">
                     <label>
                         <p>Token name</p>
-                        <${PF.assign({disabled:e.disabled,value:r.authTokenName})}
-                            ${IM(PF.events.valueChange,e=>{a(`authTokenName`,e.detail)})}
-                        ></${PF}>
+                        <${IF.assign({disabled:e.disabled,value:r.authTokenName})}
+                            ${IM(IF.events.valueChange,e=>{a(`authTokenName`,e.detail)})}
+                        ></${IF}>
                     </label>
                     <label>
                         <p>Token Secret</p>
                         <div class="with-delete-wrapper">
-                            <${PF.assign({value:r.authTokenSecret,disabled:e.disabled,type:NF.Password})}
-                                ${IM(PF.events.valueChange,e=>{a(`authTokenSecret`,e.detail)})}
-                            ></${PF}>
+                            <${IF.assign({value:r.authTokenSecret,disabled:e.disabled,type:FF.Password})}
+                                ${IM(IF.events.valueChange,e=>{a(`authTokenSecret`,e.detail)})}
+                            ></${IF}>
                         </div>
                     </label>
                     <div>
                         <p>&nbsp;</p>
-                        <${DF.assign({isDisabled:e.disabled,icon:cF,color:KP.Danger,buttonEmphasis:ZP.Subtle})}
+                        <${kF.assign({isDisabled:e.disabled,icon:cF,color:KP.Danger,buttonEmphasis:ZP.Subtle})}
                             ${IM(`click`,()=>{let r=ol(ml(e.authTokens),[i]);n(new t.authTokensChange(r))})}
-                        ></${DF}>
+                        ></${kF}>
                     </div>
                 </div>
-            `}),i=mI[e.serviceName],a=i.permissions.map(e=>J`
+            `}),i=gI[e.serviceName],a=i.permissions.map(e=>J`
                 <tr>
                     <td>${e.label}</td>
                     <td>${e.value}</td>
@@ -1928,11 +1961,11 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                 <table>${a}</table>
             </section>
             <section class="tokens">${r}</section>
-            <${DF.assign({text:`Add Token`,isDisabled:e.disabled,icon:_F,color:KP.Positive,buttonEmphasis:ZP.Subtle})}
+            <${kF.assign({text:`Add Token`,isDisabled:e.disabled,icon:vF,color:KP.Positive,buttonEmphasis:ZP.Subtle})}
                 class="add-token-button"
                 ${IM(`click`,()=>{n(new t.authTokensChange(e.authTokens.concat({authTokenName:``,authTokenSecret:``})))})}
-            ></${DF}>
-        `}}),gI=DM()({tagName:`vir-auth-token-entry`,styles:q`
+            ></${kF}>
+        `}}),vI=DM()({tagName:`vir-auth-token-entry`,styles:q`
         :host {
             display: flex;
             flex-direction: column;
@@ -1952,11 +1985,11 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
         }
     `,events:{authTokensChange:hM()},render({inputs:e,dispatch:t,events:n}){return J`
             <section class="services">${Fe(NN).map(r=>{let i=e.authTokensWithEdits[r],a=i.length?i:[{authTokenName:``,authTokenSecret:``}];return J`
-                <${hI.assign({authTokens:a,serviceName:r,disabled:e.disabled})}
-                    ${IM(hI.events.authTokensChange,i=>{t(new n.authTokensChange({...e.authTokensWithEdits,[r]:i.detail}))})}
-                ></${hI}>
+                <${_I.assign({authTokens:a,serviceName:r,disabled:e.disabled})}
+                    ${IM(_I.events.authTokensChange,i=>{t(new n.authTokensChange({...e.authTokensWithEdits,[r]:i.detail}))})}
+                ></${_I}>
             `})}</section>
-        `}}),_I=DM()({tagName:`vir-settings`,events:{settingsChange:hM()},styles:q`
+        `}}),yI=DM()({tagName:`vir-settings`,events:{settingsChange:hM()},styles:q`
         :host {
             padding: 8px 24px;
         }
@@ -1969,22 +2002,22 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
     `,state(){return{saveError:void 0,isSaving:!1,editedSettings:void 0}},render({inputs:e,state:t,updateState:n,dispatch:r,events:i}){let a=VM(e.currentAppSettings,J`
                 <span>Loading tokens...</span>
             `,r=>J`
-                <${gI.assign({authTokensWithEdits:t.editedSettings?.authTokens||r.authTokens,disabled:t.isSaving,secretEncryptionKey:e.secretEncryptionKey})}
-                    ${IM(gI.events.authTokensChange,e=>{n({editedSettings:{...t.editedSettings||r,authTokens:e.detail}})})}
-                ></${gI}>
+                <${vI.assign({authTokensWithEdits:t.editedSettings?.authTokens||r.authTokens,disabled:t.isSaving,secretEncryptionKey:e.secretEncryptionKey})}
+                    ${IM(vI.events.authTokensChange,e=>{n({editedSettings:{...t.editedSettings||r,authTokens:e.detail}})})}
+                ></${vI}>
             `),o=t.editedSettings?void 0:`No changes have been made yet.`,s=t.saveError?J`
                   <p><${TP}>${t.saveError}</${TP}></p>
               `:pj;async function c(){if(t.editedSettings){n({isSaving:!0,saveError:void 0});try{try{await Promise.all(il(t.editedSettings.authTokens).map(async([t,n])=>{n.forEach(e=>DE(e,t)),await ek({authTokens:n,serviceName:t,secretEncryptionKey:e.secretEncryptionKey})})),await tk(Fe(NN))}catch(e){let t=x(e);Ll.error(t),n({saveError:t});return}await No({seconds:1}),r(new i.settingsChange(t.editedSettings)),n({editedSettings:void 0}),r(new wP(vP)),await nl(()=>window.location.pathname.startsWith(`/`+vP.paths[0])),globalThis.location.reload()}finally{n({isSaving:!1})}}}return J`
             <h1>Settings</h1>
             <section class="actions">
-                <${DF.assign({text:`Cancel`,isDisabled:t.isSaving,color:KP.Danger,buttonEmphasis:ZP.Subtle})}
+                <${kF.assign({text:`Cancel`,isDisabled:t.isSaving,color:KP.Danger,buttonEmphasis:ZP.Subtle})}
                     ${IM(`click`,()=>{n({editedSettings:void 0}),r(new wP(vP))})}
-                ></${DF}>
-                <${DF.assign({text:`Save`,isDisabled:!t.editedSettings||t.isSaving,color:KP.Positive})}
+                ></${kF}>
+                <${kF.assign({text:`Save`,isDisabled:!t.editedSettings||t.isSaving,color:KP.Positive})}
                     title=${Vj(o)}
                     ${IM(`click`,async()=>{await c()})}
-                ></${DF}>
-                <${$.assign({icon:t.isSaving?mF:void 0})}></${$}>
+                ></${kF}>
+                <${$.assign({icon:t.isSaving?hF:void 0})}></${$}>
             </section>
 
             ${s}
@@ -2027,18 +2060,18 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                     ${x(e.appSettings.value)}
                 </${TP}>
             `;let n=(e.appSettings.isResolved()&&FN(e.appSettings.value.authTokens)===0?{...vP,paths:[_P.Settings]}:e.currentRoute)||vP;(!e.currentRoute||!M.jsonEquals(n,e.currentRoute))&&e.router.setRoute(n);let r=J`
-            <${fI.assign({router:e.router,secretEncryptionKey:t,currentRoute:n})}
+            <${mI.assign({router:e.router,secretEncryptionKey:t,currentRoute:n})}
                 class=${Bj({hidden:n.paths[0]!==_P.CodeReview})}
-            ></${fI}>
+            ></${mI}>
         `,i=n.paths[0]===_P.Settings?J`
-                      <${_I.assign({secretEncryptionKey:t,currentAppSettings:e.appSettings})}></${_I}>
+                      <${yI.assign({secretEncryptionKey:t,currentAppSettings:e.appSettings})}></${yI}>
                   `:n.paths[0]===_P.AnnualReview?J`
-                        <${WF.assign({currentAppSettings:e.appSettings,router:e.router})}></${WF}>
+                        <${KF.assign({currentAppSettings:e.appSettings,router:e.router})}></${KF}>
                     `:pj;return J`
             <div
                 class="root"
                 ${IM(wP,t=>{e.router.setRoute(t.detail)})}
-                ${IM(gI.events.authTokensChange,t=>{e.appSettings.isResolved()&&e.appSettings.setValue({...e.appSettings.value,authTokens:t.detail})})}
+                ${IM(vI.events.authTokensChange,t=>{e.appSettings.isResolved()&&e.appSettings.setValue({...e.appSettings.value,authTokens:t.detail})})}
             >
                 ${r} ${i}
             </div>
