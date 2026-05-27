@@ -1863,9 +1863,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                 </div>
             </${UF}>
             ${f}
-            ${e.errorMessage?J`
-                      <${TP}>${e.errorMessage}</${TP}>
-                  `:``}
+            <${TP}>${e.errorMessage||J`&nbsp;`}</${TP}>
             <main>
                 ${o.length?d:J`
                           <p class="nothing">No pull requests to display.</p>
