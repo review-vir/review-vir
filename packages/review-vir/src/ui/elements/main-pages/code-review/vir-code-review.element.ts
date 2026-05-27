@@ -327,11 +327,7 @@ export const VirCodeReview = defineElement<{
                 </div>
             </${VirHeader}>
             ${pausedBanners}
-            ${state.errorMessage
-                ? html`
-                      <${VirErrorMessage}>${state.errorMessage}</${VirErrorMessage}>
-                  `
-                : ''}
+            <${VirErrorMessage}>${state.errorMessage || html`&nbsp;`}</${VirErrorMessage}>
             <main>
                 ${allOrgNames.length
                     ? mainTemplate
