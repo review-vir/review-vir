@@ -1,6 +1,6 @@
 import {toFormattedString} from 'date-vir';
-import {css, defineElement, html, unsafeCSS} from 'element-vir';
-import {Document24Icon, ViraIcon, ViraLink} from 'vira';
+import {css, defineElement, html} from 'element-vir';
+import {Document24Icon, ViraIcon, ViraLink, viraTheme} from 'vira';
 import type {AnnualReviewPullRequest} from '../../../../data/annual-review.js';
 import {sharedColors} from '../../../styles/color.js';
 
@@ -9,7 +9,8 @@ export const VirAnnualReviewPullRequest = defineElement<{pullRequest: AnnualRevi
     styles: css`
         :host {
             border-radius: 8px;
-            border: 1px solid lightgrey;
+            border: 1px solid
+                ${viraTheme.colors['vira-grey-foreground-decoration'].foreground.value};
             padding: 8px 16px;
             gap: 4px;
             display: flex;
@@ -17,10 +18,10 @@ export const VirAnnualReviewPullRequest = defineElement<{pullRequest: AnnualRevi
         }
 
         .delete {
-            color: ${unsafeCSS(sharedColors.error)};
+            color: ${sharedColors.error};
         }
         .add {
-            color: ${unsafeCSS(sharedColors.success)};
+            color: ${sharedColors.success};
         }
 
         .stat,

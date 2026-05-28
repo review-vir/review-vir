@@ -1,7 +1,7 @@
 import {mapObject} from '@augment-vir/common';
 import type {PullRequestsByOwner} from '@review-vir/adapter-core';
 import {classMap, css, defineElement, html, listen} from 'element-vir';
-import {noNativeFormStyles, ViraImage} from 'vira';
+import {noNativeFormStyles, ViraImage, viraTheme} from 'vira';
 import {ReviewVirMainPath} from '../../../../data/routing.js';
 import {ChangeRouteEvent} from '../../../events/change-route.event.js';
 import {avatarSize} from '../../../styles/size.js';
@@ -38,19 +38,22 @@ export const VirOrgSelector = defineElement<{
             gap: 4px;
             width: 200px;
 
-            border: 1px solid #bbbbbb;
+            border: 1px solid
+                ${viraTheme.colors['vira-grey-foreground-decoration'].foreground.value};
             border-radius: 8px;
             padding: 12px 16px;
-            background-color: white;
+            color: ${viraTheme.colors['theme-default'].foreground.value};
+            background-color: ${viraTheme.colors['theme-default'].background.value};
         }
 
         .org-selector:not(.selected):hover {
-            background-color: #e0f7ff;
+            background-color: ${viraTheme.colors['vira-blue-behind-fg-invisible'].background.value};
         }
 
         .org-selector.selected {
-            background-color: #f2fcff;
-            border-color: #33ccff;
+            background-color: ${viraTheme.colors['vira-blue-behind-fg-lowest-contrast'].background
+                .value};
+            border-color: ${viraTheme.colors['vira-blue-foreground-body'].foreground.value};
             border-width: 2px;
             padding: 11px 15px;
         }

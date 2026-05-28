@@ -1,11 +1,10 @@
 import {extractErrorMessage} from '@augment-vir/common';
 import {asyncProp, type AsyncProp, css, defineElement, html, renderAsync} from 'element-vir';
-import {LoaderAnimated24Icon, ViraIcon} from 'vira';
+import {LoaderAnimated24Icon, ViraError, ViraIcon} from 'vira';
 import {fetchAnnualReview} from '../../../../data/annual-review.js';
 import {type ServiceAuthTokens} from '../../../../data/auth-tokens.js';
 import {type ReviewVirRouter} from '../../../../data/routing.js';
 import {type AppSettings} from '../../../../data/settings.js';
-import {VirErrorMessage} from '../../common-elements/vir-error-message.element.js';
 import {VirHeader} from '../../common-elements/vir-header.element.js';
 import {VirAnnualReviewPullRequest} from './vir-annual-review-pull-request.element.js';
 
@@ -75,7 +74,7 @@ export const VirAnnualReview = defineElement<{
             },
             (error) => {
                 return html`
-                    <${VirErrorMessage}>${extractErrorMessage(error)}</${VirErrorMessage}>
+                    <${ViraError}>${extractErrorMessage(error)}</${ViraError}>
                 `;
             },
         );

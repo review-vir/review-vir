@@ -1,7 +1,10 @@
 import {check} from '@augment-vir/assert';
 import {extractErrorMessage} from '@augment-vir/common';
+import {colorCss} from '@electrovir/color';
 import {getGitAdapterGlobalVars} from '@review-vir/adapter-core';
 import {asyncProp, classMap, css, defineElement, html, listen, nothing} from 'element-vir';
+import {themeDefaultKey} from 'theme-vir';
+import {ViraError, viraTheme} from 'vira';
 import {countAuthTokens, loadAllAdapterAuthTokens} from '../../../data/auth-tokens.js';
 import {
     type ReviewVirFullRoute,
@@ -11,7 +14,6 @@ import {
 } from '../../../data/routing.js';
 import {type AppSettings, loadSettings} from '../../../data/settings.js';
 import {ChangeRouteEvent} from '../../events/change-route.event.js';
-import {VirErrorMessage} from '../common-elements/vir-error-message.element.js';
 import {VirAnnualReview} from '../main-pages/annual-review/vir-annual-review.element.js';
 import {VirCodeReview} from '../main-pages/code-review/vir-code-review.element.js';
 import {VirAuthTokenEntry} from '../main-pages/settings/auth-token-entry/vir-auth-token-entry.element.js';
@@ -21,8 +23,10 @@ export const VirReviewVirApp = defineElement()({
     tagName: 'vir-review-vir-app',
     styles: css`
         :host {
+            ${colorCss(viraTheme.colors[themeDefaultKey])}
             padding: 8px 16px;
             display: block;
+            font-family: sans-serif;
         }
 
         :host,
@@ -33,7 +37,6 @@ export const VirReviewVirApp = defineElement()({
             min-height: 100%;
             width: 100%;
             box-sizing: border-box;
-            font-family: sans-serif;
             gap: 16px;
         }
 
@@ -45,7 +48,7 @@ export const VirReviewVirApp = defineElement()({
             display: none;
         }
 
-        ${VirErrorMessage} {
+        ${ViraError} {
             margin: 16px;
         }
         .hidden {
@@ -90,9 +93,7 @@ export const VirReviewVirApp = defineElement()({
 
         if (state.appSettings.isError()) {
             return html`
-                <${VirErrorMessage}>
-                    ${extractErrorMessage(state.appSettings.value)}
-                </${VirErrorMessage}>
+                <${ViraError}>${extractErrorMessage(state.appSettings.value)}</${ViraError}>
             `;
         }
 

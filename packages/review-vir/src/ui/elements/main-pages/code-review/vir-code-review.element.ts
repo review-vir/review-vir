@@ -16,6 +16,7 @@ import {
     ViraButton,
     ViraColorVariant,
     ViraEmphasis,
+    ViraError,
     ViraIcon,
     ViraSize,
 } from 'vira';
@@ -34,7 +35,6 @@ import {
     type ReviewVirRouter,
 } from '../../../../data/routing.js';
 import {ChangeRouteEvent} from '../../../events/change-route.event.js';
-import {VirErrorMessage} from '../../common-elements/vir-error-message.element.js';
 import {VirHeader} from '../../common-elements/vir-header.element.js';
 import {VirPausedBanner} from '../../common-elements/vir-paused-banner.element.js';
 import {VirOrgReviewers} from './vir-org-reviewers.element.js';
@@ -327,7 +327,12 @@ export const VirCodeReview = defineElement<{
                 </div>
             </${VirHeader}>
             ${pausedBanners}
-            <${VirErrorMessage}>${state.errorMessage || html`&nbsp;`}</${VirErrorMessage}>
+            <${ViraError}>
+                ${state.errorMessage ||
+                html`
+                    &nbsp;
+                `}
+            </${ViraError}>
             <main>
                 ${allOrgNames.length
                     ? mainTemplate

@@ -22,12 +22,19 @@ import {
     renderAsync,
     type AsyncProp,
 } from 'element-vir';
-import {LoaderAnimated24Icon, ViraButton, ViraColorVariant, ViraEmphasis, ViraIcon} from 'vira';
+import {
+    LoaderAnimated24Icon,
+    ViraButton,
+    ViraColorVariant,
+    ViraEmphasis,
+    ViraError,
+    ViraIcon,
+    ViraThemeSwitcher,
+} from 'vira';
 import {GitServiceName} from '../../../../data/all-adapters.js';
 import {defaultReviewVirFullRoute} from '../../../../data/routing.js';
 import type {AppSettings} from '../../../../data/settings.js';
 import {ChangeRouteEvent} from '../../../events/change-route.event.js';
-import {VirErrorMessage} from '../../common-elements/vir-error-message.element.js';
 import {VirAuthTokenEntry} from './auth-token-entry/vir-auth-token-entry.element.js';
 
 export const VirSettings = defineElement<{
@@ -41,6 +48,13 @@ export const VirSettings = defineElement<{
     styles: css`
         :host {
             padding: 8px 24px;
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
         }
 
         .actions {
@@ -85,7 +99,7 @@ export const VirSettings = defineElement<{
 
         const errorElement = state.saveError
             ? html`
-                  <p><${VirErrorMessage}>${state.saveError}</${VirErrorMessage}></p>
+                  <p><${ViraError}>${state.saveError}</${ViraError}></p>
               `
             : nothing;
 
@@ -154,7 +168,10 @@ export const VirSettings = defineElement<{
         }
 
         return html`
-            <h1>Settings</h1>
+            <div class="top-bar">
+                <h1>Settings</h1>
+                <${ViraThemeSwitcher}></${ViraThemeSwitcher}>
+            </div>
             <section class="actions">
                 <${ViraButton.assign({
                     text: 'Cancel',

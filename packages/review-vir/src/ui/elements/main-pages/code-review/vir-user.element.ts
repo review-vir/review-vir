@@ -3,13 +3,15 @@ import {
     type GitUser,
     type PullRequestReview,
 } from '@review-vir/adapter-core';
-import {classMap, css, defineElement, html, ifDefined, nothing, unsafeCSS} from 'element-vir';
+import {classMap, css, defineElement, html, ifDefined, nothing} from 'element-vir';
+import {themeDefaultKey} from 'theme-vir';
 import {
     StatusFailure24Icon,
     StatusSuccess24Icon,
     ViraIcon,
     viraIconCssVars,
     ViraImage,
+    viraTheme,
     type ViraIconSvg,
 } from 'vira';
 import {sharedColors} from '../../../styles/color.js';
@@ -30,7 +32,8 @@ export const VirUser = defineElement<{
     },
     styles: ({hostClasses}) => css`
         :host {
-            ${viraIconCssVars['vira-icon-fill-color'].name}: white;
+            ${viraIconCssVars['vira-icon-fill-color'].name}: ${viraTheme.colors[themeDefaultKey]
+                .background.value};
         }
 
         a {
@@ -52,18 +55,18 @@ export const VirUser = defineElement<{
         }
 
         ${ViraIcon} {
-            color: ${unsafeCSS(sharedColors.error)};
+            color: ${sharedColors.error};
         }
 
         ${ViraIcon}.success {
-            color: ${unsafeCSS(sharedColors.success)};
+            color: ${sharedColors.success};
         }
 
         .avatar-border {
             position: absolute;
             left: -1px;
             border-radius: 50%;
-            border: 3px solid #f0f0f0;
+            border: 3px solid ${viraTheme.colors['vira-grey-foreground-invisible'].foreground.value};
             box-sizing: border-box;
             height: ${avatarSize + 2}px;
             width: ${avatarSize + 2}px;
@@ -73,7 +76,7 @@ export const VirUser = defineElement<{
         .avatar {
             display: flex;
             border-radius: 50%;
-            background-color: white;
+            background-color: ${viraTheme.colors[themeDefaultKey].background.value};
         }
 
         .avatar-and-review-wrapper {
@@ -84,10 +87,10 @@ export const VirUser = defineElement<{
         }
 
         .is-primary .avatar-border {
-            border-color: ${unsafeCSS(sharedColors.primary)};
+            border-color: ${sharedColors.primary};
         }
         .is-code-owner .avatar-border {
-            border-color: ${unsafeCSS(sharedColors.codeOwner)};
+            border-color: ${sharedColors.codeOwner};
         }
 
         .placeholder {

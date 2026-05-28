@@ -1,7 +1,7 @@
 import type {Values} from '@augment-vir/common';
 import type {PullRequestsByOwner} from '@review-vir/adapter-core';
 import {css, defineElement, html, nothing} from 'element-vir';
-import {ViraImage} from 'vira';
+import {ViraImage, viraTheme} from 'vira';
 import {avatarSize} from '../../../styles/size.js';
 
 export const VirOrgReviewers = defineElement<{
@@ -21,7 +21,7 @@ export const VirOrgReviewers = defineElement<{
             min-width: ${avatarSize}px;
             box-sizing: border-box;
             border-radius: 50%;
-            border: 2px solid #eee;
+            border: 2px solid ${viraTheme.colors['vira-grey-foreground-invisible'].foreground.value};
         }
 
         :host > * {

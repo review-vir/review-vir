@@ -1,6 +1,6 @@
 import {arrayToObject, getEnumValues, getObjectTypedEntries} from '@augment-vir/common';
 import {PullRequestDisplayStatus, type PullRequest} from '@review-vir/adapter-core';
-import {css, defineElement, html, ifDefined, nothing, unsafeCSS} from 'element-vir';
+import {css, defineElement, html, ifDefined, nothing, unsafeCSS, type CSSResult} from 'element-vir';
 import {
     Chat24Icon,
     Commit24Icon,
@@ -14,10 +14,14 @@ import {
     ViraIcon,
     viraIconCssVars,
     ViraLink,
+    viraTheme,
     type ViraIconSvg,
 } from 'vira';
 import {sharedColors} from '../../../styles/color.js';
 import {VirUsers} from './vir-users.element.js';
+
+const defaultPullRequestBorderColor =
+    viraTheme.colors['vira-grey-foreground-decoration'].foreground.value;
 
 export const pullRequestMaxWidth = 800;
 
@@ -33,9 +37,9 @@ const statusConfigs: Record<
     PullRequestDisplayStatus,
     {
         /** An `undefined` border color will just be black. */
-        borderColor: string | undefined;
+        borderColor: CSSResult | undefined;
         /** `undefined` icon color inherits its icon color from the borderColor. */
-        iconColor: string | undefined;
+        iconColor: CSSResult | undefined;
         /** An `undefined` icon will be rendered in other ways. */
         icon: ViraIconSvg | undefined;
         /** This will be the hover text for the icon. */
@@ -63,13 +67,13 @@ const statusConfigs: Record<
 
     [PullRequestDisplayStatus.PrimaryReviewer]: {
         icon: Star24Icon,
-        borderColor: 'orange',
+        borderColor: sharedColors.primary,
         iconColor: undefined,
         description: 'You are a primary reviewer of this pull request!',
     },
     [PullRequestDisplayStatus.CodeOwner]: {
         icon: Shield24Icon,
-        borderColor: 'dodgerblue',
+        borderColor: sharedColors.codeOwner,
         iconColor: undefined,
         description: 'You are a code owner reviewer of this pull request!',
     },
@@ -136,8 +140,8 @@ export const VirPullRequest = defineElement<{
             inputs.pullRequest.currentUser.hasReviewed,
     },
     cssVars: {
-        'vir-pull-request-border-color': '#cbcbcb',
-        'vir-pull-request-icon-color': '#cbcbcb',
+        'vir-pull-request-border-color': defaultPullRequestBorderColor,
+        'vir-pull-request-icon-color': defaultPullRequestBorderColor,
     },
     styles: ({hostClasses, cssVars}) => css`
         :host {
@@ -148,7 +152,7 @@ export const VirPullRequest = defineElement<{
 
         .child-marker {
             flex-shrink: 0;
-            color: rgb(204, 204, 204);
+            color: ${defaultPullRequestBorderColor};
             height: 40px;
             width: 40px;
             font-size: 2em;
@@ -179,7 +183,7 @@ export const VirPullRequest = defineElement<{
                     )}
             )
             .status-failures {
-            border-color: ${unsafeCSS(sharedColors.inProgress)};
+            border-color: ${sharedColors.inProgress};
         }
 
         ${unsafeCSS(statusStyles)}
@@ -238,9 +242,9 @@ export const VirPullRequest = defineElement<{
                         height: 24px;
                         width: 24px;
                         flex-shrink: 0;
-                        color: red;
+                        color: ${sharedColors.error};
                         border-radius: 50%;
-                        border: 1px solid ${unsafeCSS(sharedColors.error)};
+                        border: 1px solid ${sharedColors.error};
                     }
 
                     & .assignees {

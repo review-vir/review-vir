@@ -9,7 +9,6 @@ import {
     ViraEmphasis,
     ViraInput,
     ViraInputType,
-    noNativeFormStyles,
     noNativeSpacing,
 } from 'vira';
 import {type GitServiceName} from '../../../../../data/all-adapters.js';
@@ -56,15 +55,6 @@ export const VirServiceAuthTokens = defineElement<{
             display: flex;
             gap: 16px;
             align-items: center;
-        }
-
-        .delete {
-            ${noNativeFormStyles};
-            cursor: pointer;
-        }
-
-        .delete:hover {
-            color: red;
         }
 
         .description td:first-child {

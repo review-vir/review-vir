@@ -1,5 +1,6 @@
 import {GithubAdapter} from '@review-vir/github-adapter';
 import {type HTMLTemplateResult, html} from 'element-vir';
+import {ViraLink} from 'vira';
 import type {GitServiceName} from '../../../../../data/all-adapters.js';
 
 export type Permission = {label: string; value: string};
@@ -14,9 +15,14 @@ export const serviceAuthTokenDescriptions: Record<
     [GithubAdapter.serviceName]: {
         intro: html`
             You will need a
-            <a href="https://github.com/settings/tokens?type=beta">
+            <${ViraLink.assign({
+                link: {
+                    newTab: true,
+                    url: 'https://github.com/settings/tokens?type=beta',
+                },
+            })}>
                 Fine-grained Personal Access Token
-            </a>
+            </${ViraLink}>
             with the following permissions:
         `,
         permissions: [

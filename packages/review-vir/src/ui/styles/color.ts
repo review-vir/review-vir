@@ -1,18 +1,9 @@
-import Color from 'colorjs.io';
-
-type TextColor = 'black' | 'white';
-
-export function calculateTextColor(colorString: string): TextColor {
-    const onWhite = Math.abs(new Color(colorString).contrast('white', 'APCA'));
-    const onBlack = Math.abs(new Color(colorString).contrast('black', 'APCA'));
-    const textColorString = onWhite > onBlack ? 'white' : 'black';
-    return textColorString;
-}
+import {viraTheme} from 'vira';
 
 export const sharedColors = {
-    error: 'red',
-    inProgress: 'dodgerblue',
-    codeOwner: 'dodgerblue',
-    primary: 'orange',
-    success: '#00ad14',
+    error: viraTheme.colors['vira-red-foreground-non-body'].foreground.value,
+    inProgress: viraTheme.colors['vira-blue-foreground-non-body'].foreground.value,
+    codeOwner: viraTheme.colors['vira-blue-foreground-non-body'].foreground.value,
+    primary: viraTheme.colors['vira-yellow-foreground-non-body'].foreground.value,
+    success: viraTheme.colors['vira-green-foreground-non-body'].foreground.value,
 };
