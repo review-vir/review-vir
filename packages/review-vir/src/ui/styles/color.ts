@@ -1,9 +1,9 @@
 import {viraTheme} from 'vira';
 
 export const sharedColors = {
-    error: viraTheme.colors['vira-red-foreground-non-body'].foreground.value,
-    inProgress: viraTheme.colors['vira-blue-foreground-non-body'].foreground.value,
-    codeOwner: viraTheme.colors['vira-blue-foreground-non-body'].foreground.value,
-    primary: viraTheme.colors['vira-yellow-foreground-non-body'].foreground.value,
-    success: viraTheme.colors['vira-green-foreground-non-body'].foreground.value,
+    error: viraTheme.colors['vira-red-foreground-header'].foreground.value,
+    inProgress: viraTheme.colors['vira-blue-foreground-header'].foreground.value,
+    codeOwner: viraTheme.colors['vira-blue-foreground-header'].foreground.value,
+    primary: viraTheme.colors['vira-yellow-foreground-header'].foreground.value,
+    success: viraTheme.colors['vira-green-foreground-header'].foreground.value,
 };

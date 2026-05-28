@@ -42,8 +42,6 @@ export const VirOrgSelector = defineElement<{
                 ${viraTheme.colors['vira-grey-foreground-decoration'].foreground.value};
             border-radius: 8px;
             padding: 12px 16px;
-            color: ${viraTheme.colors['theme-default'].foreground.value};
-            background-color: ${viraTheme.colors['theme-default'].background.value};
         }
 
         .org-selector:not(.selected):hover {
@@ -51,7 +49,7 @@ export const VirOrgSelector = defineElement<{
         }
 
         .org-selector.selected {
-            background-color: ${viraTheme.colors['vira-blue-behind-fg-lowest-contrast'].background
+            background-color: ${viraTheme.colors['vira-blue-behind-fg-highest-contrast'].background
                 .value};
             border-color: ${viraTheme.colors['vira-blue-foreground-body'].foreground.value};
             border-width: 2px;

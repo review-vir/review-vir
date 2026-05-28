@@ -244,7 +244,7 @@ export const VirPullRequest = defineElement<{
                         flex-shrink: 0;
                         color: ${sharedColors.error};
                         border-radius: 50%;
-                        border: 1px solid ${sharedColors.error};
+                        border: 1.5px solid ${sharedColors.error};
                     }
 
                     & .assignees {
