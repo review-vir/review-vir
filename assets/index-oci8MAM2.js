@@ -1345,7 +1345,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                     </${kP}>
                 </div>
             </header>
-        `}}),pI={error:Z.colors[`vira-red-foreground-non-body`].foreground.value,inProgress:Z.colors[`vira-blue-foreground-non-body`].foreground.value,codeOwner:Z.colors[`vira-blue-foreground-non-body`].foreground.value,primary:Z.colors[`vira-yellow-foreground-non-body`].foreground.value,success:Z.colors[`vira-green-foreground-non-body`].foreground.value},mI=MD()({tagName:`vir-annual-review-pull-request`,styles:K`
+        `}}),pI={error:Z.colors[`vira-red-foreground-header`].foreground.value,inProgress:Z.colors[`vira-blue-foreground-header`].foreground.value,codeOwner:Z.colors[`vira-blue-foreground-header`].foreground.value,primary:Z.colors[`vira-yellow-foreground-header`].foreground.value,success:Z.colors[`vira-green-foreground-header`].foreground.value},mI=MD()({tagName:`vir-annual-review-pull-request`,styles:K`
         :host {
             border-radius: 8px;
             border: 1px solid
@@ -1521,8 +1521,6 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                 ${Z.colors[`vira-grey-foreground-decoration`].foreground.value};
             border-radius: 8px;
             padding: 12px 16px;
-            color: ${Z.colors[`theme-default`].foreground.value};
-            background-color: ${Z.colors[`theme-default`].background.value};
         }
 
         .org-selector:not(.selected):hover {
@@ -1530,7 +1528,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
         }
 
         .org-selector.selected {
-            background-color: ${Z.colors[`vira-blue-behind-fg-lowest-contrast`].background.value};
+            background-color: ${Z.colors[`vira-blue-behind-fg-highest-contrast`].background.value};
             border-color: ${Z.colors[`vira-blue-foreground-body`].foreground.value};
             border-width: 2px;
             padding: 11px 15px;
@@ -1766,7 +1764,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                         flex-shrink: 0;
                         color: ${pI.error};
                         border-radius: 50%;
-                        border: 1px solid ${pI.error};
+                        border: 1.5px solid ${pI.error};
                     }
 
                     & .assignees {
