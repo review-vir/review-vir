@@ -1,5 +1,5 @@
 import {css, defineElement, html} from 'element-vir';
-import {Options24Icon, ViraIcon, ViraLink} from 'vira';
+import {Options24Icon, ViraIcon, ViraLink, ViraThemeSwitcher} from 'vira';
 import {ReviewVirMainPath, type ReviewVirRouter} from '../../../data/routing.js';
 
 export const VirHeader = defineElement<{
@@ -14,6 +14,10 @@ export const VirHeader = defineElement<{
             & > * {
                 display: flex;
                 align-items: center;
+            }
+
+            & .right {
+                gap: 12px;
             }
 
             & .updates,
@@ -35,21 +39,24 @@ export const VirHeader = defineElement<{
                 <div>
                     <slot></slot>
                 </div>
-                <${ViraLink.assign({
-                    route: {
-                        router: inputs.router,
+                <div class="right">
+                    <${ViraThemeSwitcher}></${ViraThemeSwitcher}>
+                    <${ViraLink.assign({
                         route: {
-                            paths: [ReviewVirMainPath.Settings],
+                            router: inputs.router,
+                            route: {
+                                paths: [ReviewVirMainPath.Settings],
+                            },
                         },
-                    },
-                })}>
-                    <div class="settings-link">
-                        <${ViraIcon.assign({
-                            icon: Options24Icon,
-                        })}></${ViraIcon}>
-                        Settings
-                    </div>
-                </${ViraLink}>
+                    })}>
+                        <div class="settings-link">
+                            <${ViraIcon.assign({
+                                icon: Options24Icon,
+                            })}></${ViraIcon}>
+                            Settings
+                        </div>
+                    </${ViraLink}>
+                </div>
             </header>
         `;
     },

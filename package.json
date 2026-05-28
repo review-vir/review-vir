@@ -42,7 +42,7 @@
         "spa-router-vir": "^6.6.0",
         "type-fest": "^5.6.0",
         "typed-event-target": "^4.3.0",
-        "vira": "^31.18.2"
+        "vira": "^31.20.0"
     },
     "devDependencies": {
         "@eslint/eslintrc": "^3.3.5",
@@ -75,7 +75,7 @@
         "prettier-plugin-toml": "^2.0.6",
         "typescript": "~5.9.3",
         "typescript-eslint": "^8.59.3",
-        "virmator": "^14.15.0"
+        "virmator": "^14.19.0"
     },
     "engines": {
         "node": ">=22"
