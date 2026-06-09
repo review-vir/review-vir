@@ -45,7 +45,7 @@ export const VirOrgSelector = defineElement<{
         }
 
         .org-selector:not(.selected):hover {
-            background-color: ${viraTheme.colors['vira-blue-behind-fg-invisible'].background.value};
+            background-color: ${viraTheme.colors['vira-blue-behind-fg-body'].background.value};
         }
 
         .org-selector.selected {
