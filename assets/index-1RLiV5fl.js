@@ -1524,7 +1524,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
         }
 
         .org-selector:not(.selected):hover {
-            background-color: ${Z.colors[`vira-blue-behind-fg-invisible`].background.value};
+            background-color: ${Z.colors[`vira-blue-behind-fg-body`].background.value};
         }
 
         .org-selector.selected {
