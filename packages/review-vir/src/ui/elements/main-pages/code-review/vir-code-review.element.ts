@@ -6,7 +6,7 @@ import {
     type GitUpdatesStoppedReason,
     type PullRequestsByOwner,
 } from '@review-vir/adapter-core';
-import {isDateAfter, type FullDate} from 'date-vir';
+import {type FullDate} from 'date-vir';
 import {classMap, css, defineElement, html, listen, type TemplateResult} from 'element-vir';
 import {
     Copy24Icon,
@@ -28,7 +28,7 @@ import {
     GitUpdatesPausedEvent,
     GitUpdateStartEvent,
 } from '../../../../data/git-loader.js';
-import {organizeGitData} from '../../../../data/organize-git-data.js';
+import {getEarliestUpdateTime, organizeGitData} from '../../../../data/organize-git-data.js';
 import {
     ReviewVirMainPath,
     type ReviewVirFullRoute,
@@ -112,6 +112,7 @@ export const VirCodeReview = defineElement<{
             // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
             pausedAdapters: {} as Partial<Record<GitServiceName, PausedAdapter>>,
             data: undefined as undefined | PullRequestsByOwner,
+            updateTime: undefined as undefined | FullDate,
             isUpdating: true,
             showCopiedSuccess: false,
             copyResetTimeoutId: undefined as undefined | ReturnType<typeof globalThis.setTimeout>,
@@ -148,6 +149,7 @@ export const VirCodeReview = defineElement<{
             updateState({
                 isUpdating: Object.values(gitLoader.updatesInProgress).some((value) => value),
                 data: organizeGitData(event.detail.data),
+                updateTime: getEarliestUpdateTime(event.detail.data),
             });
         });
 
@@ -172,23 +174,6 @@ export const VirCodeReview = defineElement<{
                 : undefined) ||
             state.data ||
             {};
-
-        const earliestUpdateDate = Object.values(latestData).reduce(
-            (earliest: undefined | FullDate, {earliestUpdateDate}) => {
-                if (
-                    !earliest ||
-                    isDateAfter({
-                        fullDate: earliest,
-                        relativeTo: earliestUpdateDate,
-                    })
-                ) {
-                    return earliestUpdateDate;
-                } else {
-                    return earliest;
-                }
-            },
-            undefined,
-        );
 
         const allOrgNames = Object.keys(latestData).sort();
 
@@ -293,7 +278,7 @@ export const VirCodeReview = defineElement<{
                     <span>Updated:</span>
                     <span>
                         <${VirUpdateTime.assign({
-                            updateTime: earliestUpdateDate,
+                            updateTime: state.updateTime,
                         })}></${VirUpdateTime}>
                     </span>
                     <${ViraButton.assign({

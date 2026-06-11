@@ -1,5 +1,5 @@
 import {getOrSet, log, mapObjectValues, type Values} from '@augment-vir/common';
-import {type FullDate, getNowInUserTimezone, isDateAfter} from 'date-vir';
+import {type FullDate, isDateAfter} from 'date-vir';
 import {type GitUser} from './git-user.js';
 import {type PullRequest, PullRequestMergeStatus} from './pull-request.js';
 
@@ -40,7 +40,6 @@ export type PullRequestsByOwner = {
         totalCount: number;
         owner: GitUser;
         reviewers: Record<string, {count: number; user: GitUser}>;
-        earliestUpdateDate: FullDate;
         pullRequests: PullRequestsByStatus;
     };
 };
@@ -65,7 +64,6 @@ export function organizePullRequests(
                 assigned: PullRequest[];
             };
             reviewers: Record<string, {count: number; user: GitUser}>;
-            earliestUpdateDate: FullDate;
         };
     } = {};
 
@@ -83,7 +81,6 @@ export function organizePullRequests(
                         assigned: [],
                         reviewer: [],
                     },
-                    earliestUpdateDate: getNowInUserTimezone(),
                     reviewers: {},
                 };
             },
@@ -107,15 +104,6 @@ export function organizePullRequests(
             organizedRawPullRequests.pullRequests.assigned.push(pullRequest);
         } else {
             organizedRawPullRequests.pullRequests.reviewer.push(pullRequest);
-        }
-
-        if (
-            isDateAfter({
-                fullDate: organizedRawPullRequests.earliestUpdateDate,
-                relativeTo: pullRequest.fetchDate,
-            })
-        ) {
-            organizedRawPullRequests.earliestUpdateDate = pullRequest.fetchDate;
         }
 
         Object.values(pullRequest.users.reviewers).forEach((reviewer) => {
