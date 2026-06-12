@@ -49,9 +49,7 @@ export const VirUpdateTime = defineElement<{updateTime: Readonly<FullDate> | und
                 decimalCount: 0,
                 useOnlyLargestUnit: true,
                 justNowThresholds: {
-                    milliseconds: 100,
-                    minutes: 0.5,
-                    seconds: 3,
+                    seconds: 1,
                 },
             },
         );
