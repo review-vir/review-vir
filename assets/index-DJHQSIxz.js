@@ -1888,7 +1888,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                     </span>
                 </div>
             </div>
-        `}}),RI=MD()({tagName:`vir-update-time`,state(){return{now:iT(),intervalId:void 0}},init({updateState:e,state:t}){t.intervalId||e({intervalId:globalThis.setInterval(()=>{e({now:iT()})},3e3)})},cleanup({updateState:e,state:t}){globalThis.clearInterval(t.intervalId),e({intervalId:void 0})},render({inputs:e,state:t}){return e.updateTime?mT({start:t.now,end:e.updateTime},{years:!0,months:!0,days:!0,hours:!0,minutes:!0,seconds:!0},{decimalCount:0,useOnlyLargestUnit:!0,justNowThresholds:{milliseconds:100,minutes:.5,seconds:3}}):gE}}),zI=MD()({tagName:`vir-code-review`,styles:K`
+        `}}),RI=MD()({tagName:`vir-update-time`,state(){return{now:iT(),intervalId:void 0}},init({updateState:e,state:t}){t.intervalId||e({intervalId:globalThis.setInterval(()=>{e({now:iT()})},3e3)})},cleanup({updateState:e,state:t}){globalThis.clearInterval(t.intervalId),e({intervalId:void 0})},render({inputs:e,state:t}){return e.updateTime?mT({start:t.now,end:e.updateTime},{years:!0,months:!0,days:!0,hours:!0,minutes:!0,seconds:!0},{decimalCount:0,useOnlyLargestUnit:!0,justNowThresholds:{seconds:1}}):gE}}),zI=MD()({tagName:`vir-code-review`,styles:K`
         :host {
             container-type: inline-size;
             display: flex;
