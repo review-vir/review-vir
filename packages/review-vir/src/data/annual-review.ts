@@ -1,10 +1,10 @@
 import {log, type ArrayElement, type Overwrite} from '@augment-vir/common';
 import {fetchGithubGraphql} from '@review-vir/github-adapter';
-import {createFullDateInUserTimezone, type FullDate} from 'date-vir';
+import {createFullDateInUserTimezone, getNowInUserTimezone, type FullDate} from 'date-vir';
 import {defineShape} from 'object-shape-tester';
 import {type ServiceAuthTokens} from './auth-tokens.js';
 
-const currentYear = new Date().getFullYear();
+const currentYear = getNowInUserTimezone().year;
 
 const annualReviewDataShape = defineShape({
     viewer: {
@@ -53,9 +53,9 @@ export async function fetchAnnualReview(
 
     const results = await Promise.all(
         authTokens.GitHub.map(async (authToken) => {
-            return fetchGithubGraphql(
+            return fetchGithubGraphql({
                 authToken,
-                (cursor) => {
+                createQuery: (cursor) => {
                     log.faint(
                         `Loading ${authToken.authTokenName} annual review page ${pageCount}...`,
                     );
@@ -103,11 +103,11 @@ export async function fetchAnnualReview(
                         },
                     };
                 },
-                annualReviewDataShape,
-                ({search}) => {
+                responseShape: annualReviewDataShape,
+                getPageInfo: ({search}) => {
                     return search.pageInfo;
                 },
-            );
+            });
         }),
     );
 

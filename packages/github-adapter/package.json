@@ -1,6 +1,6 @@
 {
     "name": "@review-vir/github-adapter",
-    "version": "3.0.0",
+    "version": "3.1.0",
     "description": "The official GitHub adapter for review-vir.",
     "keywords": [
         "github",
@@ -16,7 +16,7 @@
         "type": "git",
         "url": "git+https://github.com/review-vir/review-vir.git"
     },
-    "license": "(MIT or CC0 1.0)",
+    "license": "(MIT OR CC0-1.0)",
     "author": {
         "name": "review-vir",
         "url": "https://github.com/review-vir"
@@ -38,8 +38,8 @@
     "dependencies": {
         "@augment-vir/assert": "^31.70.0",
         "@augment-vir/common": "^31.70.0",
-        "@review-vir/adapter-core": "^3.0.0",
-        "@review-vir/common": "^3.0.0",
+        "@review-vir/adapter-core": "^3.1.0",
+        "@review-vir/common": "^3.1.0",
         "date-vir": "^8.3.2",
         "object-shape-tester": "^6.12.1",
         "type-fest": "^5.6.0"

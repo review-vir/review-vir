@@ -1,6 +1,6 @@
 {
     "name": "@review-vir/common",
-    "version": "3.0.0",
+    "version": "3.1.0",
     "description": "Common functionality that review-vir primary uses but other external packages need as well.",
     "keywords": [
         "review-vir",
@@ -16,7 +16,7 @@
         "type": "git",
         "url": "git+https://github.com/review-vir/review-vir.git"
     },
-    "license": "(MIT or CC0 1.0)",
+    "license": "(MIT OR CC0-1.0)",
     "author": {
         "name": "electrovir",
         "url": "https://github.com/electrovir"

@@ -117,7 +117,6 @@ export const VirCodeReview = defineElement<{
         return {
             gitLoader: undefined as GitDataLoader | undefined,
             errorMessage: undefined as string | undefined,
-            // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
             pausedAdapters: {} as Partial<Record<GitServiceName, PausedAdapter>>,
             data: undefined as undefined | PullRequestsByOwner,
             updateTime: undefined as undefined | FullDate,
@@ -155,7 +154,7 @@ export const VirCodeReview = defineElement<{
         });
         gitLoader.listen(GitDataUpdated, (event) => {
             updateState({
-                isUpdating: Object.values(gitLoader.updatesInProgress).some((value) => value),
+                isUpdating: Object.values(gitLoader.updatesInProgress).includes(true),
                 data: organizeGitData(event.detail.data),
                 updateTime: getEarliestUpdateTime(event.detail.data),
             });

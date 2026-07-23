@@ -23,12 +23,17 @@ import {
     type GithubUserSearchResponse,
 } from './github-query/graphql-query.js';
 
-export function parseGithubPullRequest(
-    authTokenName: string,
-    raw: Readonly<GithubPullRequest>,
-    currentUser: Readonly<GitUser>,
-    serviceName: string,
-): PullRequest {
+export function parseGithubPullRequest({
+    authTokenName,
+    raw,
+    currentUser,
+    serviceName,
+}: Readonly<{
+    authTokenName: string;
+    raw: Readonly<GithubPullRequest>;
+    currentUser: Readonly<GitUser>;
+    serviceName: string;
+}>): PullRequest {
     const dates = {
         closed: raw.closedAt ? createFullDateInUserTimezone(raw.closedAt) : undefined,
         created: createFullDateInUserTimezone(raw.createdAt),

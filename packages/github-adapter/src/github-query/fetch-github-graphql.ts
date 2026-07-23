@@ -28,17 +28,22 @@ function isRateLimitHttpResponse(response: Readonly<Response>) {
     );
 }
 
-export async function fetchGithubGraphql<ResponseShape extends Shape>(
-    authToken: Readonly<AuthToken>,
-    createQuery: (cursor: string | null) => {query: string; variables?: Record<string, Primitive>},
-    responseShape: ResponseShape,
+export async function fetchGithubGraphql<ResponseShape extends Shape>({
+    authToken,
+    createQuery,
+    responseShape,
+    getPageInfo,
+    fetch = globalThis.fetch,
+}: Readonly<{
+    authToken: Readonly<AuthToken>;
+    createQuery: (cursor: string | null) => {query: string; variables?: Record<string, Primitive>};
+    responseShape: ResponseShape;
     getPageInfo?: (data: ResponseShape['runtimeType']) => {
         endCursor: string | null;
         hasNextPage: boolean;
-    },
-    /** This is an input so it can be mocked. */
-    fetch: typeof globalThis.fetch = globalThis.fetch,
-): Promise<ResponseShape['runtimeType'][]> {
+    };
+    fetch?: typeof globalThis.fetch;
+}>): Promise<ResponseShape['runtimeType'][]> {
     try {
         let nextPageCursor: null | string = null;
 

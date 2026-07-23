@@ -13,7 +13,12 @@ export const GithubAdapter = defineGitAdapter({
         const user: Readonly<GitUser> = parseGithubUser(githubData.viewer);
 
         const pullRequests = githubData.search.nodes.map((rawPullRequest) =>
-            parseGithubPullRequest(authToken.authTokenName, rawPullRequest, user, serviceName),
+            parseGithubPullRequest({
+                authTokenName: authToken.authTokenName,
+                raw: rawPullRequest,
+                currentUser: user,
+                serviceName,
+            }),
         );
 
         const finalizedData: FetchGitDataResult = {
