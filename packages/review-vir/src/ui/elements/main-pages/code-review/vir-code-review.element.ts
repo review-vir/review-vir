@@ -7,7 +7,15 @@ import {
     type PullRequestsByOwner,
 } from '@review-vir/adapter-core';
 import {type FullDate} from 'date-vir';
-import {classMap, css, defineElement, html, listen, type TemplateResult} from 'element-vir';
+import {
+    classMap,
+    css,
+    defineElement,
+    html,
+    listen,
+    nothing,
+    type TemplateResult,
+} from 'element-vir';
 import {
     Copy24Icon,
     createSizedIcon,
@@ -18,6 +26,7 @@ import {
     ViraEmphasis,
     ViraError,
     ViraIcon,
+    ViraRelativeTime,
     ViraSize,
 } from 'vira';
 import type {GitServiceName} from '../../../../data/all-adapters.js';
@@ -40,7 +49,6 @@ import {VirPausedBanner} from '../../common-elements/vir-paused-banner.element.j
 import {VirOrgReviewers} from './vir-org-reviewers.element.js';
 import {VirOrgSelector} from './vir-org-selector.element.js';
 import {pullRequestMaxWidth, VirPullRequest} from './vir-pull-request.element.js';
-import {VirUpdateTime} from './vir-update-time.element.js';
 
 type PausedAdapter = {
     message: string;
@@ -277,9 +285,13 @@ export const VirCodeReview = defineElement<{
                     ></${ViraIcon}>
                     <span>Updated:</span>
                     <span>
-                        <${VirUpdateTime.assign({
-                            updateTime: state.updateTime,
-                        })}></${VirUpdateTime}>
+                        ${state.updateTime
+                            ? html`
+                                  <${ViraRelativeTime.assign({
+                                      time: state.updateTime,
+                                  })}></${ViraRelativeTime}>
+                              `
+                            : nothing}
                     </span>
                     <${ViraButton.assign({
                         icon: createSizedIcon(
