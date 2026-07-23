@@ -104,6 +104,7 @@ export const githubPullRequestShape = defineShape({
     baseRef: {
         name: '',
     },
+    body: '',
     bodyText: '',
     mergeable: enumShape(GithubMergeableState),
     headRef: {
@@ -259,6 +260,7 @@ export const githubSearchQuery = /* GraphQL */ `
                 ... on PullRequest {
                     number
                     id
+                    body
                     bodyText
                     isDraft
                     title

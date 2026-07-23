@@ -9,7 +9,7 @@ import {
     type PullRequestChecks,
     type PullRequestReview,
 } from '@review-vir/adapter-core';
-import {parseDescriptionUsers} from '@review-vir/common';
+import {parseDescriptionUsers, parseInsertedCodeOwners} from '@review-vir/common';
 import {createFullDateInUserTimezone, getNowInUserTimezone} from 'date-vir';
 import type {OmitDeep} from 'type-fest';
 import {
@@ -42,10 +42,17 @@ export function parseGithubPullRequest(
         bodyText: raw.bodyText,
         triggerText: 'primary reviewer',
     });
-    const codeOwners = parseDescriptionUsers({
-        bodyText: raw.bodyText,
-        triggerText: 'code owner',
-    });
+    /**
+     * Code owners are inserted by pull-request-vir into the raw markdown body, wrapped in HTML
+     * comment delimiters that GitHub strips out of `bodyText`. Fall back to the rendered body for
+     * any manually-typed code owner mentions that lack those delimiters.
+     */
+    const codeOwners =
+        parseInsertedCodeOwners(raw.body) ??
+        parseDescriptionUsers({
+            bodyText: raw.bodyText,
+            triggerText: 'code owner',
+        });
     const pullRequestUsers: PullRequest['users'] = {
         assignees: groupUsersByUserName(assignees.length ? assignees : authors),
         reviewers: parseReviews(
