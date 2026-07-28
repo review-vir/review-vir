@@ -5,7 +5,11 @@ import {assertValidShape, defineShape} from 'object-shape-tester';
 import {GitServiceName, type AllServiceGitData} from './all-adapters.js';
 
 const cacheClientPromise = LocalDbClient.createClient(
-    mapObjectValues(GitServiceName, () => defineShape([gitDataShape])),
+    mapObjectValues(GitServiceName, () => {
+        return {
+            shape: defineShape([gitDataShape]),
+        };
+    }),
     {
         storeName: 'review-vir-data-cache',
     },

@@ -25,7 +25,9 @@ const nonTokenSettingsShape = defineShape({
 
 const settingsClientPromise = LocalDbClient.createClient(
     {
-        savedSettings: nonTokenSettingsShape,
+        savedSettings: {
+            shape: nonTokenSettingsShape,
+        },
     },
     {
         storeName: 'review-vir-settings',

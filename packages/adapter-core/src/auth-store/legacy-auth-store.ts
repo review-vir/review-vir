@@ -19,9 +19,9 @@ const legacyAuthTokensStore = localForage.createInstance({
 
 /**
  * Peek at the IndexedDB database with the raw API to see whether the legacy object store exists,
- * without triggering a `versionchange` upgrade. If we let `localforage.keys()` make this check, it
- * would auto-create the store on a fresh install and that upgrade would be blocked by
- * `LocalDbClient`'s still-open connection — hanging the whole load.
+ * without triggering a `versionchange` upgrade. Letting `localforage.keys()` make this check would
+ * auto-create the store (and its database) on a fresh install, leaving behind an empty phantom
+ * legacy database for every user who never had pre-3.x data.
  */
 async function legacyAuthTokensStoreExists(): Promise<boolean> {
     return new Promise<boolean>((resolve) => {

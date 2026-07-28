@@ -24,7 +24,9 @@ const encryptedAuthTokensByServiceShape = recordShape({
 
 export const reviewVirAuthTokensClientPromise = LocalDbClient.createClient(
     {
-        encryptedTokens: encryptedAuthTokensByServiceShape,
+        encryptedTokens: {
+            shape: encryptedAuthTokensByServiceShape,
+        },
     },
     {
         storeName: 'review-vir-auth-tokens',
@@ -34,10 +36,7 @@ export const reviewVirAuthTokensClientPromise = LocalDbClient.createClient(
 let legacyMigrationPromise: Promise<void> | undefined;
 
 async function migrateLegacyAuthTokens(secretEncryptionKey: string): Promise<void> {
-    /**
-     * Let `LocalDbClient` finish its own version upgrade before we touch the database. Otherwise
-     * the two upgrade transactions race and at least one ends up blocked indefinitely.
-     */
+    /** Wait for the client so re-encrypted tokens have somewhere to be written. */
     const client = await reviewVirAuthTokensClientPromise;
 
     const legacyTokensByService = await readLegacyAuthTokens();

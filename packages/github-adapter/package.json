@@ -36,25 +36,25 @@
         "test:update": "npm test update"
     },
     "dependencies": {
-        "@augment-vir/assert": "^31.70.0",
-        "@augment-vir/common": "^31.70.0",
+        "@augment-vir/assert": "^32.2.1",
+        "@augment-vir/common": "^32.2.1",
         "@review-vir/adapter-core": "^3.1.0",
         "@review-vir/common": "^3.1.0",
-        "date-vir": "^8.3.2",
-        "object-shape-tester": "^6.12.1",
-        "type-fest": "^5.6.0"
+        "date-vir": "^8.6.2",
+        "object-shape-tester": "^6.14.0",
+        "type-fest": "^5.8.0"
     },
     "devDependencies": {
-        "@augment-vir/test": "^31.70.0",
-        "@augment-vir/web": "^31.70.0",
-        "@web/dev-server-esbuild": "^1.0.5",
-        "@web/test-runner": "^0.20.2",
-        "@web/test-runner-commands": "^0.9.0",
-        "@web/test-runner-playwright": "^0.11.1",
-        "@web/test-runner-visual-regression": "^0.10.0",
+        "@augment-vir/test": "^32.2.1",
+        "@augment-vir/web": "^32.2.1",
+        "@web/dev-server-esbuild": "^2.0.0",
+        "@web/test-runner": "^1.0.0",
+        "@web/test-runner-commands": "^1.0.1",
+        "@web/test-runner-playwright": "^1.0.0",
+        "@web/test-runner-visual-regression": "^1.0.1",
         "istanbul-smart-text-reporter": "^1.1.5",
-        "typescript": "~5.9.3",
-        "vite": "^8.0.12"
+        "typescript": "^6.0.3",
+        "vite": "^8.1.5"
     },
     "engines": {
         "node": ">=22"
