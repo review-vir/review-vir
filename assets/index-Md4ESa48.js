@@ -2021,13 +2021,11 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                     >
                         ${e.pullRequest.branches.targetBranch.repo.repoName}
                     </${iZ}>
-                    <span class="branch-name">
-                        ${e.pullRequest.branches.targetBranch.branchName}
-                    </span>
+                    <!-- prettier-ignore -->
+                    <span class="branch-name">${e.pullRequest.branches.targetBranch.branchName}</span>
                     <span>←</span>
-                    <span class="branch-name">
-                        ${e.pullRequest.branches.headBranch.branchName}
-                    </span>
+                    <!-- prettier-ignore -->
+                    <span class="branch-name">${e.pullRequest.branches.headBranch.branchName}</span>
                 </div>
             </div>
         `}}),P0=SR()({tagName:`vir-code-review`,styles:aR`
