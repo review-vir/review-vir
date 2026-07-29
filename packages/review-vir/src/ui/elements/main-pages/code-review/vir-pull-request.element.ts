@@ -425,13 +425,13 @@ export const VirPullRequest = defineElement<{
                     >
                         ${inputs.pullRequest.branches.targetBranch.repo.repoName}
                     </${ViraLink}>
-                    <span class="branch-name">
-                        ${inputs.pullRequest.branches.targetBranch.branchName}
-                    </span>
+                    <!-- prettier-ignore -->
+                    <span class="branch-name">${inputs.pullRequest.branches.targetBranch
+                        .branchName}</span>
                     <span>←</span>
-                    <span class="branch-name">
-                        ${inputs.pullRequest.branches.headBranch.branchName}
-                    </span>
+                    <!-- prettier-ignore -->
+                    <span class="branch-name">${inputs.pullRequest.branches.headBranch
+                        .branchName}</span>
                 </div>
             </div>
         `;
