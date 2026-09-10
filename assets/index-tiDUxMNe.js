@@ -1254,7 +1254,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                 >
                     <${JH.assign({icon:c1[e],fitContainer:!0})}></${JH}>
                 </button>
-            `)}});function d1({a:e,b:t}){return e+t}var f1=rM({extensions:gM(PM()),locations:gM([{line:0,column:0}]),message:``,path:gM([_M(``,0)]),type:gM(``),code:gM(``)}),p1=function(e){return e.ActionRequired=`ACTION_REQUIRED`,e.Cancelled=`CANCELLED`,e.Completed=`COMPLETED`,e.Failure=`FAILURE`,e.InProgress=`IN_PROGRESS`,e.Neutral=`NEUTRAL`,e.Pending=`PENDING`,e.Queued=`QUEUED`,e.Skipped=`SKIPPED`,e.Stale=`STALE`,e.StartupFailure=`STARTUP_FAILURE`,e.Success=`SUCCESS`,e.TimedOut=`TIMED_OUT`,e.Waiting=`WAITING`,e}({}),m1=function(e){return e.Approved=`APPROVED`,e.Pending=`PENDING`,e.Commented=`COMMENTED`,e.ChangesRequested=`CHANGES_REQUESTED`,e.Dismissed=`DISMISSED`,e}({}),h1=function(e){return e.Mergeable=`MERGEABLE`,e.Conflicting=`CONFLICTING`,e.Unknown=`UNKNOWN`,e}({}),g1=[`ACTION_REQUIRED`,`CANCELLED`,`FAILURE`,`STALE`,`STARTUP_FAILURE`,`TIMED_OUT`],_1=[`COMPLETED`,`NEUTRAL`,`SKIPPED`,`SUCCESS`],v1=[`IN_PROGRESS`,`PENDING`,`QUEUED`,`WAITING`],y1=rM({login:``,avatarUrl:gM(``),teamAvatarUrl:gM(``),url:``}),b1=rM({count:0,state:dM(p1)}),x1=rM({state:dM(m1),author:y1,submittedAt:``}),S1=rM({additions:0,assignees:{nodes:[y1]},author:y1,baseRef:{name:``},body:``,bodyText:``,mergeable:dM(h1),headRef:{name:``},labels:_M(null,{nodes:[{name:``,color:``}]}),baseRepository:{name:``,owner:y1,isArchived:!1,isPrivate:!1,url:``},headRepository:{name:``,owner:y1,isArchived:!1,isPrivate:!1,url:``},changedFiles:0,closedAt:_M(null,``),commits:{nodes:[_M(null,{commit:{statusCheckRollup:_M(null,{contexts:{checkRunCountsByState:[b1]}})}})],totalCount:0},createdAt:``,deletions:0,id:``,isDraft:!1,mergedAt:_M(null,``),mergedBy:_M(null,y1),number:0,reviewThreads:{nodes:[{isResolved:!1}]},latestOpinionatedReviews:{nodes:[x1]},reviewRequests:{nodes:[{requestedReviewer:y1}]},title:``,updatedAt:``,url:``}),C1=rM({rateLimit:{cost:1,limit:5e3,nodeCount:0,remaining:0,resetAt:``,used:0},viewer:y1,search:{issueCount:0,pageInfo:{endCursor:_M(``,null),hasNextPage:!1},nodes:[S1]}}),w1=`
+            `)}});function d1({a:e,b:t}){return e+t}var f1=rM({extensions:gM(PM()),locations:gM([{line:0,column:0}]),message:``,path:gM([_M(``,0)]),type:gM(``),code:gM(``)}),p1=function(e){return e.ActionRequired=`ACTION_REQUIRED`,e.Cancelled=`CANCELLED`,e.Completed=`COMPLETED`,e.Failure=`FAILURE`,e.InProgress=`IN_PROGRESS`,e.Neutral=`NEUTRAL`,e.Pending=`PENDING`,e.Queued=`QUEUED`,e.Skipped=`SKIPPED`,e.Stale=`STALE`,e.StartupFailure=`STARTUP_FAILURE`,e.Success=`SUCCESS`,e.TimedOut=`TIMED_OUT`,e.Waiting=`WAITING`,e}({}),m1=function(e){return e.Approved=`APPROVED`,e.Pending=`PENDING`,e.Commented=`COMMENTED`,e.ChangesRequested=`CHANGES_REQUESTED`,e.Dismissed=`DISMISSED`,e}({}),h1=function(e){return e.Mergeable=`MERGEABLE`,e.Conflicting=`CONFLICTING`,e.Unknown=`UNKNOWN`,e}({}),g1=[`ACTION_REQUIRED`,`FAILURE`,`STALE`,`STARTUP_FAILURE`,`TIMED_OUT`],_1=[`COMPLETED`,`NEUTRAL`,`SKIPPED`,`SUCCESS`],v1=[`IN_PROGRESS`,`PENDING`,`QUEUED`,`WAITING`],y1=rM({login:``,avatarUrl:gM(``),teamAvatarUrl:gM(``),url:``}),b1=rM({count:0,state:dM(p1)}),x1=rM({state:dM(m1),author:y1,submittedAt:``}),S1=rM({additions:0,assignees:{nodes:[y1]},author:y1,baseRef:{name:``},body:``,bodyText:``,mergeable:dM(h1),headRef:{name:``},labels:_M(null,{nodes:[{name:``,color:``}]}),baseRepository:{name:``,owner:y1,isArchived:!1,isPrivate:!1,url:``},headRepository:{name:``,owner:y1,isArchived:!1,isPrivate:!1,url:``},changedFiles:0,closedAt:_M(null,``),commits:{nodes:[_M(null,{commit:{statusCheckRollup:_M(null,{contexts:{checkRunCountsByState:[b1]}})}})],totalCount:0},createdAt:``,deletions:0,id:``,isDraft:!1,mergedAt:_M(null,``),mergedBy:_M(null,y1),number:0,reviewThreads:{nodes:[{isResolved:!1}]},latestOpinionatedReviews:{nodes:[x1]},reviewRequests:{nodes:[{requestedReviewer:y1}]},title:``,updatedAt:``,url:``}),C1=rM({rateLimit:{cost:1,limit:5e3,nodeCount:0,remaining:0,resetAt:``,used:0},viewer:y1,search:{issueCount:0,pageInfo:{endCursor:_M(``,null),hasNextPage:!1},nodes:[S1]}}),w1=`
     query ($afterCursor: String) {
         rateLimit {
             cost
@@ -1411,9 +1411,9 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
             }
         }
     }
-`;function T1(e){let t=e.get(`x-ratelimit-reset`);if(!t)return;let n=Number(t);if(Number.isFinite(n))return XM(n*1e3)}function E1(e){return e.type===`RATE_LIMIT`||e.code===`graphql_rate_limit`}function D1(e){return e.status===429||e.status===403&&e.headers.get(`x-ratelimit-remaining`)===`0`}async function O1({authToken:e,createQuery:t,responseShape:n,getPageInfo:r,fetch:i=globalThis.fetch}){try{let a=null,o=[];do{let s=t(a||null),c=await i(`https://api.github.com/graphql`,{method:`post`,headers:{"Content-Type":`application/json`,Accept:`application/json`,Authorization:`bearer ${e.authTokenSecret}`},body:JSON.stringify(s)});if(!c.ok)throw D1(c)?new jX(`GitHub API rate limit exceeded: ${c.status} ${c.statusText}`,T1(c.headers)):Error(`GitHub API fetch failed: ${c.status}, ${c.statusText}`);let l=await c.json();if(l.errors){l.errors.forEach(e=>{try{CM(e,f1,{allowExtraKeys:!0})}catch(t){throw t instanceof yM&&(iu.error(`GitHub GraphQL error did not match expected shape. Raw error:`),iu.error(e)),t}iu.error(e)});let e=l.errors.find(E1);throw e?new jX(e.message||`GitHub API rate limit exceeded.`,T1(c.headers)):Error(`Failed to fetch GitHub pull requests. See console for details.`)}let u=l.data;try{CM(u,n,{allowExtraKeys:!0})}catch(e){throw e instanceof yM&&(iu.error(`GitHub GraphQL response data did not match expected shape. Raw response:`),iu.error(l)),e}let{endCursor:d,hasNextPage:ee}=r?r(u):{endCursor:null,hasNextPage:!1};a=ee?d:null,o.push(u)}while(a);return o}catch(t){throw iu.error(`Failed to fetch data for token '${e.authTokenName}': ${Ge(t)}`),t}}async function k1(e,t=globalThis.fetch){return A1(await O1({authToken:e,createQuery:e=>({query:w1,variables:{afterCursor:e}}),responseShape:C1,getPageInfo:e=>e.search.pageInfo,fetch:t}))}function A1(e){let t=e[e.length-1];return yl.isDefined(t),{rateLimit:{...t.rateLimit,cost:e.map(e=>e.rateLimit.cost).reduce((e,t)=>d1({a:e,b:t}),0),nodeCount:e.map(e=>e.rateLimit.nodeCount).reduce((e,t)=>d1({a:e,b:t}),0)},viewer:t.viewer,search:{issueCount:t.search.issueCount,pageInfo:t.search.pageInfo,nodes:e.flatMap(e=>e.search.nodes)}}}function j1({triggerText:e,bodyText:t}){let[,n]=Yl(t,RegExp(`${e}s?\\W+((?:@[^@]+)+)(?:\n\n|$|\n#)`,`i`));if(!n)return[];let[,r]=Yl(n,/((?:@[\w-]+[^\w@]*)+)/);return Array.from(r?.matchAll(/@[\w-]+/g)||[]).map(e=>Gl({value:e[0],prefix:`@`}))}var M1=/<!-- code owners start -->([\S\s]*?)<!-- code owners end -->/i,N1=/^\s*-\s/,P1=/@[\w-]+/g;function F1(e){let[,t]=Yl(e,M1);if(t==null)return;let n=t.split(`
-`).filter(e=>!N1.test(e)).join(`
-`);return u(Array.from(n.matchAll(P1)).map(e=>Gl({value:e[0],prefix:`@`})))}function I1({authTokenName:e,raw:t,currentUser:n,serviceName:r}){let i={closed:t.closedAt?XM(t.closedAt):void 0,created:XM(t.createdAt),lastUpdated:XM(t.updatedAt)},a=t.assignees.nodes.map(H1),o=[H1(t.author)],s=j1({bodyText:t.bodyText,triggerText:`primary reviewer`}),c=F1(t.body)??j1({bodyText:t.bodyText,triggerText:`code owner`}),l={assignees:U1(a.length?a:o),reviewers:z1({codeOwners:c,primaryReviewers:s},t)},u=t.mergedAt?IX.Merged:t.closedAt?IX.Rejected:t.isDraft?IX.Draft:IX.Open,d={authTokenName:e,branches:{headBranch:{branchName:t.headRef.name,repo:{isArchived:t.headRepository.isArchived,isPrivate:t.headRepository.isPrivate,htmlUrl:t.headRepository.url,repoName:t.headRepository.name,repoOwner:H1(t.headRepository.owner)}},targetBranch:{branchName:t.baseRef.name,repo:{isArchived:t.baseRepository.isArchived,isPrivate:t.baseRepository.isPrivate,htmlUrl:t.baseRepository.url,repoName:t.baseRepository.name,repoOwner:H1(t.baseRepository.owner)}}},changes:{additions:t.additions,deletions:t.deletions,changedFiles:t.changedFiles},dates:i,id:{htmlUrl:t.url,prId:t.id,prNumber:String(t.number),title:t.title,owner:H1(t.baseRepository.owner),gitServiceName:r},status:{checksStatus:B1(t.commits.nodes[0]?.commit.statusCheckRollup?.contexts.checkRunCountsByState),comments:L1(t.reviewThreads.nodes),commitCount:t.commits.totalCount,mergeStatus:u,mergedBy:t.mergedBy?H1(t.mergedBy):void 0,hasMergeConflicts:t.mergeable===h1.Conflicting,pullRequestLabels:t.labels?t.labels.nodes.map(e=>({...e,color:`#${e.color}`})):[]},users:l,currentUser:{hasReviewed:!R1(u,n,l),isAssignee:n.username in l.assignees,isCodeOwner:c.includes(n.username),isPrimaryReviewer:s.includes(n.username)},raw:t,fetchDate:iN()};return{...d,status:{...d.status,displayStatus:V1(d)}}}function L1(e){return e.reduce((e,t)=>(t.isResolved&&e.resolved++,e.total++,e),{resolved:0,total:0})}function R1(e,t,n){return e===IX.Open&&n.reviewers[t.username]?.reviewStatus===LX.Pending&&!(t.username in n.assignees)}function z1({codeOwners:e,primaryReviewers:t},n){let r=U1(n.reviewRequests.nodes.map(e=>H1(e.requestedReviewer))),i=kl(n.latestOpinionatedReviews.nodes,e=>({key:e.author.login,value:e}));return El(Array.from(new Set([...Object.keys(r),...Object.keys(i)])).map(n=>{let a=r[n]||i[n]?.author;if(!a)throw Error(`Failed to find user '${n}'`);let o=fl.hasKey(r,n)?LX.Pending:i[n]?.state===m1.Approved?LX.Accepted:i[n]?.state===m1.ChangesRequested?LX.Rejected:LX.Pending;return[n,{user:{avatarUrl:a.avatarUrl||``,profileUrl:a.avatarUrl||``,username:n},isPrimaryReviewer:t.includes(n),isCodeOwner:e.includes(n),reviewStatus:o}]}))}function B1(e){if(e)return e.reduce((e,t)=>(fl.hasValue(g1,t.state)?e.failCount+=t.count:fl.hasValue(v1,t.state)?e.inProgressCount+=t.count:fl.hasValue(_1,t.state)&&(e.successCount+=t.count),e.totalCount++,e),{successCount:0,failCount:0,inProgressCount:0,totalCount:0})}function V1(e){return e.status.mergeStatus===IX.Draft?RX.Draft:e.currentUser.isPrimaryReviewer?RX.PrimaryReviewer:e.currentUser.isCodeOwner?RX.CodeOwner:e.status.hasMergeConflicts?RX.MergeConflicts:e.status.checksStatus?.failCount&&e.status.checksStatus.inProgressCount?RX.BuildFailureInProgress:e.status.checksStatus?.failCount?RX.BuildFailureFinished:e.status.comments.resolved<e.status.comments.total?RX.UnresolvedComments:!e.status.checksStatus||e.status.checksStatus.successCount<e.status.checksStatus.totalCount||e.status.checksStatus.inProgressCount||Object.values(e.users.reviewers).some(e=>e.isCodeOwner||e.isPrimaryReviewer?e.reviewStatus!==LX.Accepted:e.reviewStatus===LX.Rejected)?RX.Waiting:RX.ReadyToMerge}function H1(e){return{avatarUrl:e.teamAvatarUrl||e.avatarUrl||``,profileUrl:e.url,username:e.login}}function U1(e){return kl(e,e=>({key:e.username,value:e}))}var W1=`GitHub`,G1=NX({serviceName:W1,async fetchGitData(e){let t=await k1(e),n=H1(t.viewer),r={data:[{pullRequests:t.search.nodes.map(t=>I1({authTokenName:e.authTokenName,raw:t,currentUser:n,serviceName:W1})),time:iN()}],queryCost:t.rateLimit.cost};return console.info(`Fetched GitHub data:`,r),r}}),K1=[G1],q1=kl(K1,e=>({key:e.serviceName,value:e})),J1=kl(K1,e=>({key:e.serviceName,value:e.serviceName}));async function Y1(e){return await kl(K1,async t=>{let n=await SX({secretEncryptionKey:e,serviceName:t.serviceName});return{key:t.serviceName,value:n}})}function X1(e){return pu(e).reduce((e,t)=>t.length+e,0)}var Z1=function(e){return e.Settings=`settings`,e.CodeReview=`code-review`,e.AnnualReview=`annual-review`,e}({}),Q1={hash:void 0,paths:[`code-review`],search:void 0};function $1(){return new n1({basePath:`review-vir`,sanitizeRoute(e){return{paths:e0(e.paths),hash:void 0,search:void 0}}})}function e0(e){let t=e[0];return t===`code-review`?e[1]?[`code-review`,e[1]]:[`code-review`]:fl.isEnumValue(t,Z1)?[t]:Q1.paths}var t0=rM({userSettings:{uiColorMode:fM(`light`)},lastSelectedOrg:gM(`org name`,{alsoUndefined:!0})}),n0=qq.createClient({savedSettings:{shape:t0}},{storeName:`review-vir-settings`});async function r0(){return(await n0).value.savedSettings||t0.default}var i0=lR()(`change-route`),a0=iN().year,o0=rM({viewer:{login:``},rateLimit:{cost:-1,limit:-1,nodeCount:-1,remaining:-1,resetAt:``,used:-1},search:{pageInfo:{endCursor:``,hasNextPage:!1},issueCount:-1,nodes:[{number:-1,id:``,title:``,url:``,createdAt:``,additions:-1,deletions:-1,changedFiles:-1}]}});async function s0(e){let t=1;return(await Promise.all(e.GitHub.map(async e=>O1({authToken:e,createQuery:n=>(iu.faint(`Loading ${e.authTokenName} annual review page ${t}...`),t++,{query:`
+`;function T1(e){let t=e.get(`x-ratelimit-reset`);if(!t)return;let n=Number(t);if(Number.isFinite(n))return XM(n*1e3)}function E1(e){return e.type===`RATE_LIMIT`||e.code===`graphql_rate_limit`}function D1(e){return e.status===429||e.status===403&&e.headers.get(`x-ratelimit-remaining`)===`0`}async function O1({authToken:e,createQuery:t,responseShape:n,getPageInfo:r,fetch:i=globalThis.fetch}){try{let a=null,o=[];do{let s=t(a||null),c=await i(`https://api.github.com/graphql`,{method:`post`,headers:{"Content-Type":`application/json`,Accept:`application/json`,Authorization:`bearer ${e.authTokenSecret}`},body:JSON.stringify(s)});if(!c.ok)throw D1(c)?new jX(`GitHub API rate limit exceeded: ${c.status} ${c.statusText}`,T1(c.headers)):Error(`GitHub API fetch failed: ${c.status}, ${c.statusText}`);let l=await c.json();if(l.errors){l.errors.forEach(e=>{try{CM(e,f1,{allowExtraKeys:!0})}catch(t){throw t instanceof yM&&(iu.error(`GitHub GraphQL error did not match expected shape. Raw error:`),iu.error(e)),t}iu.error(e)});let e=l.errors.find(E1);throw e?new jX(e.message||`GitHub API rate limit exceeded.`,T1(c.headers)):Error(`Failed to fetch GitHub pull requests. See console for details.`)}let u=l.data;try{CM(u,n,{allowExtraKeys:!0})}catch(e){throw e instanceof yM&&(iu.error(`GitHub GraphQL response data did not match expected shape. Raw response:`),iu.error(l)),e}let{endCursor:d,hasNextPage:ee}=r?r(u):{endCursor:null,hasNextPage:!1};a=ee?d:null,o.push(u)}while(a);return o}catch(t){throw iu.error(`Failed to fetch data for token '${e.authTokenName}': ${Ge(t)}`),t}}async function k1(e,t=globalThis.fetch){return A1(await O1({authToken:e,createQuery:e=>({query:w1,variables:{afterCursor:e}}),responseShape:C1,getPageInfo:e=>e.search.pageInfo,fetch:t}))}function A1(e){let t=e[e.length-1];return yl.isDefined(t),{rateLimit:{...t.rateLimit,cost:e.map(e=>e.rateLimit.cost).reduce((e,t)=>d1({a:e,b:t}),0),nodeCount:e.map(e=>e.rateLimit.nodeCount).reduce((e,t)=>d1({a:e,b:t}),0)},viewer:t.viewer,search:{issueCount:t.search.issueCount,pageInfo:t.search.pageInfo,nodes:e.flatMap(e=>e.search.nodes)}}}var j1=Object.freeze({blockEnd:`<!-- code owners end -->`,blockStart:`<!-- code owners start -->`,heading:`## Code Owners`});function M1({triggerText:e,bodyText:t}){let[,n]=Yl(t,RegExp(`${e}s?\\W+((?:@[^@]+)+)(?:\n\n|$|\n#)`,`i`));if(!n)return[];let[,r]=Yl(n,/((?:@[\w-]+[^\w@]*)+)/);return Array.from(r?.matchAll(/@[\w-]+/g)||[]).map(e=>Gl({value:e[0],prefix:`@`}))}var N1=new RegExp(String.raw`${j1.blockStart}([\S\s]*?)${j1.blockEnd}`,`i`),P1=/^\s*-\s/,F1=/@[\w-]+/g;function I1(e){let[,t]=Yl(e,N1);if(t==null)return;let n=t.split(`
+`).filter(e=>!P1.test(e)).join(`
+`);return u(Array.from(n.matchAll(F1)).map(e=>Gl({value:e[0],prefix:`@`})))}function L1({authTokenName:e,raw:t,currentUser:n,serviceName:r}){let i={closed:t.closedAt?XM(t.closedAt):void 0,created:XM(t.createdAt),lastUpdated:XM(t.updatedAt)},a=t.assignees.nodes.map(U1),o=[U1(t.author)],s=M1({bodyText:t.bodyText,triggerText:`primary reviewer`}),c=I1(t.body)??M1({bodyText:t.bodyText,triggerText:`code owner`}),l={assignees:W1(a.length?a:o),reviewers:B1({codeOwners:c,primaryReviewers:s},t)},u=t.mergedAt?IX.Merged:t.closedAt?IX.Rejected:t.isDraft?IX.Draft:IX.Open,d={authTokenName:e,branches:{headBranch:{branchName:t.headRef.name,repo:{isArchived:t.headRepository.isArchived,isPrivate:t.headRepository.isPrivate,htmlUrl:t.headRepository.url,repoName:t.headRepository.name,repoOwner:U1(t.headRepository.owner)}},targetBranch:{branchName:t.baseRef.name,repo:{isArchived:t.baseRepository.isArchived,isPrivate:t.baseRepository.isPrivate,htmlUrl:t.baseRepository.url,repoName:t.baseRepository.name,repoOwner:U1(t.baseRepository.owner)}}},changes:{additions:t.additions,deletions:t.deletions,changedFiles:t.changedFiles},dates:i,id:{htmlUrl:t.url,prId:t.id,prNumber:String(t.number),title:t.title,owner:U1(t.baseRepository.owner),gitServiceName:r},status:{checksStatus:V1(t.commits.nodes[0]?.commit.statusCheckRollup?.contexts.checkRunCountsByState),comments:R1(t.reviewThreads.nodes),commitCount:t.commits.totalCount,mergeStatus:u,mergedBy:t.mergedBy?U1(t.mergedBy):void 0,hasMergeConflicts:t.mergeable===h1.Conflicting,pullRequestLabels:t.labels?t.labels.nodes.map(e=>({...e,color:`#${e.color}`})):[]},users:l,currentUser:{hasReviewed:!z1(u,n,l),isAssignee:n.username in l.assignees,isCodeOwner:c.includes(n.username),isPrimaryReviewer:s.includes(n.username)},raw:t,fetchDate:iN()};return{...d,status:{...d.status,displayStatus:H1(d)}}}function R1(e){return e.reduce((e,t)=>(t.isResolved&&e.resolved++,e.total++,e),{resolved:0,total:0})}function z1(e,t,n){return e===IX.Open&&n.reviewers[t.username]?.reviewStatus===LX.Pending&&!(t.username in n.assignees)}function B1({codeOwners:e,primaryReviewers:t},n){let r=W1(n.reviewRequests.nodes.map(e=>U1(e.requestedReviewer))),i=kl(n.latestOpinionatedReviews.nodes,e=>({key:e.author.login,value:e}));return El(Array.from(new Set([...Object.keys(r),...Object.keys(i)])).map(n=>{let a=r[n]||i[n]?.author;if(!a)throw Error(`Failed to find user '${n}'`);let o=fl.hasKey(r,n)?LX.Pending:i[n]?.state===m1.Approved?LX.Accepted:i[n]?.state===m1.ChangesRequested?LX.Rejected:LX.Pending;return[n,{user:{avatarUrl:a.avatarUrl||``,profileUrl:a.avatarUrl||``,username:n},isPrimaryReviewer:t.includes(n),isCodeOwner:e.includes(n),reviewStatus:o}]}))}function V1(e){if(e)return e.reduce((e,t)=>(fl.hasValue(g1,t.state)?e.failCount+=t.count:fl.hasValue(v1,t.state)?e.inProgressCount+=t.count:fl.hasValue(_1,t.state)&&(e.successCount+=t.count),e.totalCount++,e),{successCount:0,failCount:0,inProgressCount:0,totalCount:0})}function H1(e){return e.status.mergeStatus===IX.Draft?RX.Draft:e.currentUser.isPrimaryReviewer?RX.PrimaryReviewer:e.currentUser.isCodeOwner?RX.CodeOwner:e.status.hasMergeConflicts?RX.MergeConflicts:e.status.checksStatus?.failCount&&e.status.checksStatus.inProgressCount?RX.BuildFailureInProgress:e.status.checksStatus?.failCount?RX.BuildFailureFinished:e.status.comments.resolved<e.status.comments.total?RX.UnresolvedComments:!e.status.checksStatus||e.status.checksStatus.successCount<e.status.checksStatus.totalCount||e.status.checksStatus.inProgressCount||Object.values(e.users.reviewers).some(e=>e.isCodeOwner||e.isPrimaryReviewer?e.reviewStatus!==LX.Accepted:e.reviewStatus===LX.Rejected)?RX.Waiting:RX.ReadyToMerge}function U1(e){return{avatarUrl:e.teamAvatarUrl||e.avatarUrl||``,profileUrl:e.url,username:e.login}}function W1(e){return kl(e,e=>({key:e.username,value:e}))}var G1=`GitHub`,K1=NX({serviceName:G1,async fetchGitData(e){let t=await k1(e),n=U1(t.viewer),r={data:[{pullRequests:t.search.nodes.map(t=>L1({authTokenName:e.authTokenName,raw:t,currentUser:n,serviceName:G1})),time:iN()}],queryCost:t.rateLimit.cost};return console.info(`Fetched GitHub data:`,r),r}}),q1=[K1],J1=kl(q1,e=>({key:e.serviceName,value:e})),Y1=kl(q1,e=>({key:e.serviceName,value:e.serviceName}));async function X1(e){return await kl(q1,async t=>{let n=await SX({secretEncryptionKey:e,serviceName:t.serviceName});return{key:t.serviceName,value:n}})}function Z1(e){return pu(e).reduce((e,t)=>t.length+e,0)}var Q1=function(e){return e.Settings=`settings`,e.CodeReview=`code-review`,e.AnnualReview=`annual-review`,e}({}),$1={hash:void 0,paths:[`code-review`],search:void 0};function e0(){return new n1({basePath:`review-vir`,sanitizeRoute(e){return{paths:t0(e.paths),hash:void 0,search:void 0}}})}function t0(e){let t=e[0];return t===`code-review`?e[1]?[`code-review`,e[1]]:[`code-review`]:fl.isEnumValue(t,Q1)?[t]:$1.paths}var n0=rM({userSettings:{uiColorMode:fM(`light`)},lastSelectedOrg:gM(`org name`,{alsoUndefined:!0})}),r0=qq.createClient({savedSettings:{shape:n0}},{storeName:`review-vir-settings`});async function i0(){return(await r0).value.savedSettings||n0.default}var a0=lR()(`change-route`),o0=iN().year,s0=rM({viewer:{login:``},rateLimit:{cost:-1,limit:-1,nodeCount:-1,remaining:-1,resetAt:``,used:-1},search:{pageInfo:{endCursor:``,hasNextPage:!1},issueCount:-1,nodes:[{number:-1,id:``,title:``,url:``,createdAt:``,additions:-1,deletions:-1,changedFiles:-1}]}});async function c0(e){let t=1;return(await Promise.all(e.GitHub.map(async e=>O1({authToken:e,createQuery:n=>(iu.faint(`Loading ${e.authTokenName} annual review page ${t}...`),t++,{query:`
                             query ($cursor: String, $search: String!) {
                                 viewer {
                                     login
@@ -1446,7 +1446,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                                     }
                                 }
                             }
-                        `,variables:{cursor:n,search:`is:pr assignee:@me is:merged created:>${a0}-01-01 sort:created-desc`}}),responseShape:o0,getPageInfo:({search:e})=>e.pageInfo})))).reduce((e,t)=>(e.push(...t.flatMap(e=>e.search.nodes)),e),[]).map(e=>(e.createdAt=XM(e.createdAt),e))}var c0=SR()({tagName:`vir-header`,styles:aR`
+                        `,variables:{cursor:n,search:`is:pr assignee:@me is:merged created:>${o0}-01-01 sort:created-desc`}}),responseShape:s0,getPageInfo:({search:e})=>e.pageInfo})))).reduce((e,t)=>(e.push(...t.flatMap(e=>e.search.nodes)),e),[]).map(e=>(e.createdAt=XM(e.createdAt),e))}var l0=SR()({tagName:`vir-header`,styles:aR`
         header {
             display: flex;
             justify-content: space-between;
@@ -1479,7 +1479,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                 </div>
                 <div class="right">
                     <${u1}></${u1}>
-                    <${iZ.assign({route:{router:e.router,route:{paths:[Z1.Settings]}}})}>
+                    <${iZ.assign({route:{router:e.router,route:{paths:[Q1.Settings]}}})}>
                         <div class="settings-link">
                             <${JH.assign({icon:pz})}></${JH}>
                             Settings
@@ -1487,7 +1487,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                     </${iZ}>
                 </div>
             </header>
-        `}}),l0={error:SH.colors[`vira-red-foreground-header`].foreground.value,inProgress:SH.colors[`vira-blue-foreground-header`].foreground.value,codeOwner:SH.colors[`vira-blue-foreground-header`].foreground.value,primary:SH.colors[`vira-yellow-foreground-header`].foreground.value,success:SH.colors[`vira-green-foreground-header`].foreground.value},u0=SR()({tagName:`vir-annual-review-pull-request`,styles:aR`
+        `}}),u0={error:SH.colors[`vira-red-foreground-header`].foreground.value,inProgress:SH.colors[`vira-blue-foreground-header`].foreground.value,codeOwner:SH.colors[`vira-blue-foreground-header`].foreground.value,primary:SH.colors[`vira-yellow-foreground-header`].foreground.value,success:SH.colors[`vira-green-foreground-header`].foreground.value},d0=SR()({tagName:`vir-annual-review-pull-request`,styles:aR`
         :host {
             border-radius: 8px;
             border: 1px solid
@@ -1499,10 +1499,10 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
         }
 
         .delete {
-            color: ${l0.error};
+            color: ${u0.error};
         }
         .add {
-            color: ${l0.success};
+            color: ${u0.success};
         }
 
         .stat,
@@ -1546,7 +1546,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                     ${e.pullRequest.changedFiles}
                 </span>
             </div>
-        `}}),d0=SR()({tagName:`vir-annual-review`,styles:aR`
+        `}}),f0=SR()({tagName:`vir-annual-review`,styles:aR`
         :host {
             display: flex;
             flex-direction: column;
@@ -1565,21 +1565,21 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
             flex-direction: column;
             gap: 8px;
         }
-    `,state(){return{annualReview:TR({updateCallback({authTokens:e}){return s0(e)}})}},render({inputs:e,state:t}){e.currentAppSettings.isResolved()&&t.annualReview.update({authTokens:e.currentAppSettings.value.authTokens});let n=IR(t.annualReview,F`
+    `,state(){return{annualReview:TR({updateCallback({authTokens:e}){return c0(e)}})}},render({inputs:e,state:t}){e.currentAppSettings.isResolved()&&t.annualReview.update({authTokens:e.currentAppSettings.value.authTokens});let n=IR(t.annualReview,F`
                 <div class="loading">
                     <${JH.assign({icon:dz})}></${JH}>
                     Loading annual review...
                 </div>
             `,e=>F`
                     <section class="pull-request-list">${e.map(e=>F`
-                        <${u0.assign({pullRequest:e})}></${u0}>
+                        <${d0.assign({pullRequest:e})}></${d0}>
                     `)}</section>
                 `,e=>F`
                     <${nZ}>${Ge(e)}</${nZ}>
                 `);return F`
-            <${c0.assign({router:e.router})}></${c0}>
+            <${l0.assign({router:e.router})}></${l0}>
             ${n}
-        `}}),f0=function(e){return e.SetupWorker=`setup-worker`,e.UpdateStarted=`update-started`,e.StartAutoUpdates=`start-auto-updates`,e.DataUpdated=`data-updated`,e.UpdatesStopped=`updates-stopped`,e}({}),p0=qq.createClient(lu(J1,()=>({shape:rM([VX])})),{storeName:`review-vir-data-cache`});async function m0(){let e=await p0;return lu(J1,t=>[...e.value[t]||[]])}async function h0(e){return[...await(await p0).load[e]()||[]]}var g0=class extends gu()(`git-error`){},_0=class extends _u(`git-update-start`){},v0=class extends gu()(`git-updates-paused`){},y0=class extends gu()(`git-data-updated`){},b0=class extends yu{updateInterval;data;adapterWorkers;updatesInProgress={};constructor(e,t){super(),this.updateInterval=t,m0().then(e=>{this.data||(this.data=e,this.dispatch(new y0({detail:{data:this.data}})))}).catch(e=>{iu.error(`Failed to load cached data: ${Ge(e)}`)}),this.adapterWorkers=lu(q1,t=>{let n=new Worker(new URL(`/review-vir/assets/git-adapter-worker-C0st69kh.js`,``+import.meta.url),{type:`module`});return n.postMessage(JSON.stringify({type:f0.SetupWorker,serviceName:t,secretEncryptionKey:e})),n.addEventListener(`message`,async e=>{let n=JSON.parse(e.data);if(n.type===f0.UpdatesStopped)this.dispatch(new v0({detail:{reason:n.reason,message:n.message,serviceName:t,resetAt:n.resetAt}}));else if(n.type===f0.DataUpdated)if(this.updatesInProgress[t]=!1,n.error)this.dispatch(new g0({detail:{message:n.error}}));else{let e=await h0(t);this.data||=lu(q1,()=>[]),this.data[t]=e,this.dispatch(new y0({detail:{data:this.data}}))}else n.type===f0.UpdateStarted&&(this.updatesInProgress[t]=!0,this.dispatch(new _0))}),n})}startAutoUpdates(){Object.values(this.adapterWorkers).forEach(e=>{e.postMessage(JSON.stringify({type:f0.StartAutoUpdates,updateInterval:this.updateInterval}))})}restartService(e){this.adapterWorkers[e].postMessage(JSON.stringify({type:f0.StartAutoUpdates,updateInterval:this.updateInterval}))}};function x0(e){return UX(Object.values(e).flat().flatMap(e=>e.pullRequests))}function S0(e){return Object.values(e).flat().reduce((e,t)=>!e||rN({fullDate:e,relativeTo:t.time})?t.time:e,void 0)}var C0=SR()({tagName:`vir-paused-banner`,styles:aR`
+        `}}),p0=function(e){return e.SetupWorker=`setup-worker`,e.UpdateStarted=`update-started`,e.StartAutoUpdates=`start-auto-updates`,e.DataUpdated=`data-updated`,e.UpdatesStopped=`updates-stopped`,e}({}),m0=qq.createClient(lu(Y1,()=>({shape:rM([VX])})),{storeName:`review-vir-data-cache`});async function h0(){let e=await m0;return lu(Y1,t=>[...e.value[t]||[]])}async function g0(e){return[...await(await m0).load[e]()||[]]}var _0=class extends gu()(`git-error`){},v0=class extends _u(`git-update-start`){},y0=class extends gu()(`git-updates-paused`){},b0=class extends gu()(`git-data-updated`){},x0=class extends yu{updateInterval;data;adapterWorkers;updatesInProgress={};constructor(e,t){super(),this.updateInterval=t,h0().then(e=>{this.data||(this.data=e,this.dispatch(new b0({detail:{data:this.data}})))}).catch(e=>{iu.error(`Failed to load cached data: ${Ge(e)}`)}),this.adapterWorkers=lu(J1,t=>{let n=new Worker(new URL(`/review-vir/assets/git-adapter-worker-DI19fRid.js`,``+import.meta.url),{type:`module`});return n.postMessage(JSON.stringify({type:p0.SetupWorker,serviceName:t,secretEncryptionKey:e})),n.addEventListener(`message`,async e=>{let n=JSON.parse(e.data);if(n.type===p0.UpdatesStopped)this.dispatch(new y0({detail:{reason:n.reason,message:n.message,serviceName:t,resetAt:n.resetAt}}));else if(n.type===p0.DataUpdated)if(this.updatesInProgress[t]=!1,n.error)this.dispatch(new _0({detail:{message:n.error}}));else{let e=await g0(t);this.data||=lu(J1,()=>[]),this.data[t]=e,this.dispatch(new b0({detail:{data:this.data}}))}else n.type===p0.UpdateStarted&&(this.updatesInProgress[t]=!0,this.dispatch(new v0))}),n})}startAutoUpdates(){Object.values(this.adapterWorkers).forEach(e=>{e.postMessage(JSON.stringify({type:p0.StartAutoUpdates,updateInterval:this.updateInterval}))})}restartService(e){this.adapterWorkers[e].postMessage(JSON.stringify({type:p0.StartAutoUpdates,updateInterval:this.updateInterval}))}};function S0(e){return UX(Object.values(e).flat().flatMap(e=>e.pullRequests))}function C0(e){return Object.values(e).flat().reduce((e,t)=>!e||rN({fullDate:e,relativeTo:t.time})?t.time:e,void 0)}var w0=SR()({tagName:`vir-paused-banner`,styles:aR`
         :host {
             ${KR(SH.colors[`vira-red-on-self-body`])};
             display: flex;
@@ -1604,7 +1604,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                     ${jR(`click`,()=>{n(new r.resume)})}
                 ></${tZ}>
             </div>
-        `}}),w0=SR()({tagName:`vir-org-reviewers`,styles:aR`
+        `}}),T0=SR()({tagName:`vir-org-reviewers`,styles:aR`
         :host {
             display: flex;
             flex-direction: column;
@@ -1632,7 +1632,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                     <${rZ.assign({imageUrl:e.user.avatarUrl})}></${rZ}>
                     ${e.count}
                 </span>
-            `:vP)}}),T0=SR()({tagName:`vir-org-selector`,styles:aR`
+            `:vP)}}),E0=SR()({tagName:`vir-org-selector`,styles:aR`
         :host {
             display: flex;
             flex-direction: column;
@@ -1685,10 +1685,10 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
             min-height: ${24}px;
             min-width: ${24}px;
         }
-    `,render({inputs:e,dispatch:t}){let n=E0(e.pullRequestsByOrg);return Object.entries(n).sort((e,t)=>e[0].localeCompare(t[0])).map(([n,{logoUrl:r,pullRequestCount:i}])=>F`
+    `,render({inputs:e,dispatch:t}){let n=D0(e.pullRequestsByOrg);return Object.entries(n).sort((e,t)=>e[0].localeCompare(t[0])).map(([n,{logoUrl:r,pullRequestCount:i}])=>F`
                         <button
                             class="org-selector ${$P({selected:e.selectedOrgName===n})}"
-                            ${jR(`click`,()=>{t(new i0({paths:[Z1.CodeReview,n]}))})}
+                            ${jR(`click`,()=>{t(new a0({paths:[Q1.CodeReview,n]}))})}
                         >
                             <div class="title">
                                 <${rZ.assign({imageUrl:r})}
@@ -1700,7 +1700,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                                 ${i} pull request${i>1?`s`:``}
                             </div>
                         </button>
-                    `)}});function E0(e){return Kl(e,(e,{owner:t,totalCount:n})=>{if(n)return{key:e,value:{pullRequestCount:n,logoUrl:t.avatarUrl}}})}var D0=SR()({tagName:`vir-user`,hostClasses:{"vir-user-faded":({inputs:e})=>e.fadedAvatar},styles:({hostClasses:e})=>aR`
+                    `)}});function D0(e){return Kl(e,(e,{owner:t,totalCount:n})=>{if(n)return{key:e,value:{pullRequestCount:n,logoUrl:t.avatarUrl}}})}var O0=SR()({tagName:`vir-user`,hostClasses:{"vir-user-faded":({inputs:e})=>e.fadedAvatar},styles:({hostClasses:e})=>aR`
         :host {
             ${I[`vira-icon-fill-color`].name}: ${SH.colors[gH].background.value};
         }
@@ -1724,11 +1724,11 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
         }
 
         ${JH} {
-            color: ${l0.error};
+            color: ${u0.error};
         }
 
         ${JH}.success {
-            color: ${l0.success};
+            color: ${u0.success};
         }
 
         .avatar-border {
@@ -1756,10 +1756,10 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
         }
 
         .is-primary .avatar-border {
-            border-color: ${l0.primary};
+            border-color: ${u0.primary};
         }
         .is-code-owner .avatar-border {
-            border-color: ${l0.codeOwner};
+            border-color: ${u0.codeOwner};
         }
 
         .placeholder {
@@ -1788,28 +1788,28 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                 ${e.show.avatar?s:vP}
                 ${e.show.username?c:vP}
             </a>
-        `}}),O0=SR()({tagName:`vir-users`,hostClasses:{"vir-users-overlap-icons":({inputs:e})=>e.overlap},styles:({hostClasses:e})=>aR`
+        `}}),k0=SR()({tagName:`vir-users`,hostClasses:{"vir-users-overlap-icons":({inputs:e})=>e.overlap},styles:({hostClasses:e})=>aR`
         :host {
             display: flex;
             align-items: center;
             align-items: flex-start;
         }
 
-        ${D0} {
+        ${O0} {
             font-size: 20px;
         }
 
-        ${e[`vir-users-overlap-icons`].selector} ${D0} + ${D0} {
+        ${e[`vir-users-overlap-icons`].selector} ${O0} + ${O0} {
             margin-left: -10px;
         }
     `,render({inputs:e}){return F`
             ${e.users.toSorted((e,t)=>{let n=`user`in e?e.user:e,r=`user`in t?t.user:t;return n.username.localeCompare(r.username)}).map((t,n)=>F`
-                <${D0.assign({user:t,show:{avatar:!0,username:!1,statusSpace:e.holdStatusSpace},fadedAvatar:e.fadedAvatar})}
+                <${O0.assign({user:t,show:{avatar:!0,username:!1,statusSpace:e.holdStatusSpace},fadedAvatar:e.fadedAvatar})}
                     style="z-index: ${n}"
-                ></${D0}>
+                ></${O0}>
             `)}
-        `}}),k0=SH.colors[`vira-grey-foreground-decoration`].foreground.value,A0=kl(He(RX),e=>({key:`vir-pull-request-status-${e}`,value:({inputs:t})=>t.pullRequest.status.displayStatus===e})),j0={[RX.Draft]:{icon:mz,borderColor:void 0,iconColor:void 0,description:`This pull request is a draft.`},[RX.ReadyToMerge]:{icon:bz,borderColor:l0.success,iconColor:void 0,description:`This pull request is ready to merge!`},[RX.Waiting]:{icon:yz,borderColor:void 0,iconColor:l0.inProgress,description:`This pull request is waiting for reviews or builds to finish.`},[RX.PrimaryReviewer]:{icon:_z,borderColor:l0.primary,iconColor:void 0,description:`You are a primary reviewer of this pull request!`},[RX.CodeOwner]:{icon:gz,borderColor:l0.codeOwner,iconColor:void 0,description:`You are a code owner reviewer of this pull request!`},[RX.MergeConflicts]:{icon:vz,borderColor:void 0,iconColor:l0.error,description:`This pull request has merge conflicts.`},[RX.BuildFailureInProgress]:{icon:void 0,borderColor:void 0,iconColor:void 0,description:void 0},[RX.BuildFailureFinished]:{icon:void 0,borderColor:void 0,iconColor:void 0,description:void 0},[RX.UnresolvedComments]:{icon:rz,borderColor:void 0,iconColor:l0.error,description:`This pull request has unresolved comments.`}},M0=Tl(j0).map(([e,t])=>{let n=t.iconColor||t.borderColor,r=[t.borderColor?`--vir-pull-request-border-color: ${t.borderColor};`:``,n?`--vir-pull-request-icon-color: ${n};`:``].join(``);return r?`${`:host(.vir-pull-request-status-${e})`} {${r}}`:``}).join(`
-`),N0=SR()({tagName:`vir-pull-request`,hostClasses:{...A0,"vir-pull-request-reviewed":({inputs:e})=>!e.pullRequest.currentUser.isAssignee&&e.pullRequest.currentUser.hasReviewed},cssVars:{"vir-pull-request-border-color":k0,"vir-pull-request-icon-color":k0},styles:({hostClasses:e,cssVars:t})=>aR`
+        `}}),A0=SH.colors[`vira-grey-foreground-decoration`].foreground.value,j0=kl(He(RX),e=>({key:`vir-pull-request-status-${e}`,value:({inputs:t})=>t.pullRequest.status.displayStatus===e})),M0={[RX.Draft]:{icon:mz,borderColor:void 0,iconColor:void 0,description:`This pull request is a draft.`},[RX.ReadyToMerge]:{icon:bz,borderColor:u0.success,iconColor:void 0,description:`This pull request is ready to merge!`},[RX.Waiting]:{icon:yz,borderColor:void 0,iconColor:u0.inProgress,description:`This pull request is waiting for reviews or builds to finish.`},[RX.PrimaryReviewer]:{icon:_z,borderColor:u0.primary,iconColor:void 0,description:`You are a primary reviewer of this pull request!`},[RX.CodeOwner]:{icon:gz,borderColor:u0.codeOwner,iconColor:void 0,description:`You are a code owner reviewer of this pull request!`},[RX.MergeConflicts]:{icon:vz,borderColor:void 0,iconColor:u0.error,description:`This pull request has merge conflicts.`},[RX.BuildFailureInProgress]:{icon:void 0,borderColor:void 0,iconColor:void 0,description:void 0},[RX.BuildFailureFinished]:{icon:void 0,borderColor:void 0,iconColor:void 0,description:void 0},[RX.UnresolvedComments]:{icon:rz,borderColor:void 0,iconColor:u0.error,description:`This pull request has unresolved comments.`}},N0=Tl(M0).map(([e,t])=>{let n=t.iconColor||t.borderColor,r=[t.borderColor?`--vir-pull-request-border-color: ${t.borderColor};`:``,n?`--vir-pull-request-icon-color: ${n};`:``].join(``);return r?`${`:host(.vir-pull-request-status-${e})`} {${r}}`:``}).join(`
+`),P0=SR()({tagName:`vir-pull-request`,hostClasses:{...j0,"vir-pull-request-reviewed":({inputs:e})=>!e.pullRequest.currentUser.isAssignee&&e.pullRequest.currentUser.hasReviewed},cssVars:{"vir-pull-request-border-color":A0,"vir-pull-request-icon-color":A0},styles:({hostClasses:e,cssVars:t})=>aR`
         :host {
             display: flex;
             width: 100%;
@@ -1818,7 +1818,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
 
         .child-marker {
             flex-shrink: 0;
-            color: ${k0};
+            color: ${A0};
             height: 40px;
             width: 40px;
             font-size: 2em;
@@ -1847,10 +1847,10 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                 .vir-pull-request-status-${AN(RX.BuildFailureInProgress)}
             )
             .status-failures {
-            border-color: ${l0.inProgress};
+            border-color: ${u0.inProgress};
         }
 
-        ${AN(M0)}
+        ${AN(N0)}
 
         ${e[`vir-pull-request-reviewed`].selector}, :host(
                 .vir-pull-request-status-${AN(RX.Draft)}
@@ -1904,9 +1904,9 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                         height: 24px;
                         width: 24px;
                         flex-shrink: 0;
-                        color: ${l0.error};
+                        color: ${u0.error};
                         border-radius: 50%;
-                        border: 1.5px solid ${l0.error};
+                        border: 1.5px solid ${u0.error};
                     }
 
                     & .assignees {
@@ -1948,7 +1948,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                 }
             }
         }
-    `,render({inputs:e}){let t=j0[e.pullRequest.status.displayStatus].icon,n=e.pullRequest.status.checksStatus?.failCount||0,r=j0[e.pullRequest.status.displayStatus].description,i=`${n} build failure${n===1?``:`s`} and builds are ${e.pullRequest.status.displayStatus===RX.BuildFailureFinished?`finished`:`still in progress`}.`,a=t?F`
+    `,render({inputs:e}){let t=M0[e.pullRequest.status.displayStatus].icon,n=e.pullRequest.status.checksStatus?.failCount||0,r=M0[e.pullRequest.status.displayStatus].description,i=`${n} build failure${n===1?``:`s`} and builds are ${e.pullRequest.status.displayStatus===RX.BuildFailureFinished?`finished`:`still in progress`}.`,a=t?F`
                   <${JH.assign({icon:t})}
                       class="status-icon"
                       title=${eF(r)}
@@ -1966,9 +1966,9 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                     <div class="left">
                         <div class="top-row">
                             ${a}
-                            <${O0.assign({overlap:!0,users:Object.values(e.pullRequest.users.assignees),fadedAvatar:!1})}
+                            <${k0.assign({overlap:!0,users:Object.values(e.pullRequest.users.assignees),fadedAvatar:!1})}
                                 class="assignees"
-                            ></${O0}>
+                            ></${k0}>
                             <span class="labels">${s}</span>
                             <span class="stats">
                                 <span
@@ -2011,7 +2011,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                         </${iZ}>
                     </div>
                     <div class="right">
-                        <${O0.assign({overlap:!0,users:Object.values(e.pullRequest.users.reviewers),holdStatusSpace:!0,fadedAvatar:!0})}></${O0}>
+                        <${k0.assign({overlap:!0,users:Object.values(e.pullRequest.users.reviewers),holdStatusSpace:!0,fadedAvatar:!0})}></${k0}>
                     </div>
                 </div>
                 <div class="branches">
@@ -2028,7 +2028,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                     <span class="branch-name">${e.pullRequest.branches.headBranch.branchName}</span>
                 </div>
             </div>
-        `}}),P0=SR()({tagName:`vir-code-review`,styles:aR`
+        `}}),F0=SR()({tagName:`vir-code-review`,styles:aR`
         :host {
             container-type: inline-size;
             display: flex;
@@ -2076,29 +2076,29 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
             align-items: center;
             gap: 4px;
         }
-    `,state(){return{gitLoader:void 0,errorMessage:void 0,pausedAdapters:{},data:void 0,updateTime:void 0,isUpdating:!0,showCopiedSuccess:!1,copyResetTimeoutId:void 0}},init({state:e,updateState:t,inputs:n}){let r=new b0(n.secretEncryptionKey,{seconds:60});r.listen(g0,e=>{t({errorMessage:e.detail.message})}),r.listen(v0,n=>{t({pausedAdapters:{...e.pausedAdapters,[n.detail.serviceName]:{message:n.detail.message,reason:n.detail.reason,resetAt:n.detail.resetAt}}})}),r.listen(_0,()=>{t({isUpdating:!0,errorMessage:void 0})}),r.listen(y0,e=>{t({isUpdating:Object.values(r.updatesInProgress).includes(!0),data:x0(e.detail.data),updateTime:S0(e.detail.data)})}),r.startAutoUpdates(),t({gitLoader:r})},cleanup({state:e,updateState:t}){e.gitLoader?.destroy(),globalThis.clearTimeout(e.copyResetTimeoutId),t({gitLoader:void 0,copyResetTimeoutId:void 0})},render({state:e,inputs:t,dispatch:n,updateState:r}){let i=e.data||{},a=Object.keys(i).sort(),o=t.currentRoute.paths[1]||a[0]||``;t.currentRoute.paths[0]===Z1.CodeReview&&a.length&&!t.currentRoute.paths[1]&&n(new i0({paths:[Z1.CodeReview,o]}));let s=i[o],c=s?.pullRequests||{assigned:[],reviewer:[]},l=HX(c.reviewer),u=F`
+    `,state(){return{gitLoader:void 0,errorMessage:void 0,pausedAdapters:{},data:void 0,updateTime:void 0,isUpdating:!0,showCopiedSuccess:!1,copyResetTimeoutId:void 0}},init({state:e,updateState:t,inputs:n}){let r=new x0(n.secretEncryptionKey,{seconds:60});r.listen(_0,e=>{t({errorMessage:e.detail.message})}),r.listen(y0,n=>{t({pausedAdapters:{...e.pausedAdapters,[n.detail.serviceName]:{message:n.detail.message,reason:n.detail.reason,resetAt:n.detail.resetAt}}})}),r.listen(v0,()=>{t({isUpdating:!0,errorMessage:void 0})}),r.listen(b0,e=>{t({isUpdating:Object.values(r.updatesInProgress).includes(!0),data:S0(e.detail.data),updateTime:C0(e.detail.data)})}),r.startAutoUpdates(),t({gitLoader:r})},cleanup({state:e,updateState:t}){e.gitLoader?.destroy(),globalThis.clearTimeout(e.copyResetTimeoutId),t({gitLoader:void 0,copyResetTimeoutId:void 0})},render({state:e,inputs:t,dispatch:n,updateState:r}){let i=e.data||{},a=Object.keys(i).sort(),o=t.currentRoute.paths[1]||a[0]||``;t.currentRoute.paths[0]===Q1.CodeReview&&a.length&&!t.currentRoute.paths[1]&&n(new a0({paths:[Q1.CodeReview,o]}));let s=i[o],c=s?.pullRequests||{assigned:[],reviewer:[]},l=HX(c.reviewer),u=F`
             <div class="org-panel">
-                <${T0.assign({pullRequestsByOrg:i,selectedOrgName:o})}></${T0}>
-                <${w0.assign({reviewers:s?.reviewers||{}})}></${w0}>
+                <${E0.assign({pullRequestsByOrg:i,selectedOrgName:o})}></${E0}>
+                <${T0.assign({reviewers:s?.reviewers||{}})}></${T0}>
             </div>
             <section class="pull-request-list">
                 <h2>Reviewer (${l.notReviewed} / ${l.total})</h2>
-                ${c.reviewer.length?F0(c.reviewer):F`
+                ${c.reviewer.length?I0(c.reviewer):F`
                           <p class="nothing">None.</p>
                       `}
             </section>
             <section class="pull-request-list">
                 <h2>Assignee (${HX(c.assigned).total})</h2>
-                ${c.assigned.length?F0(c.assigned):F`
+                ${c.assigned.length?I0(c.assigned):F`
                           <p class="nothing">None.</p>
                       `}
             </section>
         `,d=Object.entries(e.pausedAdapters).map(([t,n])=>F`
-                <${C0.assign({serviceName:t,message:n.message,resetAt:n.resetAt})}
-                    ${jR(C0.events.resume,()=>{e.gitLoader&&(r({pausedAdapters:du(e.pausedAdapters,[t])}),e.gitLoader.restartService(t))})}
-                ></${C0}>
+                <${w0.assign({serviceName:t,message:n.message,resetAt:n.resetAt})}
+                    ${jR(w0.events.resume,()=>{e.gitLoader&&(r({pausedAdapters:du(e.pausedAdapters,[t])}),e.gitLoader.restartService(t))})}
+                ></${w0}>
             `);return F`
-            <${c0.assign({router:t.router})}>
+            <${l0.assign({router:t.router})}>
                 <div class="updates">
                     <${JH.assign({icon:dz})}
                         class=${$P({hidden:!e.isUpdating,dim:!0})}
@@ -2114,7 +2114,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                         ${jR(`click`,async()=>{await globalThis.navigator.clipboard.writeText(JSON.stringify(i,void 0,4)),globalThis.clearTimeout(e.copyResetTimeoutId),r({showCopiedSuccess:!0,copyResetTimeoutId:globalThis.setTimeout(()=>{r({showCopiedSuccess:!1,copyResetTimeoutId:void 0})},1500)})})}
                     ></${tZ}>
                 </div>
-            </${c0}>
+            </${l0}>
             ${d}
             <${nZ}>
                 ${e.errorMessage||F`
@@ -2126,15 +2126,15 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                           <p class="nothing">No pull requests to display.</p>
                       `}
             </main>
-        `}});function F0(e,t=!1){return e.flatMap(({children:e,pullRequest:n})=>{let r=F0(e,!0);return[F`
-                <${N0.assign({pullRequest:n,isChild:t})}></${N0}>
-            `,...r]})}var I0={[G1.serviceName]:{intro:F`
+        `}});function I0(e,t=!1){return e.flatMap(({children:e,pullRequest:n})=>{let r=I0(e,!0);return[F`
+                <${P0.assign({pullRequest:n,isChild:t})}></${P0}>
+            `,...r]})}var L0={[K1.serviceName]:{intro:F`
             You will need a
             <${iZ.assign({link:{newTab:!0,url:`https://github.com/settings/tokens?type=beta`}})}>
                 Fine-grained Personal Access Token
             </${iZ}>
             with the following permissions:
-        `,permissions:[{label:`Commit statuses`,value:`Read-only`},{label:`Contents`,value:`Read-only`},{label:`Metadata`,value:`Read-only`},{label:`Pull requests`,value:`Read-only`}]}},L0=SR()({tagName:`vir-service-auth-tokens`,styles:aR`
+        `,permissions:[{label:`Commit statuses`,value:`Read-only`},{label:`Contents`,value:`Read-only`},{label:`Metadata`,value:`Read-only`},{label:`Pull requests`,value:`Read-only`}]}},R0=SR()({tagName:`vir-service-auth-tokens`,styles:aR`
         :host,
         .tokens {
             box-sizing: border-box;
@@ -2195,7 +2195,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                         ></${tZ}>
                     </div>
                 </div>
-            `}),i=I0[e.serviceName],a=i.permissions.map(e=>F`
+            `}),i=L0[e.serviceName],a=i.permissions.map(e=>F`
                 <tr>
                     <td>${e.label}</td>
                     <td>${e.value}</td>
@@ -2211,7 +2211,7 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                 class="add-token-button"
                 ${jR(`click`,()=>{n(new t.authTokensChange(e.authTokens.concat({authTokenName:``,authTokenSecret:``})))})}
             ></${tZ}>
-        `}}),R0=SR()({tagName:`vir-auth-token-entry`,styles:aR`
+        `}}),z0=SR()({tagName:`vir-auth-token-entry`,styles:aR`
         :host {
             display: flex;
             flex-direction: column;
@@ -2230,12 +2230,12 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
             justify-content: center;
         }
     `,events:{authTokensChange:uR()},render({inputs:e,dispatch:t,events:n}){return F`
-            <section class="services">${He(J1).map(r=>{let i=e.authTokensWithEdits[r],a=i.length?i:[{authTokenName:``,authTokenSecret:``}];return F`
-                <${L0.assign({authTokens:a,serviceName:r,disabled:e.disabled})}
-                    ${jR(L0.events.authTokensChange,i=>{t(new n.authTokensChange({...e.authTokensWithEdits,[r]:i.detail}))})}
-                ></${L0}>
+            <section class="services">${He(Y1).map(r=>{let i=e.authTokensWithEdits[r],a=i.length?i:[{authTokenName:``,authTokenSecret:``}];return F`
+                <${R0.assign({authTokens:a,serviceName:r,disabled:e.disabled})}
+                    ${jR(R0.events.authTokensChange,i=>{t(new n.authTokensChange({...e.authTokensWithEdits,[r]:i.detail}))})}
+                ></${R0}>
             `})}</section>
-        `}}),z0=SR()({tagName:`vir-settings`,events:{settingsChange:uR()},styles:aR`
+        `}}),B0=SR()({tagName:`vir-settings`,events:{settingsChange:uR()},styles:aR`
         :host {
             padding: 8px 24px;
         }
@@ -2255,19 +2255,19 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
     `,state(){return{saveError:void 0,isSaving:!1,editedSettings:void 0}},render({inputs:e,state:t,updateState:n,dispatch:r,events:i}){let a=IR(e.currentAppSettings,F`
                 <span>Loading tokens...</span>
             `,r=>F`
-                <${R0.assign({authTokensWithEdits:t.editedSettings?.authTokens||r.authTokens,disabled:t.isSaving,secretEncryptionKey:e.secretEncryptionKey})}
-                    ${jR(R0.events.authTokensChange,e=>{n({editedSettings:{...t.editedSettings||r,authTokens:e.detail}})})}
-                ></${R0}>
+                <${z0.assign({authTokensWithEdits:t.editedSettings?.authTokens||r.authTokens,disabled:t.isSaving,secretEncryptionKey:e.secretEncryptionKey})}
+                    ${jR(z0.events.authTokensChange,e=>{n({editedSettings:{...t.editedSettings||r,authTokens:e.detail}})})}
+                ></${z0}>
             `),o=t.editedSettings?void 0:`No changes have been made yet.`,s=t.saveError?F`
                   <p><${nZ}>${t.saveError}</${nZ}></p>
-              `:vP;async function c(){if(t.editedSettings){n({isSaving:!0,saveError:void 0});try{try{await Promise.all(Tl(t.editedSettings.authTokens).map(async([t,n])=>{n.forEach(e=>Xq(e,t)),await wX({authTokens:n,serviceName:t,secretEncryptionKey:e.secretEncryptionKey})})),await TX(He(J1))}catch(e){let t=Ge(e);iu.error(t),n({saveError:t});return}await Yo({seconds:1}),r(new i.settingsChange(t.editedSettings)),n({editedSettings:void 0}),r(new i0(Q1)),await Cl(()=>window.location.pathname.startsWith(`/`+Q1.paths[0])),globalThis.location.reload()}finally{n({isSaving:!1})}}}return F`
+              `:vP;async function c(){if(t.editedSettings){n({isSaving:!0,saveError:void 0});try{try{await Promise.all(Tl(t.editedSettings.authTokens).map(async([t,n])=>{n.forEach(e=>Xq(e,t)),await wX({authTokens:n,serviceName:t,secretEncryptionKey:e.secretEncryptionKey})})),await TX(He(Y1))}catch(e){let t=Ge(e);iu.error(t),n({saveError:t});return}await Yo({seconds:1}),r(new i.settingsChange(t.editedSettings)),n({editedSettings:void 0}),r(new a0($1)),await Cl(()=>window.location.pathname.startsWith(`/`+$1.paths[0])),globalThis.location.reload()}finally{n({isSaving:!1})}}}return F`
             <div class="top-bar">
                 <h1>Settings</h1>
                 <${u1}></${u1}>
             </div>
             <section class="actions">
                 <${tZ.assign({text:`Cancel`,isDisabled:t.isSaving,color:MH.Danger,buttonEmphasis:LH.Subtle})}
-                    ${jR(`click`,()=>{n({editedSettings:void 0}),r(new i0(Q1))})}
+                    ${jR(`click`,()=>{n({editedSettings:void 0}),r(new a0($1))})}
                 ></${tZ}>
                 <${tZ.assign({text:`Save`,isDisabled:!t.editedSettings||t.isSaving,color:MH.Positive})}
                     title=${eF(o)}
@@ -2312,21 +2312,21 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
         .hidden {
             display: none;
         }
-    `,state(){return{appSettings:TR({async updateCallback({secretEncryptionKey:e}){if(!e)throw Error(`No encryption key found. Cannot run review-vir.`);return{...await r0(),authTokens:await Y1(e)}}}),router:$1(),currentRoute:void 0}},init({state:e,updateState:t}){e.router.listen(!0,e=>{t({currentRoute:e})})},render({state:e}){let t=oJ().encryptionKey||``;if(e.appSettings.update({secretEncryptionKey:t}),e.appSettings.isError())return F`
+    `,state(){return{appSettings:TR({async updateCallback({secretEncryptionKey:e}){if(!e)throw Error(`No encryption key found. Cannot run review-vir.`);return{...await i0(),authTokens:await X1(e)}}}),router:e0(),currentRoute:void 0}},init({state:e,updateState:t}){e.router.listen(!0,e=>{t({currentRoute:e})})},render({state:e}){let t=oJ().encryptionKey||``;if(e.appSettings.update({secretEncryptionKey:t}),e.appSettings.isError())return F`
                 <${nZ}>${Ge(e.appSettings.value)}</${nZ}>
-            `;let n=(e.appSettings.isResolved()&&X1(e.appSettings.value.authTokens)===0?{...Q1,paths:[Z1.Settings]}:e.currentRoute)||Q1;(!e.currentRoute||!fl.jsonEquals(n,e.currentRoute))&&e.router.setRoute(n);let r=F`
-            <${P0.assign({router:e.router,secretEncryptionKey:t,currentRoute:n})}
-                class=${$P({hidden:n.paths[0]!==Z1.CodeReview})}
-            ></${P0}>
-        `,i=n.paths[0]===Z1.Settings?F`
-                      <${z0.assign({secretEncryptionKey:t,currentAppSettings:e.appSettings})}></${z0}>
-                  `:n.paths[0]===Z1.AnnualReview?F`
-                        <${d0.assign({currentAppSettings:e.appSettings,router:e.router})}></${d0}>
+            `;let n=(e.appSettings.isResolved()&&Z1(e.appSettings.value.authTokens)===0?{...$1,paths:[Q1.Settings]}:e.currentRoute)||$1;(!e.currentRoute||!fl.jsonEquals(n,e.currentRoute))&&e.router.setRoute(n);let r=F`
+            <${F0.assign({router:e.router,secretEncryptionKey:t,currentRoute:n})}
+                class=${$P({hidden:n.paths[0]!==Q1.CodeReview})}
+            ></${F0}>
+        `,i=n.paths[0]===Q1.Settings?F`
+                      <${B0.assign({secretEncryptionKey:t,currentAppSettings:e.appSettings})}></${B0}>
+                  `:n.paths[0]===Q1.AnnualReview?F`
+                        <${f0.assign({currentAppSettings:e.appSettings,router:e.router})}></${f0}>
                     `:vP;return F`
             <div
                 class="root"
-                ${jR(i0,t=>{e.router.setRoute(t.detail)})}
-                ${jR(R0.events.authTokensChange,t=>{e.appSettings.isResolved()&&e.appSettings.setValue({...e.appSettings.value,authTokens:t.detail})})}
+                ${jR(a0,t=>{e.router.setRoute(t.detail)})}
+                ${jR(z0.events.authTokensChange,t=>{e.appSettings.isResolved()&&e.appSettings.setValue({...e.appSettings.value,authTokens:t.detail})})}
             >
                 ${r} ${i}
             </div>
