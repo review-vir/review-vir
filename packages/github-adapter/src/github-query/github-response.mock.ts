@@ -23,7 +23,7 @@ export const mockGithubSearch = {
             {
                 number: 1,
                 id: 'PR_1',
-                body: '<!-- code owners start -->\n**Code owners**:\n@electrovir\n<details>\n<summary>Owned files</summary>\n\n- [packages/common/src/index.ts](https://github.com/review-vir/fake-repo/pull/1/files#diff-abc)\n\n</details>\n<!-- code owners end -->\nPrimary Reviewer: @electrovir\nChanges\n\n\nstuff',
+                body: '<!-- code owners start -->\n## Code Owners\n@electrovir\n<details>\n<summary>Owned files</summary>\n\n- [packages/common/src/index.ts](https://github.com/review-vir/fake-repo/pull/1/files#diff-abc)\n\n</details>\n<!-- code owners end -->\nPrimary Reviewer: @electrovir\nChanges\n\n\nstuff',
                 bodyText:
                     'Primary Reviewer: @electrovir\nChanges\n\n\nstuff\n\ncode owner: @electrovir',
                 isDraft: false,

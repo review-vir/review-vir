@@ -32,11 +32,11 @@ describe(parseDescriptionUsers.name, () => {
             ],
         },
         {
-            it: 'works with other trigger texts',
+            it: 'parses code owners from a markdown heading',
             input: {
                 triggerText: 'code owner',
                 bodyText:
-                    'https://my-ticket-url.com/ticket-number\ncode owners:\n@my-name1\n@my-name2\nChanges\n\nadd primary reviewer support\n\nHow to test\nNothing to test.',
+                    'https://my-ticket-url.com/ticket-number\n## Code Owners\n@my-name1\n@my-name2\nChanges\n\nadd primary reviewer support\n\nHow to test\nNothing to test.',
             },
             expect: [
                 'my-name1',

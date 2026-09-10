@@ -1,6 +1,6 @@
 {
     "name": "@review-vir/common",
-    "version": "3.1.0",
+    "version": "3.1.1",
     "description": "Common functionality that review-vir primary uses but other external packages need as well.",
     "keywords": [
         "review-vir",

@@ -1,6 +1,10 @@
 import {removeDuplicates, removePrefix, safeMatch} from '@augment-vir/common';
+import {codeOwnersMarkdown} from './code-owners-markdown.js';
 
-const insertedCodeOwnersRegExp = /<!-- code owners start -->([\S\s]*?)<!-- code owners end -->/i;
+const insertedCodeOwnersRegExp = new RegExp(
+    String.raw`${codeOwnersMarkdown.blockStart}([\S\s]*?)${codeOwnersMarkdown.blockEnd}`,
+    'i',
+);
 const fileLinkLineRegExp = /^\s*-\s/;
 const userTagRegExp = /@[\w-]+/g;
 
@@ -11,7 +15,7 @@ const userTagRegExp = /@[\w-]+/g;
  * line followed by a collapsible list of their owned files:
  *
  *     <!-- code owners start -->
- *     **Code owners**:
+ *     ## Code Owners
  *     (at)username1
  *     <details>
  *     <summary>Owned files</summary>
