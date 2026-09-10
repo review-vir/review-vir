@@ -52,7 +52,6 @@ export enum GithubMergeableState {
 
 export const failedCheckRunConclusions = [
     GithubGraphqlCheckRunConclusion.ActionRequired,
-    GithubGraphqlCheckRunConclusion.Cancelled,
     GithubGraphqlCheckRunConclusion.Failure,
     GithubGraphqlCheckRunConclusion.Stale,
     GithubGraphqlCheckRunConclusion.StartupFailure,
