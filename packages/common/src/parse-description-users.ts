@@ -42,10 +42,10 @@ export function parseDescriptionUsers({
 
     const userTags = Array.from(restrictedMatch?.matchAll(/@[\w-]+/g) || []);
 
-    return userTags.map((userTag) =>
-        removePrefix({
+    return userTags.map((userTag) => {
+        return removePrefix({
             value: userTag[0],
             prefix: '@',
-        }),
-    );
+        });
+    });
 }

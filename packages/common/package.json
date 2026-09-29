@@ -1,6 +1,6 @@
 {
     "name": "@review-vir/common",
-    "version": "3.1.1",
+    "version": "3.1.2",
     "description": "Common functionality that review-vir primary uses but other external packages need as well.",
     "keywords": [
         "review-vir",
@@ -35,11 +35,11 @@
         "test:docs": "virmator docs check"
     },
     "dependencies": {
-        "@augment-vir/assert": "^32.2.1",
-        "@augment-vir/common": "^32.2.1"
+        "@augment-vir/assert": "^32.5.0",
+        "@augment-vir/common": "^32.5.0"
     },
     "devDependencies": {
-        "@augment-vir/test": "^32.2.1",
+        "@augment-vir/test": "^32.5.0",
         "@web/dev-server-esbuild": "^2.0.0",
         "@web/test-runner": "^1.0.0",
         "@web/test-runner-commands": "^1.0.1",

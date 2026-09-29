@@ -11,23 +11,27 @@ export const VirUsers = defineElement<{
 }>()({
     tagName: 'vir-users',
     hostClasses: {
-        'vir-users-overlap-icons': ({inputs}) => inputs.overlap,
+        'vir-users-overlap-icons'({inputs}) {
+            return inputs.overlap;
+        },
     },
-    styles: ({hostClasses}) => css`
-        :host {
-            display: flex;
-            align-items: center;
-            align-items: flex-start;
-        }
+    styles({hostClasses}) {
+        return css`
+            :host {
+                display: flex;
+                align-items: center;
+                align-items: flex-start;
+            }
 
-        ${VirUser} {
-            font-size: 20px;
-        }
+            ${VirUser} {
+                font-size: 20px;
+            }
 
-        ${hostClasses['vir-users-overlap-icons'].selector} ${VirUser} + ${VirUser} {
-            margin-left: -10px;
-        }
-    `,
+            ${hostClasses['vir-users-overlap-icons'].selector} ${VirUser} + ${VirUser} {
+                margin-left: -10px;
+            }
+        `;
+    },
     render({inputs}) {
         const sortedUsers = inputs.users.toSorted((a, b) => {
             const aUser: GitUser = 'user' in a ? a.user : a;

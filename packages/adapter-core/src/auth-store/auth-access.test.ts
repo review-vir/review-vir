@@ -340,12 +340,13 @@ describe('legacy auth token migration', () => {
 describe(saveServiceAuthTokens.name, () => {
     it('rejects empty encryption key', async () => {
         await assert.throws(
-            () =>
-                saveServiceAuthTokens({
+            () => {
+                return saveServiceAuthTokens({
                     authTokens: [],
                     secretEncryptionKey: '',
                     serviceName: mockServiceName,
-                }),
+                });
+            },
             {
                 matchMessage: 'Missing encryption key',
             },

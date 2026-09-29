@@ -55,7 +55,7 @@ export async function fetchAnnualReview(
         authTokens.GitHub.map(async (authToken) => {
             return fetchGithubGraphql({
                 authToken,
-                createQuery: (cursor) => {
+                createQuery(cursor) {
                     log.faint(
                         `Loading ${authToken.authTokenName} annual review page ${pageCount}...`,
                     );
@@ -104,7 +104,7 @@ export async function fetchAnnualReview(
                     };
                 },
                 responseShape: annualReviewDataShape,
-                getPageInfo: ({search}) => {
+                getPageInfo({search}) {
                     return search.pageInfo;
                 },
             });

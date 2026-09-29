@@ -54,8 +54,10 @@ export const VirAuthTokenEntry = defineElement<{
                     ${listen(VirServiceAuthTokens.events.authTokensChange, (event) => {
                         dispatch(
                             new events.authTokensChange({
-                                ...inputs.authTokensWithEdits,
-                                [serviceName]: event.detail,
+                                detail: {
+                                    ...inputs.authTokensWithEdits,
+                                    [serviceName]: event.detail,
+                                },
                             }),
                         );
                     })}

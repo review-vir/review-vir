@@ -28,75 +28,80 @@ export const VirUser = defineElement<{
 }>()({
     tagName: 'vir-user',
     hostClasses: {
-        'vir-user-faded': ({inputs}) => inputs.fadedAvatar,
+        'vir-user-faded'({inputs}) {
+            return inputs.fadedAvatar;
+        },
     },
-    styles: ({hostClasses}) => css`
-        :host {
-            ${viraIconCssVars['vira-icon-fill-color'].name}: ${viraTheme.colors[themeDefaultKey]
-                .background.value};
-        }
+    styles({hostClasses}) {
+        return css`
+            :host {
+                ${viraIconCssVars['vira-icon-fill-color'].name}: ${viraTheme.colors[themeDefaultKey]
+                    .background.value};
+            }
 
-        a {
-            display: flex;
-            align-items: center;
-        }
+            a {
+                display: flex;
+                align-items: center;
+            }
 
-        ${hostClasses['vir-user-faded'].selector} ${ViraImage} {
-            opacity: 0.75;
-        }
+            ${hostClasses['vir-user-faded'].selector} ${ViraImage} {
+                opacity: 0.75;
+            }
 
-        ${ViraImage} {
-            max-height: ${avatarSize}px;
-            max-width: ${avatarSize}px;
-            min-height: ${avatarSize}px;
-            min-width: ${avatarSize}px;
-            box-sizing: border-box;
-            margin: 1px 0;
-        }
+            ${ViraImage} {
+                max-height: ${avatarSize}px;
+                max-width: ${avatarSize}px;
+                min-height: ${avatarSize}px;
+                min-width: ${avatarSize}px;
+                box-sizing: border-box;
+                margin: 1px 0;
+            }
 
-        ${ViraIcon} {
-            color: ${sharedColors.error};
-        }
+            ${ViraIcon} {
+                color: ${sharedColors.error};
+            }
 
-        ${ViraIcon}.success {
-            color: ${sharedColors.success};
-        }
+            ${ViraIcon}.success {
+                color: ${sharedColors.success};
+            }
 
-        .avatar-border {
-            position: absolute;
-            left: -1px;
-            border-radius: 50%;
-            border: 3px solid ${viraTheme.colors['vira-grey-foreground-invisible'].foreground.value};
-            box-sizing: border-box;
-            height: ${avatarSize + 2}px;
-            width: ${avatarSize + 2}px;
-            pointer-events: none;
-        }
+            .avatar-border {
+                position: absolute;
+                left: -1px;
+                border-radius: 50%;
+                border: 3px solid
+                    ${viraTheme.colors['vira-grey-foreground-invisible'].foreground.value};
+                box-sizing: border-box;
+                height: ${avatarSize + 2}px;
+                width: ${avatarSize + 2}px;
+                pointer-events: none;
+            }
 
-        .avatar {
-            display: flex;
-            border-radius: 50%;
-            background-color: ${viraTheme.colors[themeDefaultKey].background.value};
-        }
+            .avatar {
+                display: flex;
+                border-radius: 50%;
+                background-color: ${viraTheme.colors[themeDefaultKey].background.value};
+            }
 
-        .avatar-and-review-wrapper {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            gap: 1px;
-        }
+            .avatar-and-review-wrapper {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                gap: 1px;
+            }
 
-        .is-primary .avatar-border {
-            border-color: ${sharedColors.primary};
-        }
-        .is-code-owner .avatar-border {
-            border-color: ${sharedColors.codeOwner};
-        }
+            .is-primary .avatar-border {
+                border-color: ${sharedColors.primary};
+            }
+            .is-code-owner .avatar-border {
+                border-color: ${sharedColors.codeOwner};
+            }
 
-        .placeholder {
-            visibility: hidden;
-        }
-    `,
+            .placeholder {
+                visibility: hidden;
+            }
+        `;
+    },
     render({inputs}) {
         const review: PullRequestReview | undefined =
             'user' in inputs.user ? inputs.user : undefined;

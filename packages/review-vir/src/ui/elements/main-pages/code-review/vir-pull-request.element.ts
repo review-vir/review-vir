@@ -28,8 +28,9 @@ export const pullRequestMaxWidth = 800;
 const statusHostClasses = arrayToObject(getEnumValues(PullRequestDisplayStatus), (enumValue) => {
     return {
         key: `vir-pull-request-status-${enumValue}`,
-        value: ({inputs}: {inputs: {pullRequest: Readonly<PullRequest>}}) =>
-            inputs.pullRequest.status.displayStatus === enumValue,
+        value({inputs}: {inputs: {pullRequest: Readonly<PullRequest>}}) {
+            return inputs.pullRequest.status.displayStatus === enumValue;
+        },
     };
 });
 
@@ -135,160 +136,165 @@ export const VirPullRequest = defineElement<{
     tagName: 'vir-pull-request',
     hostClasses: {
         ...statusHostClasses,
-        'vir-pull-request-reviewed': ({inputs}) =>
-            !inputs.pullRequest.currentUser.isAssignee &&
-            inputs.pullRequest.currentUser.hasReviewed,
+        'vir-pull-request-reviewed'({inputs}) {
+            return (
+                !inputs.pullRequest.currentUser.isAssignee &&
+                inputs.pullRequest.currentUser.hasReviewed
+            );
+        },
     },
     cssVars: {
         'vir-pull-request-border-color': defaultPullRequestBorderColor,
         'vir-pull-request-icon-color': defaultPullRequestBorderColor,
     },
-    styles: ({hostClasses, cssVars}) => css`
-        :host {
-            display: flex;
-            width: 100%;
-            max-width: ${pullRequestMaxWidth}px;
-        }
+    styles({hostClasses, cssVars}) {
+        return css`
+            :host {
+                display: flex;
+                width: 100%;
+                max-width: ${pullRequestMaxWidth}px;
+            }
 
-        .child-marker {
-            flex-shrink: 0;
-            color: ${defaultPullRequestBorderColor};
-            height: 40px;
-            width: 40px;
-            font-size: 2em;
-            font-weight: bold;
-            transform: rotate(-90deg);
-        }
+            .child-marker {
+                flex-shrink: 0;
+                color: ${defaultPullRequestBorderColor};
+                height: 40px;
+                width: 40px;
+                font-size: 2em;
+                font-weight: bold;
+                transform: rotate(-90deg);
+            }
 
-        .pull-request {
-            display: flex;
-            gap: 4px;
-            flex-direction: column;
-            border-radius: 8px;
-            border: 2px solid ${cssVars['vir-pull-request-border-color'].value};
-            padding: 6px 8px;
-            width: 100%;
-            overflow: hidden;
-            box-sizing: border-box;
-        }
+            .pull-request {
+                display: flex;
+                gap: 4px;
+                flex-direction: column;
+                border-radius: 8px;
+                border: 2px solid ${cssVars['vir-pull-request-border-color'].value};
+                padding: 6px 8px;
+                width: 100%;
+                overflow: hidden;
+                box-sizing: border-box;
+            }
 
-        .pull-request-number,
-        .branches {
-            opacity: 0.4;
-        }
+            .pull-request-number,
+            .branches {
+                opacity: 0.4;
+            }
 
-        :host(
-                .vir-pull-request-status-${unsafeCSS(
-                        PullRequestDisplayStatus.BuildFailureInProgress,
-                    )}
-            )
-            .status-failures {
-            border-color: ${sharedColors.inProgress};
-        }
+            :host(
+                    .vir-pull-request-status-${unsafeCSS(
+                            PullRequestDisplayStatus.BuildFailureInProgress,
+                        )}
+                )
+                .status-failures {
+                border-color: ${sharedColors.inProgress};
+            }
 
-        ${unsafeCSS(statusStyles)}
+            ${unsafeCSS(statusStyles)}
 
-        ${hostClasses['vir-pull-request-reviewed'].selector}, :host(
+            ${hostClasses['vir-pull-request-reviewed'].selector}, :host(
                 .vir-pull-request-status-${unsafeCSS(PullRequestDisplayStatus.Draft)}
             ) {
-            opacity: 0.3;
+                opacity: 0.3;
 
-            ${cssVars['vir-pull-request-border-color'].name}: ${unsafeCSS(
-                cssVars['vir-pull-request-border-color'].default,
-            )};
-        }
-
-        .branches {
-            display: flex;
-            gap: 4px;
-
-            & .repo-name,
-            & .branch-name {
-                white-space: nowrap;
+                ${cssVars['vir-pull-request-border-color'].name}: ${unsafeCSS(
+                    cssVars['vir-pull-request-border-color'].default,
+                )};
             }
 
-            & .repo-name {
-                margin-right: 4px;
-            }
-
-            & .branch-name {
-                user-select: all;
-                -webkit-user-select: all;
-                text-overflow: ellipsis;
-                overflow: hidden;
-            }
-        }
-
-        .double-row {
-            display: flex;
-            gap: 8px;
-
-            & .left {
+            .branches {
                 display: flex;
-                flex-grow: 1;
-                flex-direction: column;
                 gap: 4px;
-                overflow: hidden;
 
-                & .top-row {
+                & .repo-name,
+                & .branch-name {
+                    white-space: nowrap;
+                }
+
+                & .repo-name {
+                    margin-right: 4px;
+                }
+
+                & .branch-name {
+                    user-select: all;
+                    -webkit-user-select: all;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                }
+            }
+
+            .double-row {
+                display: flex;
+                gap: 8px;
+
+                & .left {
                     display: flex;
+                    flex-grow: 1;
+                    flex-direction: column;
                     gap: 4px;
+                    overflow: hidden;
 
-                    & .status-failures {
-                        box-sizing: border-box;
+                    & .top-row {
                         display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        height: 24px;
-                        width: 24px;
-                        flex-shrink: 0;
-                        color: ${sharedColors.error};
-                        border-radius: 50%;
-                        border: 1.5px solid ${sharedColors.error};
-                    }
+                        gap: 4px;
 
-                    & .assignees {
-                        margin-right: 8px;
-                    }
-
-                    & .labels {
-                        display: flex;
-                        white-space: nowrap;
-                        flex-shrink: 1;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        align-items: center;
-                        gap: 8px;
-                        font-size: 0.8em;
-                        opacity: 0.4;
-                    }
-
-                    & .status-icon {
-                        ${viraIconCssVars['vira-icon-stroke-color'].name}: ${cssVars[
-                            'vir-pull-request-icon-color'
-                        ].value};
-                    }
-
-                    & .stats {
-                        display: flex;
-                        opacity: 0.4;
-                        align-items: center;
-                        margin-left: auto;
-
-                        & > * {
-                            padding: 0 2px;
+                        & .status-failures {
+                            box-sizing: border-box;
                             display: flex;
                             align-items: center;
+                            justify-content: center;
+                            height: 24px;
+                            width: 24px;
+                            flex-shrink: 0;
+                            color: ${sharedColors.error};
+                            border-radius: 50%;
+                            border: 1.5px solid ${sharedColors.error};
+                        }
+
+                        & .assignees {
+                            margin-right: 8px;
+                        }
+
+                        & .labels {
+                            display: flex;
+                            white-space: nowrap;
+                            flex-shrink: 1;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            align-items: center;
+                            gap: 8px;
+                            font-size: 0.8em;
+                            opacity: 0.4;
+                        }
+
+                        & .status-icon {
+                            ${viraIconCssVars['vira-icon-stroke-color'].name}: ${cssVars[
+                                'vir-pull-request-icon-color'
+                            ].value};
+                        }
+
+                        & .stats {
+                            display: flex;
+                            opacity: 0.4;
+                            align-items: center;
+                            margin-left: auto;
+
+                            & > * {
+                                padding: 0 2px;
+                                display: flex;
+                                align-items: center;
+                            }
                         }
                     }
-                }
 
-                & .title {
-                    font-weight: bold;
+                    & .title {
+                        font-weight: bold;
+                    }
                 }
             }
-        }
-    `,
+        `;
+    },
     render({inputs}) {
         const statusIconSvg = statusConfigs[inputs.pullRequest.status.displayStatus].icon;
         const failCount: number = inputs.pullRequest.status.checksStatus?.failCount || 0;
@@ -314,11 +320,11 @@ export const VirPullRequest = defineElement<{
               `
             : nothing;
 
-        const labelTemplates = inputs.pullRequest.status.pullRequestLabels.map(
-            (label) => html`
+        const labelTemplates = inputs.pullRequest.status.pullRequestLabels.map((label) => {
+            return html`
                 <span class="label">${label.name}</span>
-            `,
-        );
+            `;
+        });
 
         return html`
             ${childMarkerTemplate}

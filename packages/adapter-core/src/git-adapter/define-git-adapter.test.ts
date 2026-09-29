@@ -166,9 +166,11 @@ describe(GitAdapter.name, () => {
             milliseconds: 100,
         });
 
-        await waitUntil.isTruthy(() =>
-            events.find((event) => event.type === gitAdapterEvents.GitUpdatesStoppedEvent.name),
-        );
+        await waitUntil.isTruthy(() => {
+            return events.find(
+                (event) => event.type === gitAdapterEvents.GitUpdatesStoppedEvent.name,
+            );
+        });
 
         assert.deepEquals(events, [
             {
@@ -196,9 +198,11 @@ describe(GitAdapter.name, () => {
             milliseconds: 100,
         });
 
-        await waitUntil.isTruthy(() =>
-            events.find((event) => event.type === gitAdapterEvents.GitUpdatesStoppedEvent.name),
-        );
+        await waitUntil.isTruthy(() => {
+            return events.find(
+                (event) => event.type === gitAdapterEvents.GitUpdatesStoppedEvent.name,
+            );
+        });
 
         assert.deepEquals(events, [
             {
@@ -329,9 +333,11 @@ describe(GitAdapter.name, () => {
             milliseconds: 100,
         });
 
-        await waitUntil.isTruthy(() =>
-            events.find((event) => event.type === gitAdapterEvents.GitUpdatesStoppedEvent.name),
-        );
+        await waitUntil.isTruthy(() => {
+            return events.find(
+                (event) => event.type === gitAdapterEvents.GitUpdatesStoppedEvent.name,
+            );
+        });
 
         /** Wait long enough that, if auto-updates were still running, more events would land. */
         await wait({

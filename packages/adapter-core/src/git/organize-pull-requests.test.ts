@@ -234,9 +234,9 @@ describe(organizePullRequests.name, () => {
             return {
                 pullRequest: unwrapPullRequests(pullRequest.pullRequest),
                 isChained: pullRequest.isChained,
-                children: pullRequest.children.map((childPullRequest) =>
-                    unwrapPullRequests(childPullRequest),
-                ),
+                children: pullRequest.children.map((childPullRequest) => {
+                    return unwrapPullRequests(childPullRequest);
+                }),
             };
         } else {
             return pullRequest.id.prId;

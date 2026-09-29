@@ -73,7 +73,11 @@ export const VirPausedBanner = defineElement<{
                     color: ViraColorVariant.Positive,
                 })}
                     ${listen('click', () => {
-                        dispatch(new events.resume());
+                        dispatch(
+                            new events.resume({
+                                detail: undefined,
+                            }),
+                        );
                     })}
                 ></${ViraButton}>
             </div>

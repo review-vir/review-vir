@@ -193,10 +193,12 @@ export const VirCodeReview = defineElement<{
         ) {
             dispatch(
                 new ChangeRouteEvent({
-                    paths: [
-                        ReviewVirMainPath.CodeReview,
-                        selectedOrgName,
-                    ],
+                    detail: {
+                        paths: [
+                            ReviewVirMainPath.CodeReview,
+                            selectedOrgName,
+                        ],
+                    },
                 }),
             );
         }
@@ -248,25 +250,27 @@ export const VirCodeReview = defineElement<{
             ([
                 serviceName,
                 paused,
-            ]) => html`
-                <${VirPausedBanner.assign({
-                    serviceName,
-                    message: paused.message,
-                    resetAt: paused.resetAt,
-                })}
-                    ${listen(VirPausedBanner.events.resume, () => {
-                        if (!state.gitLoader) {
-                            return;
-                        }
-                        updateState({
-                            pausedAdapters: omitObjectKeys(state.pausedAdapters, [
-                                serviceName,
-                            ]),
-                        });
-                        state.gitLoader.restartService(serviceName);
+            ]) => {
+                return html`
+                    <${VirPausedBanner.assign({
+                        serviceName,
+                        message: paused.message,
+                        resetAt: paused.resetAt,
                     })}
-                ></${VirPausedBanner}>
-            `,
+                        ${listen(VirPausedBanner.events.resume, () => {
+                            if (!state.gitLoader) {
+                                return;
+                            }
+                            updateState({
+                                pausedAdapters: omitObjectKeys(state.pausedAdapters, [
+                                    serviceName,
+                                ]),
+                            });
+                            state.gitLoader.restartService(serviceName);
+                        })}
+                    ></${VirPausedBanner}>
+                `;
+            },
         );
 
         return html`

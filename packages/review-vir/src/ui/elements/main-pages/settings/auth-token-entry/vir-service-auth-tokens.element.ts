@@ -80,7 +80,11 @@ export const VirServiceAuthTokens = defineElement<{
 
                 makeWritable(authTokenToEdit)[fieldToEdit] = value;
 
-                dispatch(new events.authTokensChange(newAuthTokens));
+                dispatch(
+                    new events.authTokensChange({
+                        detail: newAuthTokens,
+                    }),
+                );
             }
 
             return html`
@@ -124,7 +128,11 @@ export const VirServiceAuthTokens = defineElement<{
                                     [authTokenIndex],
                                 );
 
-                                dispatch(new events.authTokensChange(newAuthTokens));
+                                dispatch(
+                                    new events.authTokensChange({
+                                        detail: newAuthTokens,
+                                    }),
+                                );
                             })}
                         ></${ViraButton}>
                     </div>
@@ -134,14 +142,14 @@ export const VirServiceAuthTokens = defineElement<{
 
         const tokenDescription = serviceAuthTokenDescriptions[inputs.serviceName];
 
-        const permissionRows = tokenDescription.permissions.map(
-            (permission) => html`
+        const permissionRows = tokenDescription.permissions.map((permission) => {
+            return html`
                 <tr>
                     <td>${permission.label}</td>
                     <td>${permission.value}</td>
                 </tr>
-            `,
-        );
+            `;
+        });
 
         return html`
             <h2>${inputs.serviceName}</h2>
@@ -160,12 +168,12 @@ export const VirServiceAuthTokens = defineElement<{
                 class="add-token-button"
                 ${listen('click', () => {
                     dispatch(
-                        new events.authTokensChange(
-                            inputs.authTokens.concat({
+                        new events.authTokensChange({
+                            detail: inputs.authTokens.concat({
                                 authTokenName: '',
                                 authTokenSecret: '',
                             }),
-                        ),
+                        }),
                     );
                 })}
             ></${ViraButton}>

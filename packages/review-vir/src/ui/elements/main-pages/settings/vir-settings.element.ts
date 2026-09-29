@@ -76,23 +76,25 @@ export const VirSettings = defineElement<{
             html`
                 <span>Loading tokens...</span>
             `,
-            (resolvedSettings) => html`
-                <${VirAuthTokenEntry.assign({
-                    authTokensWithEdits:
-                        state.editedSettings?.authTokens || resolvedSettings.authTokens,
-                    disabled: state.isSaving,
-                    secretEncryptionKey: inputs.secretEncryptionKey,
-                })}
-                    ${listen(VirAuthTokenEntry.events.authTokensChange, (event) => {
-                        updateState({
-                            editedSettings: {
-                                ...(state.editedSettings || resolvedSettings),
-                                authTokens: event.detail,
-                            },
-                        });
+            (resolvedSettings) => {
+                return html`
+                    <${VirAuthTokenEntry.assign({
+                        authTokensWithEdits:
+                            state.editedSettings?.authTokens || resolvedSettings.authTokens,
+                        disabled: state.isSaving,
+                        secretEncryptionKey: inputs.secretEncryptionKey,
                     })}
-                ></${VirAuthTokenEntry}>
-            `,
+                        ${listen(VirAuthTokenEntry.events.authTokensChange, (event) => {
+                            updateState({
+                                editedSettings: {
+                                    ...(state.editedSettings || resolvedSettings),
+                                    authTokens: event.detail,
+                                },
+                            });
+                        })}
+                    ></${VirAuthTokenEntry}>
+                `;
+            },
         );
 
         const saveButtonTitle = state.editedSettings ? undefined : 'No changes have been made yet.';
@@ -121,9 +123,9 @@ export const VirSettings = defineElement<{
                                 serviceName,
                                 authTokens,
                             ]) => {
-                                authTokens.forEach((authToken) =>
-                                    assertValidAuthToken(authToken, serviceName),
-                                );
+                                authTokens.forEach((authToken) => {
+                                    return assertValidAuthToken(authToken, serviceName);
+                                });
 
                                 await saveServiceAuthTokens({
                                     authTokens,
@@ -150,14 +152,24 @@ export const VirSettings = defineElement<{
                     seconds: 1,
                 });
 
-                dispatch(new events.settingsChange(state.editedSettings));
+                dispatch(
+                    new events.settingsChange({
+                        detail: state.editedSettings,
+                    }),
+                );
                 updateState({
                     editedSettings: undefined,
                 });
-                dispatch(new ChangeRouteEvent(defaultReviewVirFullRoute));
-                await waitUntil(() =>
-                    window.location.pathname.startsWith('/' + defaultReviewVirFullRoute.paths[0]),
+                dispatch(
+                    new ChangeRouteEvent({
+                        detail: defaultReviewVirFullRoute,
+                    }),
                 );
+                await waitUntil(() => {
+                    return window.location.pathname.startsWith(
+                        '/' + defaultReviewVirFullRoute.paths[0],
+                    );
+                });
 
                 globalThis.location.reload();
             } finally {
@@ -183,7 +195,11 @@ export const VirSettings = defineElement<{
                         updateState({
                             editedSettings: undefined,
                         });
-                        dispatch(new ChangeRouteEvent(defaultReviewVirFullRoute));
+                        dispatch(
+                            new ChangeRouteEvent({
+                                detail: defaultReviewVirFullRoute,
+                            }),
+                        );
                     })}
                 ></${ViraButton}>
                 <${ViraButton.assign({

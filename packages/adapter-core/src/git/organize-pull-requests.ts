@@ -174,17 +174,20 @@ export function createChainedPullRequests(
                     pullRequest.pullRequest.branches.targetBranch.repo.repoName,
                     pullRequest.pullRequest.branches.targetBranch.branchName,
                 ].join('/')
-            ]?.filter(
-                (pullRequest) =>
-                    /**
-                     * Remove branches pull requests that target themselves because
-                     *
-                     * 1. That makes no sense
-                     * 2. It'll mess up all our logic
-                     * 3. It'll create circular references
-                     */
-                    pullRequest.pullRequest.branches.headBranch.branchName !==
-                    pullRequest.pullRequest.branches.targetBranch.branchName,
+            ]?.filter((pullRequest) =>
+                /**
+                 * Remove branches pull requests that target themselves because
+                 *
+                 * 1. That makes no sense
+                 * 2. It'll mess up all our logic
+                 * 3. It'll create circular references
+                 */
+                {
+                    return (
+                        pullRequest.pullRequest.branches.headBranch.branchName !==
+                        pullRequest.pullRequest.branches.targetBranch.branchName
+                    );
+                },
             );
 
             if (targetPullRequests) {
@@ -212,13 +215,14 @@ export function createChainedPullRequests(
 
     return Object.values(chainedPullRequests)
         .flat()
-        .filter(
-            (pullRequest) =>
-                /**
-                 * Remove all chained pull requests because they will be included as children pull
-                 * requests anyway.
-                 */
-                !pullRequest.isChained,
+        .filter((pullRequest) =>
+            /**
+             * Remove all chained pull requests because they will be included as children pull
+             * requests anyway.
+             */
+            {
+                return !pullRequest.isChained;
+            },
         )
         .sort((a, b) => {
             const bTimeOrder: number = isDateAfter({

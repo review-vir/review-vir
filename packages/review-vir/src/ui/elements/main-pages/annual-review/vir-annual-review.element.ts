@@ -60,13 +60,13 @@ export const VirAnnualReview = defineElement<{
                 </div>
             `,
             (data) => {
-                const pullRequestTemplates = data.map(
-                    (pullRequest) => html`
+                const pullRequestTemplates = data.map((pullRequest) => {
+                    return html`
                         <${VirAnnualReviewPullRequest.assign({
                             pullRequest,
                         })}></${VirAnnualReviewPullRequest}>
-                    `,
-                );
+                    `;
+                });
 
                 return html`
                     <section class="pull-request-list">${pullRequestTemplates}</section>

@@ -53,11 +53,11 @@ export function parseInsertedCodeOwners(body: string): string[] | undefined {
     const userTags = Array.from(ownerLines.matchAll(userTagRegExp));
 
     return removeDuplicates(
-        userTags.map((userTag) =>
-            removePrefix({
+        userTags.map((userTag) => {
+            return removePrefix({
                 value: userTag[0],
                 prefix: '@',
-            }),
-        ),
+            });
+        }),
     );
 }

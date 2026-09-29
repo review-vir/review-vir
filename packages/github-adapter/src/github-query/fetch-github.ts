@@ -12,7 +12,7 @@ export async function fetchGithubPullRequests(
     return combineResponseData(
         await fetchGithubGraphql({
             authToken,
-            createQuery: (cursor) => {
+            createQuery(cursor) {
                 return {
                     query: githubSearchQuery,
                     variables: {
@@ -21,7 +21,7 @@ export async function fetchGithubPullRequests(
                 };
             },
             responseShape: githubSearchShape,
-            getPageInfo: (data) => {
+            getPageInfo(data) {
                 return data.search.pageInfo;
             },
             fetch,
@@ -39,24 +39,20 @@ function combineResponseData(responses: ReadonlyArray<Readonly<GithubSearch>>): 
             ...lastResponse.rateLimit,
             cost: responses
                 .map((response) => response.rateLimit.cost)
-                .reduce(
-                    (total, current) =>
-                        sum({
-                            a: total,
-                            b: current,
-                        }),
-                    0,
-                ),
+                .reduce((total, current) => {
+                    return sum({
+                        a: total,
+                        b: current,
+                    });
+                }, 0),
             nodeCount: responses
                 .map((response) => response.rateLimit.nodeCount)
-                .reduce(
-                    (total, current) =>
-                        sum({
-                            a: total,
-                            b: current,
-                        }),
-                    0,
-                ),
+                .reduce((total, current) => {
+                    return sum({
+                        a: total,
+                        b: current,
+                    });
+                }, 0),
         },
         viewer: lastResponse.viewer,
         search: {

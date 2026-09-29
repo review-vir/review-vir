@@ -84,10 +84,12 @@ export const VirOrgSelector = defineElement<{
                             ${listen('click', () => {
                                 dispatch(
                                     new ChangeRouteEvent({
-                                        paths: [
-                                            ReviewVirMainPath.CodeReview,
-                                            orgName,
-                                        ],
+                                        detail: {
+                                            paths: [
+                                                ReviewVirMainPath.CodeReview,
+                                                orgName,
+                                            ],
+                                        },
                                     }),
                                 );
                             })}
