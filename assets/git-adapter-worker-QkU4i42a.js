@@ -353,7 +353,7 @@ if(!this.updateInterval)return;let e=fo(this.updateInterval,{milliseconds:!0}).m
             }
         }
     }
-`,variables:{afterCursor:e}}},responseShape:MD,getPageInfo(e){return e.search.pageInfo},fetch:t}));return BD(n,(await Promise.all(u(n.search.nodes.filter(zD),{chunkSize:10}).map(async n=>await LD({authToken:e,createQuery(){return{query:`
+`,variables:{afterCursor:e}}},responseShape:MD,getPageInfo(e){return e.search.pageInfo},fetch:t}));return BD(n,(await Promise.all(u(n.search.nodes.filter(zD),{chunkSize:100}).map(async n=>await LD({authToken:e,createQuery(){return{query:`
     query ($pullRequestIds: [ID!]!) {
         rateLimit {
             cost
