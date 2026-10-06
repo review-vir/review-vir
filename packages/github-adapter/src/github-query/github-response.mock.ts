@@ -35,6 +35,7 @@ export const mockGithubSearch = {
                 },
                 url: 'https://github.com/review-vir/fake-repo/pull/1',
                 mergeable: 'MERGEABLE',
+                reviewDecision: null,
                 headRepository: {
                     name: 'fake-repo',
                     owner: {
@@ -83,23 +84,62 @@ export const mockGithubSearch = {
                             commit: {
                                 statusCheckRollup: {
                                     contexts: {
-                                        nodes: [
+                                        checkRunCountsByState: [
                                             {
-                                                __typename: 'CheckRun',
-                                                name: 'test',
-                                                databaseId: 1,
-                                                conclusion: 'SUCCESS',
-                                                status: 'COMPLETED',
-                                                checkSuite: {
-                                                    workflowRun: {
-                                                        workflow: {
-                                                            name: 'build',
-                                                        },
-                                                    },
-                                                },
+                                                count: 0,
+                                                state: 'ACTION_REQUIRED',
                                             },
                                             {
-                                                __typename: 'StatusContext',
+                                                count: 0,
+                                                state: 'CANCELLED',
+                                            },
+                                            {
+                                                count: 0,
+                                                state: 'COMPLETED',
+                                            },
+                                            {
+                                                count: 1,
+                                                state: 'FAILURE',
+                                            },
+                                            {
+                                                count: 0,
+                                                state: 'IN_PROGRESS',
+                                            },
+                                            {
+                                                count: 5,
+                                                state: 'NEUTRAL',
+                                            },
+                                            {
+                                                count: 0,
+                                                state: 'PENDING',
+                                            },
+                                            {
+                                                count: 1,
+                                                state: 'QUEUED',
+                                            },
+                                            {
+                                                count: 0,
+                                                state: 'SKIPPED',
+                                            },
+                                            {
+                                                count: 0,
+                                                state: 'STALE',
+                                            },
+                                            {
+                                                count: 0,
+                                                state: 'STARTUP_FAILURE',
+                                            },
+                                            {
+                                                count: 16,
+                                                state: 'SUCCESS',
+                                            },
+                                            {
+                                                count: 0,
+                                                state: 'TIMED_OUT',
+                                            },
+                                            {
+                                                count: 0,
+                                                state: 'WAITING',
                                             },
                                         ],
                                     },
@@ -173,6 +213,7 @@ export const mockGithubSearch = {
                 },
                 url: 'https://github.com/review-vir/fake-repo/pull/2',
                 mergeable: 'MERGEABLE',
+                reviewDecision: null,
                 headRepository: {
                     name: 'fake-repo',
                     owner: {
@@ -216,23 +257,62 @@ export const mockGithubSearch = {
                             commit: {
                                 statusCheckRollup: {
                                     contexts: {
-                                        nodes: [
+                                        checkRunCountsByState: [
                                             {
-                                                __typename: 'CheckRun',
-                                                name: 'test',
-                                                databaseId: 1,
-                                                conclusion: 'SUCCESS',
-                                                status: 'COMPLETED',
-                                                checkSuite: {
-                                                    workflowRun: {
-                                                        workflow: {
-                                                            name: 'build',
-                                                        },
-                                                    },
-                                                },
+                                                count: 0,
+                                                state: 'ACTION_REQUIRED',
                                             },
                                             {
-                                                __typename: 'StatusContext',
+                                                count: 0,
+                                                state: 'CANCELLED',
+                                            },
+                                            {
+                                                count: 0,
+                                                state: 'COMPLETED',
+                                            },
+                                            {
+                                                count: 3,
+                                                state: 'FAILURE',
+                                            },
+                                            {
+                                                count: 0,
+                                                state: 'IN_PROGRESS',
+                                            },
+                                            {
+                                                count: 5,
+                                                state: 'NEUTRAL',
+                                            },
+                                            {
+                                                count: 0,
+                                                state: 'PENDING',
+                                            },
+                                            {
+                                                count: 0,
+                                                state: 'QUEUED',
+                                            },
+                                            {
+                                                count: 8,
+                                                state: 'SKIPPED',
+                                            },
+                                            {
+                                                count: 0,
+                                                state: 'STALE',
+                                            },
+                                            {
+                                                count: 0,
+                                                state: 'STARTUP_FAILURE',
+                                            },
+                                            {
+                                                count: 5,
+                                                state: 'SUCCESS',
+                                            },
+                                            {
+                                                count: 0,
+                                                state: 'TIMED_OUT',
+                                            },
+                                            {
+                                                count: 0,
+                                                state: 'WAITING',
                                             },
                                         ],
                                     },

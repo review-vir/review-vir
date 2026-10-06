@@ -36,7 +36,10 @@ export async function fetchGithubGraphql<ResponseShape extends Shape>({
     fetch = globalThis.fetch,
 }: Readonly<{
     authToken: Readonly<AuthToken>;
-    createQuery: (cursor: string | null) => {query: string; variables?: Record<string, Primitive>};
+    createQuery: (cursor: string | null) => {
+        query: string;
+        variables?: Record<string, Primitive | ReadonlyArray<Primitive>>;
+    };
     responseShape: ResponseShape;
     getPageInfo?: (data: ResponseShape['runtimeType']) => {
         endCursor: string | null;

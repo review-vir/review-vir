@@ -1,43 +1,31 @@
 import {assert, assertWrap} from '@augment-vir/assert';
 import {describe, it} from '@augment-vir/test';
+import {PullRequestDisplayStatus} from '@review-vir/adapter-core';
 import {assertValidShape} from 'object-shape-tester';
 import {mockGithubSearch} from './github-query/github-response.mock.js';
 import {
     GithubGraphqlCheckRunConclusion,
+    GithubMergeStateStatus,
     githubPullRequestShape,
-    type GithubCheckRun,
+    GithubReviewDecision,
+    type GithubPullRequest,
 } from './github-query/graphql-query.js';
 import {parseGithubPullRequest} from './parse-github-data.js';
 
-function createCheckRun({
-    name,
-    databaseId,
-    conclusion,
-}: Readonly<Pick<GithubCheckRun, 'name' | 'databaseId' | 'conclusion'>>): GithubCheckRun {
-    return {
-        __typename: 'CheckRun',
-        name,
-        databaseId,
-        conclusion,
-        status: conclusion
-            ? GithubGraphqlCheckRunConclusion.Completed
-            : GithubGraphqlCheckRunConclusion.InProgress,
-        checkSuite: {
-            workflowRun: {
-                workflow: {
-                    name: 'PR Checks',
-                },
-            },
-        },
-    };
-}
-
-function parseChecks(checkRuns: ReadonlyArray<Readonly<GithubCheckRun>>) {
+function parseWithFailedCheck({
+    mergeStateStatus,
+    reviewDecision,
+}: Readonly<Pick<GithubPullRequest, 'mergeStateStatus' | 'reviewDecision'>>) {
     const mockPullRequest = assertWrap.isDefined(mockGithubSearch.search.nodes[0]);
     assertValidShape(mockPullRequest, githubPullRequestShape);
 
     const rawPullRequest = {
         ...mockPullRequest,
+        mergeStateStatus,
+        reviewDecision,
+        reviewThreads: {
+            nodes: [],
+        },
         commits: {
             ...mockPullRequest.commits,
             nodes: [
@@ -45,10 +33,18 @@ function parseChecks(checkRuns: ReadonlyArray<Readonly<GithubCheckRun>>) {
                     commit: {
                         statusCheckRollup: {
                             contexts: {
-                                nodes: [
-                                    ...checkRuns,
+                                checkRunCountsByState: [
                                     {
-                                        __typename: 'StatusContext',
+                                        count: 1,
+                                        state: GithubGraphqlCheckRunConclusion.Cancelled,
+                                    },
+                                    {
+                                        count: 1,
+                                        state: GithubGraphqlCheckRunConclusion.Failure,
+                                    },
+                                    {
+                                        count: 3,
+                                        state: GithubGraphqlCheckRunConclusion.Success,
                                     },
                                 ],
                             },
@@ -60,7 +56,7 @@ function parseChecks(checkRuns: ReadonlyArray<Readonly<GithubCheckRun>>) {
     };
     assertValidShape(rawPullRequest, githubPullRequestShape);
 
-    return parseGithubPullRequest({
+    const pullRequest = parseGithubPullRequest({
         authTokenName: 'test auth token',
         currentUser: {
             avatarUrl: '',
@@ -69,61 +65,59 @@ function parseChecks(checkRuns: ReadonlyArray<Readonly<GithubCheckRun>>) {
         },
         raw: rawPullRequest,
         serviceName: 'GitHub',
-    }).status.checksStatus;
+    });
+
+    return {
+        failCount: pullRequest.status.checksStatus?.failCount,
+        displayStatus: pullRequest.status.displayStatus,
+    };
 }
 
 describe(parseGithubPullRequest.name, () => {
     it('does not count cancelled check runs as failures', () => {
         assert.deepEquals(
-            parseChecks([
-                createCheckRun({
-                    name: 'a',
-                    databaseId: 1,
-                    conclusion: GithubGraphqlCheckRunConclusion.Cancelled,
-                }),
-                createCheckRun({
-                    name: 'b',
-                    databaseId: 2,
-                    conclusion: GithubGraphqlCheckRunConclusion.Failure,
-                }),
-            ]),
+            parseWithFailedCheck({
+                reviewDecision: null,
+            }),
             {
-                successCount: 0,
                 failCount: 1,
-                inProgressCount: 0,
-                totalCount: 2,
+                displayStatus: PullRequestDisplayStatus.BuildFailureFinished,
             },
         );
     });
-    it('only counts the latest run of each check', () => {
+    it('ignores failures when required checks are passing', () => {
         assert.deepEquals(
-            parseChecks([
-                createCheckRun({
-                    name: 'Check PR',
-                    databaseId: 3,
-                    conclusion: GithubGraphqlCheckRunConclusion.Success,
-                }),
-                createCheckRun({
-                    name: 'Check PR',
-                    databaseId: 1,
-                    conclusion: GithubGraphqlCheckRunConclusion.Failure,
-                }),
-                createCheckRun({
-                    name: 'Check PR',
-                    databaseId: 2,
-                    conclusion: GithubGraphqlCheckRunConclusion.Failure,
-                }),
-                createCheckRun({
-                    name: 'lint',
-                    databaseId: 4,
-                    conclusion: null,
-                }),
-            ]),
+            parseWithFailedCheck({
+                mergeStateStatus: GithubMergeStateStatus.Clean,
+                reviewDecision: GithubReviewDecision.Approved,
+            }),
             {
-                successCount: 1,
                 failCount: 0,
-                inProgressCount: 1,
-                totalCount: 2,
+                displayStatus: PullRequestDisplayStatus.ReadyToMerge,
+            },
+        );
+    });
+    it('shows reviews instead of failures when blocked on reviews', () => {
+        assert.deepEquals(
+            parseWithFailedCheck({
+                mergeStateStatus: GithubMergeStateStatus.Blocked,
+                reviewDecision: GithubReviewDecision.ReviewRequired,
+            }),
+            {
+                failCount: 0,
+                displayStatus: PullRequestDisplayStatus.Waiting,
+            },
+        );
+    });
+    it('keeps failures when blocked with reviews done', () => {
+        assert.deepEquals(
+            parseWithFailedCheck({
+                mergeStateStatus: GithubMergeStateStatus.Blocked,
+                reviewDecision: GithubReviewDecision.Approved,
+            }),
+            {
+                failCount: 1,
+                displayStatus: PullRequestDisplayStatus.BuildFailureFinished,
             },
         );
     });

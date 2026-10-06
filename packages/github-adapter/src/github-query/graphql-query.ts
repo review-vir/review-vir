@@ -1,7 +1,7 @@
 import {
     defineShape,
     enumShape,
-    exactShape,
+    nullableShape,
     optionalShape,
     unionShape,
     unknownShape,
@@ -39,7 +39,6 @@ export enum GithubGraphqlCheckRunConclusion {
     Stale = 'STALE',
     StartupFailure = 'STARTUP_FAILURE',
     Success = 'SUCCESS',
-    Requested = 'REQUESTED',
     TimedOut = 'TIMED_OUT',
     Waiting = 'WAITING',
 }
@@ -56,6 +55,30 @@ export enum GithubMergeableState {
     Mergeable = 'MERGEABLE',
     Conflicting = 'CONFLICTING',
     Unknown = 'UNKNOWN',
+}
+
+export enum GithubMergeStateStatus {
+    Behind = 'BEHIND',
+    Blocked = 'BLOCKED',
+    Clean = 'CLEAN',
+    Dirty = 'DIRTY',
+    Draft = 'DRAFT',
+    HasHooks = 'HAS_HOOKS',
+    Unknown = 'UNKNOWN',
+    Unstable = 'UNSTABLE',
+}
+
+/** Merge states where the base branch's required checks aren't blocking the merge. */
+export const requiredChecksPassingMergeStates = [
+    GithubMergeStateStatus.Clean,
+    GithubMergeStateStatus.HasHooks,
+    GithubMergeStateStatus.Unstable,
+] as const satisfies ReadonlyArray<GithubMergeStateStatus>;
+
+export enum GithubReviewDecision {
+    Approved = 'APPROVED',
+    ChangesRequested = 'CHANGES_REQUESTED',
+    ReviewRequired = 'REVIEW_REQUIRED',
 }
 
 export const failedCheckRunConclusions = [
@@ -77,7 +100,6 @@ export const pendingCheckRunConclusions = [
     GithubGraphqlCheckRunConclusion.InProgress,
     GithubGraphqlCheckRunConclusion.Pending,
     GithubGraphqlCheckRunConclusion.Queued,
-    GithubGraphqlCheckRunConclusion.Requested,
     GithubGraphqlCheckRunConclusion.Waiting,
 ] as const satisfies ReadonlyArray<GithubGraphqlCheckRunConclusion>;
 
@@ -89,26 +111,11 @@ const githubUserSearchResponseShape = defineShape({
 });
 export type GithubUserSearchResponse = typeof githubUserSearchResponseShape.runtimeType;
 
-const githubCheckRunShape = defineShape({
-    __typename: exactShape('CheckRun'),
-    name: '',
-    databaseId: 0,
-    /** `null` until the check run has completed. */
-    conclusion: unionShape(null, enumShape(GithubGraphqlCheckRunConclusion)),
-    status: enumShape(GithubGraphqlCheckRunConclusion),
-    checkSuite: {
-        workflowRun: unionShape(
-            /** `null` for check runs that weren't created by GitHub Actions. */
-            null,
-            {
-                workflow: {
-                    name: '',
-                },
-            },
-        ),
-    },
+const githubRunCheckStateShape = defineShape({
+    count: 0,
+    state: enumShape(GithubGraphqlCheckRunConclusion),
 });
-export type GithubCheckRun = typeof githubCheckRunShape.runtimeType;
+export type GithubRunCheckState = typeof githubRunCheckStateShape.runtimeType;
 
 const githubReviewShape = defineShape({
     state: enumShape(GithubGraphqlReviewState),
@@ -130,6 +137,13 @@ export const githubPullRequestShape = defineShape({
     body: '',
     bodyText: '',
     mergeable: enumShape(GithubMergeableState),
+    /**
+     * Not part of {@link githubSearchQuery}: it's slow for GitHub to compute, so it's fetched
+     * separately with {@link githubMergeStateQuery}, and only for pull requests that need it.
+     */
+    mergeStateStatus: nullableShape(enumShape(GithubMergeStateStatus)),
+    /** `null` when the base branch doesn't require reviews. */
+    reviewDecision: unionShape(null, enumShape(GithubReviewDecision)),
     headRef: {
         name: '',
     },
@@ -173,11 +187,7 @@ export const githubPullRequestShape = defineShape({
                             null,
                             {
                                 contexts: {
-                                    nodes: [
-                                        unionShape(githubCheckRunShape, {
-                                            __typename: exactShape('StatusContext'),
-                                        }),
-                                    ],
+                                    checkRunCountsByState: [githubRunCheckStateShape],
                                 },
                             },
                         ),
@@ -270,10 +280,10 @@ export const githubSearchQuery = /* GraphQL */ `
             login
             url
         }
-        # first 36 = cost of 3
-        # first 35 = cost of 2
+        # first 42 = cost of 3
+        # first 41 = cost of 2
         search(
-            first: 35
+            first: 41
             after: $afterCursor
             query: "is:open type:pr archived:false involves:@me"
             type: ISSUE
@@ -298,6 +308,7 @@ export const githubSearchQuery = /* GraphQL */ `
                     }
                     url
                     mergeable
+                    reviewDecision
                     headRepository {
                         name
                         owner {
@@ -346,22 +357,10 @@ export const githubSearchQuery = /* GraphQL */ `
                         nodes {
                             commit {
                                 statusCheckRollup {
-                                    contexts(last: 100) {
-                                        nodes {
-                                            __typename
-                                            ... on CheckRun {
-                                                name
-                                                databaseId
-                                                conclusion
-                                                status
-                                                checkSuite {
-                                                    workflowRun {
-                                                        workflow {
-                                                            name
-                                                        }
-                                                    }
-                                                }
-                                            }
+                                    contexts {
+                                        checkRunCountsByState {
+                                            count
+                                            state
                                         }
                                     }
                                 }
@@ -421,6 +420,40 @@ export const githubSearchQuery = /* GraphQL */ `
                         }
                     }
                 }
+            }
+        }
+    }
+`;
+
+export const githubMergeStateShape = defineShape({
+    rateLimit: {
+        cost: 1,
+        nodeCount: 0,
+    },
+    nodes: [
+        unionShape(null, {
+            id: '',
+            mergeStateStatus: enumShape(GithubMergeStateStatus),
+        }),
+    ],
+});
+export type GithubMergeState = typeof githubMergeStateShape.runtimeType;
+
+/**
+ * Includes `mergeStateStatus` because check run counts include check runs that have since been
+ * re-run, and fine-grained personal access tokens can't read individual check runs to filter those
+ * out. GitHub's merge state only considers the latest run of each required check.
+ */
+export const githubMergeStateQuery = /* GraphQL */ `
+    query ($pullRequestIds: [ID!]!) {
+        rateLimit {
+            cost
+            nodeCount
+        }
+        nodes(ids: $pullRequestIds) {
+            ... on PullRequest {
+                id
+                mergeStateStatus
             }
         }
     }

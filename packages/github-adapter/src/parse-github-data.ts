@@ -1,5 +1,5 @@
 import {check} from '@augment-vir/assert';
-import {arrayToObject, getObjectTypedValues, typedObjectFromEntries} from '@augment-vir/common';
+import {arrayToObject, typedObjectFromEntries} from '@augment-vir/common';
 import {
     PullRequestDisplayStatus,
     PullRequestMergeStatus,
@@ -16,10 +16,13 @@ import {
     failedCheckRunConclusions,
     GithubGraphqlReviewState,
     GithubMergeableState,
+    GithubMergeStateStatus,
+    GithubReviewDecision,
     pendingCheckRunConclusions,
+    requiredChecksPassingMergeStates,
     successCheckRunConclusions,
-    type GithubCheckRun,
     type GithubPullRequest,
+    type GithubRunCheckState,
     type GithubUserSearchResponse,
 } from './github-query/graphql-query.js';
 
@@ -116,9 +119,7 @@ export function parseGithubPullRequest({
             gitServiceName: serviceName,
         },
         status: {
-            checksStatus: parseStates(
-                raw.commits.nodes[0]?.commit.statusCheckRollup?.contexts.nodes,
-            ),
+            checksStatus: parseChecks(raw),
             comments: parseComments(raw.reviewThreads.nodes),
             commitCount: raw.commits.totalCount,
             mergeStatus,
@@ -152,7 +153,7 @@ export function parseGithubPullRequest({
         ...pullRequest,
         status: {
             ...pullRequest.status,
-            displayStatus: determineDisplayStatus(pullRequest),
+            displayStatus: determineDisplayStatus(pullRequest, raw.mergeStateStatus),
         },
     };
 }
@@ -262,53 +263,55 @@ function parseReviews(
     );
 }
 
+/**
+ * Check run counts include check runs that have since been re-run, so their failures can be stale.
+ * Those failures are ignored when GitHub's merge state shows that they aren't what's blocking the
+ * merge.
+ */
+function parseChecks(raw: Readonly<GithubPullRequest>): PullRequestChecks | undefined {
+    const checks = parseStates(
+        raw.commits.nodes[0]?.commit.statusCheckRollup?.contexts.checkRunCountsByState,
+    );
+
+    if (!checks?.failCount) {
+        return checks;
+    }
+
+    const isWaitingOnReviews =
+        raw.reviewDecision === GithubReviewDecision.ReviewRequired ||
+        raw.reviewDecision === GithubReviewDecision.ChangesRequested ||
+        raw.reviewThreads.nodes.some((thread) => !thread.isResolved);
+    const areFailuresIgnored =
+        check.hasValue(requiredChecksPassingMergeStates, raw.mergeStateStatus) ||
+        (raw.mergeStateStatus === GithubMergeStateStatus.Blocked && isWaitingOnReviews);
+
+    return areFailuresIgnored
+        ? {
+              ...checks,
+              failCount: 0,
+          }
+        : checks;
+}
+
 function parseStates(
     /** Sometimes this is undefined even if nothing is wrong. */
-    contexts: ReadonlyArray<Readonly<{__typename: string} | GithubCheckRun>> | undefined,
+    checkStates: ReadonlyArray<Readonly<GithubRunCheckState>> | undefined,
 ): PullRequestChecks | undefined {
-    if (!contexts) {
+    if (!checkStates) {
         return undefined;
     }
 
-    /**
-     * Re-running a workflow leaves its old check runs attached to the commit, so only the latest
-     * run of each check counts (which is what GitHub's merge box shows).
-     */
-    const latestCheckRuns = getObjectTypedValues(
-        contexts.reduce<Record<string, Readonly<GithubCheckRun>>>((accum, context) => {
-            if (!('databaseId' in context)) {
-                return accum;
+    const results = checkStates.reduce(
+        (accum, checkState) => {
+            if (check.hasValue(failedCheckRunConclusions, checkState.state)) {
+                accum.failCount += checkState.count;
+            } else if (check.hasValue(pendingCheckRunConclusions, checkState.state)) {
+                accum.inProgressCount += checkState.count;
+            } else if (check.hasValue(successCheckRunConclusions, checkState.state)) {
+                accum.successCount += checkState.count;
             }
-            const key = [
-                context.checkSuite.workflowRun?.workflow.name,
-                context.name,
-            ].join('/');
-            const existing = accum[key];
-
-            return existing && existing.databaseId > context.databaseId
-                ? accum
-                : {
-                      ...accum,
-                      [key]: context,
-                  };
-        }, {}),
-    );
-
-    return latestCheckRuns.reduce(
-        (accum, checkRun) => {
-            const state = checkRun.conclusion ?? checkRun.status;
-
-            return {
-                successCount:
-                    accum.successCount +
-                    (check.hasValue(successCheckRunConclusions, state) ? 1 : 0),
-                failCount:
-                    accum.failCount + (check.hasValue(failedCheckRunConclusions, state) ? 1 : 0),
-                inProgressCount:
-                    accum.inProgressCount +
-                    (check.hasValue(pendingCheckRunConclusions, state) ? 1 : 0),
-                totalCount: accum.totalCount + 1,
-            };
+            accum.totalCount++;
+            return accum;
         },
         {
             successCount: 0,
@@ -317,10 +320,13 @@ function parseStates(
             totalCount: 0,
         },
     );
+
+    return results;
 }
 
 function determineDisplayStatus(
     pullRequest: OmitDeep<PullRequest, 'status.displayStatus'>,
+    mergeStateStatus: GithubMergeStateStatus | null | undefined,
 ): PullRequestDisplayStatus {
     if (pullRequest.status.mergeStatus === PullRequestMergeStatus.Draft) {
         return PullRequestDisplayStatus.Draft;
@@ -351,7 +357,9 @@ function determineDisplayStatus(
                 /** Any rejected review blocks merging. */
                 return user.reviewStatus === PullRequestReviewStatus.Rejected;
             }
-        })
+        }) ||
+        /** GitHub can block merging for reasons review-vir doesn't otherwise track. */
+        mergeStateStatus === GithubMergeStateStatus.Blocked
     ) {
         return PullRequestDisplayStatus.Waiting;
     } else {
