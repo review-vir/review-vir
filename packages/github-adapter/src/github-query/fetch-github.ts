@@ -38,10 +38,14 @@ export async function fetchGithubPullRequests(
         }),
     );
 
-    /** Merge states only matter for failures, the only counts that re-run check runs inflate. */
+    /**
+     * Merge states only matter for failures, the only counts that re-run check runs inflate. Each
+     * query costs 1 no matter how many ids it has, up to GitHub's limit of 100, so they aren't
+     * split up further to keep the total query cost down.
+     */
     const mergeStateResponses = await Promise.all(
         chunkArray(searchData.search.nodes.filter(hasFailedChecks), {
-            chunkSize: 10,
+            chunkSize: 100,
         }).map(async (pullRequests) => {
             return await fetchGithubGraphql({
                 authToken,
