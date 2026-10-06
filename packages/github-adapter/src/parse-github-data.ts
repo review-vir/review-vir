@@ -1,5 +1,5 @@
 import {check} from '@augment-vir/assert';
-import {arrayToObject, typedObjectFromEntries} from '@augment-vir/common';
+import {arrayToObject, getObjectTypedValues, typedObjectFromEntries} from '@augment-vir/common';
 import {
     PullRequestDisplayStatus,
     PullRequestMergeStatus,
@@ -18,8 +18,8 @@ import {
     GithubMergeableState,
     pendingCheckRunConclusions,
     successCheckRunConclusions,
+    type GithubCheckRun,
     type GithubPullRequest,
-    type GithubRunCheckState,
     type GithubUserSearchResponse,
 } from './github-query/graphql-query.js';
 
@@ -117,7 +117,7 @@ export function parseGithubPullRequest({
         },
         status: {
             checksStatus: parseStates(
-                raw.commits.nodes[0]?.commit.statusCheckRollup?.contexts.checkRunCountsByState,
+                raw.commits.nodes[0]?.commit.statusCheckRollup?.contexts.nodes,
             ),
             comments: parseComments(raw.reviewThreads.nodes),
             commitCount: raw.commits.totalCount,
@@ -264,23 +264,51 @@ function parseReviews(
 
 function parseStates(
     /** Sometimes this is undefined even if nothing is wrong. */
-    checkStates: ReadonlyArray<Readonly<GithubRunCheckState>> | undefined,
+    contexts: ReadonlyArray<Readonly<{__typename: string} | GithubCheckRun>> | undefined,
 ): PullRequestChecks | undefined {
-    if (!checkStates) {
+    if (!contexts) {
         return undefined;
     }
 
-    const results = checkStates.reduce(
-        (accum, checkState) => {
-            if (check.hasValue(failedCheckRunConclusions, checkState.state)) {
-                accum.failCount += checkState.count;
-            } else if (check.hasValue(pendingCheckRunConclusions, checkState.state)) {
-                accum.inProgressCount += checkState.count;
-            } else if (check.hasValue(successCheckRunConclusions, checkState.state)) {
-                accum.successCount += checkState.count;
+    /**
+     * Re-running a workflow leaves its old check runs attached to the commit, so only the latest
+     * run of each check counts (which is what GitHub's merge box shows).
+     */
+    const latestCheckRuns = getObjectTypedValues(
+        contexts.reduce<Record<string, Readonly<GithubCheckRun>>>((accum, context) => {
+            if (!('databaseId' in context)) {
+                return accum;
             }
-            accum.totalCount++;
-            return accum;
+            const key = [
+                context.checkSuite.workflowRun?.workflow.name,
+                context.name,
+            ].join('/');
+            const existing = accum[key];
+
+            return existing && existing.databaseId > context.databaseId
+                ? accum
+                : {
+                      ...accum,
+                      [key]: context,
+                  };
+        }, {}),
+    );
+
+    return latestCheckRuns.reduce(
+        (accum, checkRun) => {
+            const state = checkRun.conclusion ?? checkRun.status;
+
+            return {
+                successCount:
+                    accum.successCount +
+                    (check.hasValue(successCheckRunConclusions, state) ? 1 : 0),
+                failCount:
+                    accum.failCount + (check.hasValue(failedCheckRunConclusions, state) ? 1 : 0),
+                inProgressCount:
+                    accum.inProgressCount +
+                    (check.hasValue(pendingCheckRunConclusions, state) ? 1 : 0),
+                totalCount: accum.totalCount + 1,
+            };
         },
         {
             successCount: 0,
@@ -289,8 +317,6 @@ function parseStates(
             totalCount: 0,
         },
     );
-
-    return results;
 }
 
 function determineDisplayStatus(

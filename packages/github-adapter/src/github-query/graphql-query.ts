@@ -1,4 +1,11 @@
-import {defineShape, enumShape, optionalShape, unionShape, unknownShape} from 'object-shape-tester';
+import {
+    defineShape,
+    enumShape,
+    exactShape,
+    optionalShape,
+    unionShape,
+    unknownShape,
+} from 'object-shape-tester';
 
 export const githubGraphqlErrorShape = defineShape({
     extensions: optionalShape(unknownShape()),
@@ -32,6 +39,7 @@ export enum GithubGraphqlCheckRunConclusion {
     Stale = 'STALE',
     StartupFailure = 'STARTUP_FAILURE',
     Success = 'SUCCESS',
+    Requested = 'REQUESTED',
     TimedOut = 'TIMED_OUT',
     Waiting = 'WAITING',
 }
@@ -69,6 +77,7 @@ export const pendingCheckRunConclusions = [
     GithubGraphqlCheckRunConclusion.InProgress,
     GithubGraphqlCheckRunConclusion.Pending,
     GithubGraphqlCheckRunConclusion.Queued,
+    GithubGraphqlCheckRunConclusion.Requested,
     GithubGraphqlCheckRunConclusion.Waiting,
 ] as const satisfies ReadonlyArray<GithubGraphqlCheckRunConclusion>;
 
@@ -80,11 +89,26 @@ const githubUserSearchResponseShape = defineShape({
 });
 export type GithubUserSearchResponse = typeof githubUserSearchResponseShape.runtimeType;
 
-const githubRunCheckStateShape = defineShape({
-    count: 0,
-    state: enumShape(GithubGraphqlCheckRunConclusion),
+const githubCheckRunShape = defineShape({
+    __typename: exactShape('CheckRun'),
+    name: '',
+    databaseId: 0,
+    /** `null` until the check run has completed. */
+    conclusion: unionShape(null, enumShape(GithubGraphqlCheckRunConclusion)),
+    status: enumShape(GithubGraphqlCheckRunConclusion),
+    checkSuite: {
+        workflowRun: unionShape(
+            /** `null` for check runs that weren't created by GitHub Actions. */
+            null,
+            {
+                workflow: {
+                    name: '',
+                },
+            },
+        ),
+    },
 });
-export type GithubRunCheckState = typeof githubRunCheckStateShape.runtimeType;
+export type GithubCheckRun = typeof githubCheckRunShape.runtimeType;
 
 const githubReviewShape = defineShape({
     state: enumShape(GithubGraphqlReviewState),
@@ -149,7 +173,11 @@ export const githubPullRequestShape = defineShape({
                             null,
                             {
                                 contexts: {
-                                    checkRunCountsByState: [githubRunCheckStateShape],
+                                    nodes: [
+                                        unionShape(githubCheckRunShape, {
+                                            __typename: exactShape('StatusContext'),
+                                        }),
+                                    ],
                                 },
                             },
                         ),
@@ -242,10 +270,10 @@ export const githubSearchQuery = /* GraphQL */ `
             login
             url
         }
-        # first 42 = cost of 3
-        # first 41 = cost of 2
+        # first 36 = cost of 3
+        # first 35 = cost of 2
         search(
-            first: 41
+            first: 35
             after: $afterCursor
             query: "is:open type:pr archived:false involves:@me"
             type: ISSUE
@@ -318,10 +346,22 @@ export const githubSearchQuery = /* GraphQL */ `
                         nodes {
                             commit {
                                 statusCheckRollup {
-                                    contexts {
-                                        checkRunCountsByState {
-                                            count
-                                            state
+                                    contexts(last: 100) {
+                                        nodes {
+                                            __typename
+                                            ... on CheckRun {
+                                                name
+                                                databaseId
+                                                conclusion
+                                                status
+                                                checkSuite {
+                                                    workflowRun {
+                                                        workflow {
+                                                            name
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
                                 }
