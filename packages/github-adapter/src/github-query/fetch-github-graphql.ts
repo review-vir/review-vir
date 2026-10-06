@@ -5,7 +5,7 @@ import {assertValidShape, ShapeMismatchError, type Shape} from 'object-shape-tes
 import type {Primitive} from 'type-fest';
 import {githubGraphqlErrorShape} from './graphql-query.js';
 
-function extractRateLimitResetDate(headers: Readonly<Headers>) {
+export function extractRateLimitResetDate(headers: Readonly<Headers>) {
     const rawReset = headers.get('x-ratelimit-reset');
     if (!rawReset) {
         return undefined;
@@ -21,7 +21,7 @@ function isRateLimitError(error: AnyObject) {
     return error.type === 'RATE_LIMIT' || error.code === 'graphql_rate_limit';
 }
 
-function isRateLimitHttpResponse(response: Readonly<Response>) {
+export function isRateLimitHttpResponse(response: Readonly<Response>) {
     return (
         response.status === 429 ||
         (response.status === 403 && response.headers.get('x-ratelimit-remaining') === '0')

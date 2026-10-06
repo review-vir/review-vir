@@ -138,8 +138,9 @@ export const githubPullRequestShape = defineShape({
     bodyText: '',
     mergeable: enumShape(GithubMergeableState),
     /**
-     * Not part of {@link githubSearchQuery}: it's slow for GitHub to compute, so it's fetched
-     * separately with {@link githubMergeStateQuery}, and only for pull requests that need it.
+     * Not part of {@link githubSearchQuery}: it's slow for GitHub to compute and wrong when queried
+     * for multiple pull requests at once, so it's fetched separately from the REST API, and only
+     * for pull requests that need it.
      */
     mergeStateStatus: nullableShape(enumShape(GithubMergeStateStatus)),
     /** `null` when the base branch doesn't require reviews. */
@@ -425,36 +426,8 @@ export const githubSearchQuery = /* GraphQL */ `
     }
 `;
 
-export const githubMergeStateShape = defineShape({
-    rateLimit: {
-        cost: 1,
-        nodeCount: 0,
-    },
-    nodes: [
-        unionShape(null, {
-            id: '',
-            mergeStateStatus: enumShape(GithubMergeStateStatus),
-        }),
-    ],
+/** The only part of GitHub's REST API pull request response that's used. */
+export const githubRestPullRequestShape = defineShape({
+    /** Lowercase {@link GithubMergeStateStatus} values. */
+    mergeable_state: '',
 });
-export type GithubMergeState = typeof githubMergeStateShape.runtimeType;
-
-/**
- * Includes `mergeStateStatus` because check run counts include check runs that have since been
- * re-run, and fine-grained personal access tokens can't read individual check runs to filter those
- * out. GitHub's merge state only considers the latest run of each required check.
- */
-export const githubMergeStateQuery = /* GraphQL */ `
-    query ($pullRequestIds: [ID!]!) {
-        rateLimit {
-            cost
-            nodeCount
-        }
-        nodes(ids: $pullRequestIds) {
-            ... on PullRequest {
-                id
-                mergeStateStatus
-            }
-        }
-    }
-`;
