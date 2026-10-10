@@ -1463,9 +1463,9 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
             gap: 8px;
             font-weight: bold;
         }
-    `,events:{resume:nO()},state(){return{now:TT(),tickIntervalId:void 0}},init({updateState:e}){e({tickIntervalId:globalThis.setInterval(()=>{e({now:TT()})},5e3)})},cleanup({state:e}){globalThis.clearInterval(e.tickIntervalId)},render({inputs:e,state:t,dispatch:n,events:r}){let i=!e.resetAt||wT({fullDate:t.now,relativeTo:e.resetAt}),a=e.resetAt?` Resets at ${kT(e.resetAt,{dateStyle:`short`,timeStyle:`short`})}.`:``;return q`
+    `,events:{resume:nO()},state(){return{now:TT(),tickIntervalId:void 0}},init({updateState:e}){e({tickIntervalId:globalThis.setInterval(()=>{e({now:TT()})},5e3)})},cleanup({state:e}){globalThis.clearInterval(e.tickIntervalId)},render({inputs:e,state:t,dispatch:n,events:r}){let i=!e.resetAt||wT({fullDate:t.now,relativeTo:e.resetAt});return q`
             <div class="header">Auto-updates paused for ${e.serviceName}</div>
-            <div>${e.message}${a}</div>
+            <div>${e.message}</div>
             <div>
                 <${_N.assign({text:`Resume now`,isDisabled:!i,color:WM.Positive})}
                     ${CO(`click`,()=>{n(new r.resume({detail:void 0}))})}
