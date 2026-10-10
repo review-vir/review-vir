@@ -1,5 +1,5 @@
 import {colorCss} from '@electrovir/color';
-import {getNowInUserTimezone, isDateAfter, toLocaleString, type FullDate} from 'date-vir';
+import {getNowInUserTimezone, isDateAfter, type FullDate} from 'date-vir';
 import {css, defineElement, defineElementEvent, html, listen} from 'element-vir';
 import {ViraButton, ViraColorVariant, viraTheme} from 'vira';
 
@@ -56,16 +56,10 @@ export const VirPausedBanner = defineElement<{
                 fullDate: state.now,
                 relativeTo: inputs.resetAt,
             });
-        const resetSuffix = inputs.resetAt
-            ? ` Resets at ${toLocaleString(inputs.resetAt, {
-                  dateStyle: 'short',
-                  timeStyle: 'short',
-              })}.`
-            : '';
 
         return html`
             <div class="header">Auto-updates paused for ${inputs.serviceName}</div>
-            <div>${inputs.message}${resetSuffix}</div>
+            <div>${inputs.message}</div>
             <div>
                 <${ViraButton.assign({
                     text: 'Resume now',
