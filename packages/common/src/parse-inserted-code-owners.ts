@@ -61,3 +61,98 @@ export function parseInsertedCodeOwners(body: string): string[] | undefined {
         }),
     );
 }
+
+/**
+ * The second alternative is the older layout, which put each owner alone on the line above a plain
+ * `<summary>Owned files</summary>`.
+ */
+const ownerRegExp = /^\s*(?:<summary>@([\w-]+) Owned files<\/summary>|@([\w-]+))\s*$/;
+const fileLinkTextRegExp = /^\s*-\s+\[((?:\\.|[^\\\]])*)\]\(/;
+
+/**
+ * Same as {@link parseInsertedCodeOwners} but maps each owner username to the file paths listed
+ * under them, with pull-request-vir's link text escaping (`\\`, `\[`, `\]`) undone.
+ *
+ * Usernames keep the case they were written with. The pull request author never has an entry, and
+ * neither does anyone in the legacy `**Code owners**: @user` format, since that format doesn't say
+ * which files belong to whom. Returns `undefined` when the body has no inserted code owners block.
+ *
+ * Like {@link parseInsertedCodeOwners}, this must run against the raw markdown `body`.
+ *
+ * @category Main
+ * @example
+ *
+ * ```ts
+ * parseInsertedCodeOwnerFiles(
+ *     [
+ *         '<!-- code owners start -->',
+ *         '## Code Owners',
+ *         '<details>',
+ *         '<summary>@my-name Owned files</summary>',
+ *         '',
+ *         '- [src/\\[id\\].ts](https://github.com/o/r/pull/1/files#diff-abc)',
+ *         '',
+ *         '</details>',
+ *         '<!-- code owners end -->',
+ *     ].join('\n'),
+ * ); // {'my-name': ['src/[id].ts']}
+ * ```
+ */
+export function parseInsertedCodeOwnerFiles(body: string): Record<string, string[]> | undefined {
+    const [
+        ,
+        block,
+    ] = safeMatch(body, insertedCodeOwnersRegExp);
+
+    if (block == undefined) {
+        return undefined;
+    }
+
+    return block.split('\n').reduce<{
+        currentOwner: string | undefined;
+        filesByOwner: Record<string, string[]>;
+    }>(
+        (state, line) => {
+            const [
+                ,
+                summaryOwner,
+                lineOwner,
+            ] = safeMatch(line, ownerRegExp);
+            const owner = summaryOwner || lineOwner;
+
+            if (owner) {
+                return {
+                    currentOwner: owner,
+                    filesByOwner: {
+                        ...state.filesByOwner,
+                        [owner]: state.filesByOwner[owner] || [],
+                    },
+                };
+            }
+
+            const [
+                ,
+                escapedFilePath,
+            ] = safeMatch(line, fileLinkTextRegExp);
+
+            if (escapedFilePath == undefined || !state.currentOwner) {
+                return state;
+            }
+
+            return {
+                currentOwner: state.currentOwner,
+                filesByOwner: {
+                    ...state.filesByOwner,
+                    [state.currentOwner]: [
+                        ...(state.filesByOwner[state.currentOwner] || []),
+                        escapedFilePath.replaceAll(/\\([\\[\]])/g, '$1'),
+                    ],
+                },
+            };
+        },
+        {
+            currentOwner: undefined,
+            filesByOwner: {},
+        },
+    ).filesByOwner;
+}
