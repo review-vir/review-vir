@@ -2,8 +2,6 @@ import {copyThroughJson, filterOutIndexes, makeWritable} from '@augment-vir/comm
 import {type AuthToken} from '@review-vir/adapter-core';
 import {css, defineElement, defineElementEvent, html, listen} from 'element-vir';
 import {
-    CloseX24Icon,
-    Plus24Icon,
     ViraButton,
     ViraColorVariant,
     ViraEmphasis,
@@ -12,6 +10,7 @@ import {
     noNativeSpacing,
 } from 'vira';
 import {type GitServiceName} from '../../../../../data/all-adapters.js';
+import {CloseX24Icon, Plus24Icon} from '../../../../icons.js';
 import {serviceAuthTokenDescriptions} from './token-descriptions.js';
 
 export type AuthTokenEntryError = {

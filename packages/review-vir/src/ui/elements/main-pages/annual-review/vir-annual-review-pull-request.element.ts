@@ -1,6 +1,6 @@
 import {toFormattedString} from 'date-vir';
 import {css, defineElement, html} from 'element-vir';
-import {Document24Icon, ViraIcon, ViraLink, viraTheme} from 'vira';
+import {LucideFileIcon, ViraIcon, ViraLink, viraTheme} from 'vira';
 import type {AnnualReviewPullRequest} from '../../../../data/annual-review.js';
 import {sharedColors} from '../../../styles/color.js';
 
@@ -78,7 +78,7 @@ export const VirAnnualReviewPullRequest = defineElement<{pullRequest: AnnualRevi
                         : 's'} changed"
                 >
                     <${ViraIcon.assign({
-                        icon: Document24Icon,
+                        icon: LucideFileIcon,
                     })}></${ViraIcon}>
                     ${inputs.pullRequest.changedFiles}
                 </span>

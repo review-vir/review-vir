@@ -5,15 +5,8 @@ import {
 } from '@review-vir/adapter-core';
 import {classMap, css, defineElement, html, ifDefined, nothing} from 'element-vir';
 import {themeDefaultKey} from 'theme-vir';
-import {
-    StatusFailure24Icon,
-    StatusSuccess24Icon,
-    ViraIcon,
-    viraIconCssVars,
-    ViraImage,
-    viraTheme,
-    type ViraIconSvg,
-} from 'vira';
+import {ViraIcon, viraIconCssVars, ViraImage, viraTheme, type ViraIconSvg} from 'vira';
+import {StatusFailure24Icon, StatusSuccess24Icon} from '../../../icons.js';
 import {sharedColors} from '../../../styles/color.js';
 import {avatarSize} from '../../../styles/size.js';
 

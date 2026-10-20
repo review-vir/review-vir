@@ -2,21 +2,24 @@ import {arrayToObject, getEnumValues, getObjectTypedEntries} from '@augment-vir/
 import {PullRequestDisplayStatus, type PullRequest} from '@review-vir/adapter-core';
 import {css, defineElement, html, ifDefined, nothing, unsafeCSS, type CSSResult} from 'element-vir';
 import {
-    Chat24Icon,
-    Commit24Icon,
-    Document24Icon,
-    Pencil24Icon,
-    Shield24Icon,
-    Star24Icon,
-    StatusFailure24Icon,
-    StatusInProgress24Icon,
-    StatusSuccess24Icon,
+    LucideFileIcon,
+    LucideGitCommitVerticalIcon,
+    LucideMessageCircleIcon,
     ViraIcon,
     viraIconCssVars,
     ViraLink,
     viraTheme,
     type ViraIconSvg,
 } from 'vira';
+import {
+    Chat24Icon,
+    Pencil24Icon,
+    Shield24Icon,
+    Star24Icon,
+    StatusFailure24Icon,
+    StatusInProgress24Icon,
+    StatusSuccess24Icon,
+} from '../../../icons.js';
 import {sharedColors} from '../../../styles/color.js';
 import {VirUsers} from './vir-users.element.js';
 
@@ -365,7 +368,7 @@ export const VirPullRequest = defineElement<{
                                         : 's'} changed"
                                 >
                                     <${ViraIcon.assign({
-                                        icon: Document24Icon,
+                                        icon: LucideFileIcon,
                                     })}></${ViraIcon}>
                                     ${inputs.pullRequest.changes.changedFiles}
                                 </span>
@@ -377,7 +380,7 @@ export const VirPullRequest = defineElement<{
                                         : 's'}"
                                 >
                                     <${ViraIcon.assign({
-                                        icon: Chat24Icon,
+                                        icon: LucideMessageCircleIcon,
                                     })}></${ViraIcon}>
                                     ${inputs.pullRequest.status.comments.resolved}/${inputs
                                         .pullRequest.status.comments.total}
@@ -389,7 +392,7 @@ export const VirPullRequest = defineElement<{
                                         : 's'}"
                                 >
                                     <${ViraIcon.assign({
-                                        icon: Commit24Icon,
+                                        icon: LucideGitCommitVerticalIcon,
                                     })}></${ViraIcon}>
                                     ${inputs.pullRequest.status.commitCount}
                                 </span>

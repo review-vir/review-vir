@@ -1,6 +1,7 @@
 import {css, defineElement, html} from 'element-vir';
-import {Options24Icon, ViraIcon, ViraLink, ViraThemeSwitcher} from 'vira';
+import {ViraIcon, ViraLink, ViraThemeSwitcher} from 'vira';
 import {ReviewVirMainPath, type ReviewVirRouter} from '../../../data/routing.js';
+import {Options24Icon} from '../../icons.js';
 
 export const VirHeader = defineElement<{
     router: Readonly<ReviewVirRouter>;

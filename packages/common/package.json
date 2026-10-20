@@ -1,6 +1,6 @@
 {
     "name": "@review-vir/common",
-    "version": "3.1.6",
+    "version": "3.1.7",
     "description": "Common functionality that review-vir primary uses but other external packages need as well.",
     "keywords": [
         "review-vir",
@@ -46,7 +46,7 @@
         "@web/test-runner-playwright": "^1.0.0",
         "@web/test-runner-visual-regression": "^1.0.1",
         "istanbul-smart-text-reporter": "^1.1.5",
-        "markdown-code-example-inserter": "^3.0.6",
+        "markdown-code-example-inserter": "^3.1.1",
         "typedoc": "^0.28.20",
         "typescript": "^6.0.3"
     },

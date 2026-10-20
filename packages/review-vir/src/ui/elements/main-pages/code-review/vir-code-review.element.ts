@@ -17,10 +17,9 @@ import {
     type TemplateResult,
 } from 'element-vir';
 import {
-    Copy24Icon,
-    createSizedIcon,
     LoaderAnimated24Icon,
-    StatusSuccess24Icon,
+    LucideCircleCheckIcon,
+    LucideCopyIcon,
     ViraButton,
     ViraColorVariant,
     ViraEmphasis,
@@ -297,10 +296,7 @@ export const VirCodeReview = defineElement<{
                             : nothing}
                     </span>
                     <${ViraButton.assign({
-                        icon: createSizedIcon(
-                            state.showCopiedSuccess ? StatusSuccess24Icon : Copy24Icon,
-                            16,
-                        ),
+                        icon: state.showCopiedSuccess ? LucideCircleCheckIcon : LucideCopyIcon,
                         buttonEmphasis: ViraEmphasis.Subtle,
                         buttonSize: ViraSize.Small,
                         color: state.showCopiedSuccess

@@ -1,6 +1,6 @@
 {
     "name": "@review-vir/adapter-core",
-    "version": "3.1.6",
+    "version": "3.1.7",
     "description": "Core functionality for review-vir adapters.",
     "keywords": [
         "review-vir",
@@ -38,7 +38,7 @@
     "dependencies": {
         "@augment-vir/assert": "^32.5.0",
         "@augment-vir/common": "^32.5.0",
-        "date-vir": "^9.2.1",
+        "date-vir": "^9.4.0",
         "local-db-client": "^2.0.1",
         "localforage-esm": "^1.10.2",
         "object-shape-tester": "^6.15.1",
