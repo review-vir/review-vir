@@ -1424,10 +1424,19 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
             color: ${lI.success};
         }
 
+        /**
+         * Baseline instead of center alignment: browsers disagree on where flex-centered text lands
+         * (Firefox puts icons ~2px lower than Chromium), while the text baseline is consistent
+         * everywhere.
+         */
         .stat,
         .stats {
             display: flex;
-            align-items: center;
+            align-items: baseline;
+        }
+
+        .stat ${$} {
+            translate: 0 0.125em;
         }
 
         .stats {
@@ -1849,16 +1858,25 @@ var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=
                             ${VM[`vira-icon-stroke-color`].name}: ${t[`vir-pull-request-icon-color`].value};
                         }
 
+                        /**
+                         * Baseline instead of center alignment: browsers disagree on where
+                         * flex-centered text lands (Firefox puts icons ~2px lower than Chromium),
+                         * while the text baseline is consistent everywhere.
+                         */
                         & .stats {
                             display: flex;
                             opacity: 0.4;
-                            align-items: center;
+                            align-items: baseline;
                             margin-left: auto;
 
                             & > * {
                                 padding: 0 2px;
                                 display: flex;
-                                align-items: center;
+                                align-items: baseline;
+                            }
+
+                            & ${$} {
+                                translate: 0 0.125em;
                             }
                         }
                     }
