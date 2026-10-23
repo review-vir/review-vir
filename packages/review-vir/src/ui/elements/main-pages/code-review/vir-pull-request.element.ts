@@ -277,16 +277,25 @@ export const VirPullRequest = defineElement<{
                             ].value};
                         }
 
+                        /**
+                         * Baseline instead of center alignment: browsers disagree on where
+                         * flex-centered text lands (Firefox puts icons ~2px lower than Chromium),
+                         * while the text baseline is consistent everywhere.
+                         */
                         & .stats {
                             display: flex;
                             opacity: 0.4;
-                            align-items: center;
+                            align-items: baseline;
                             margin-left: auto;
 
                             & > * {
                                 padding: 0 2px;
                                 display: flex;
-                                align-items: center;
+                                align-items: baseline;
+                            }
+
+                            & ${ViraIcon} {
+                                translate: 0 0.125em;
                             }
                         }
                     }
