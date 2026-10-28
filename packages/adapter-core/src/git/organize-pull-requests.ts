@@ -226,13 +226,13 @@ export function createChainedPullRequests(
         )
         .sort((a, b) => {
             const bTimeOrder: number = isDateAfter({
-                fullDate: b.pullRequest.dates.lastUpdated,
-                relativeTo: a.pullRequest.dates.lastUpdated,
+                fullDate: b.pullRequest.dates.readyForReview,
+                relativeTo: a.pullRequest.dates.readyForReview,
             })
                 ? 1
                 : isDateAfter({
-                        fullDate: a.pullRequest.dates.lastUpdated,
-                        relativeTo: b.pullRequest.dates.lastUpdated,
+                        fullDate: a.pullRequest.dates.readyForReview,
+                        relativeTo: b.pullRequest.dates.readyForReview,
                     })
                   ? -1
                   : 0;

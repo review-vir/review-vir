@@ -60,6 +60,9 @@ export const mockGithubSearch = {
                 },
                 createdAt: '2024-12-01T00:00:00Z',
                 updatedAt: '2024-12-01T00:00:00Z',
+                timelineItems: {
+                    nodes: [],
+                },
                 closedAt: null,
                 mergedAt: null,
                 mergedBy: null,
@@ -238,6 +241,9 @@ export const mockGithubSearch = {
                 },
                 createdAt: '2024-12-01T00:00:00Z',
                 updatedAt: '2024-12-01T00:00:00Z',
+                timelineItems: {
+                    nodes: [],
+                },
                 closedAt: null,
                 mergedAt: null,
                 mergedBy: null,

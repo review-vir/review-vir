@@ -4,8 +4,8 @@ export type GitAdapterDefinition<ServiceName extends string = string> = (new (
     /** Used to load auth tokens. */
     secretEncryptionKey: string,
     /**
-     * Max query cost for fetches. If a fetch exceeds this max then automatic fetching will disable
-     * itself.
+     * Max query cost per auto-update interval. When an update costs more than this, the wait before
+     * the next auto-update is stretched in proportion (double the cost, double the wait).
      */
     queryCostMax: number,
 ) => GitAdapter) & {

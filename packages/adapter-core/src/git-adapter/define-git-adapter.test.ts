@@ -149,12 +149,12 @@ describe(GitAdapter.name, () => {
         instance.destroy();
     });
 
-    it('stops auto updating when cost is too high', async () => {
+    it('slows auto updates when cost is too high', async () => {
         const HighCostAdapter = defineGitAdapter({
             fetchGitData() {
                 return {
                     data: [],
-                    queryCost: 200,
+                    queryCost: 20,
                 };
             },
             serviceName: 'mock git high cost',
@@ -166,27 +166,21 @@ describe(GitAdapter.name, () => {
             milliseconds: 100,
         });
 
-        await waitUntil.isTruthy(() => {
-            return events.find(
-                (event) => event.type === gitAdapterEvents.GitUpdatesStoppedEvent.name,
-            );
+        await waitUntil.isLengthExactly(2, () => events);
+        /** Without the slow down, there would be several more updates within this time. */
+        await wait({
+            seconds: 1,
         });
 
-        assert.deepEquals(events, [
-            {
-                type: gitAdapterEvents.GitUpdateStartEvent.name,
-                message: undefined,
-            },
-            {
-                type: gitAdapterEvents.GitUpdateDoneEvent.name,
-                message: undefined,
-            },
-            {
-                type: gitAdapterEvents.GitUpdatesStoppedEvent.name,
-                message:
-                    "Query cost too high (200), turning off auto-updates for 'mock git high cost'.",
-            },
-        ]);
+        assert.deepEquals(
+            events.map((event) => event.type),
+            [
+                gitAdapterEvents.GitUpdateStartEvent.name,
+                gitAdapterEvents.GitUpdateDoneEvent.name,
+            ],
+        );
+
+        await waitUntil.isLengthExactly(4, () => events);
 
         instance.destroy();
     });

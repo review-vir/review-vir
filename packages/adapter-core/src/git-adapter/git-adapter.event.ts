@@ -6,7 +6,6 @@ import {type GitData} from '../git/git-data.js';
 
 export enum GitUpdatesStoppedReason {
     HighFailureRate = 'high-failure-rate',
-    ExcessiveCost = 'excessive-cost',
     RateLimited = 'rate-limited',
 }
 

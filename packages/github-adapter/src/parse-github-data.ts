@@ -41,6 +41,9 @@ export function parseGithubPullRequest({
         closed: raw.closedAt ? createFullDateInUserTimezone(raw.closedAt) : undefined,
         created: createFullDateInUserTimezone(raw.createdAt),
         lastUpdated: createFullDateInUserTimezone(raw.updatedAt),
+        readyForReview: createFullDateInUserTimezone(
+            raw.timelineItems.nodes[0]?.createdAt || raw.createdAt,
+        ),
     };
 
     const assignees = raw.assignees.nodes.map(parseGithubUser);

@@ -228,6 +228,14 @@ export const githubPullRequestShape = defineShape({
             },
         ],
     },
+    /** Only contains the latest `ReadyForReviewEvent`, if there are any. */
+    timelineItems: {
+        nodes: [
+            {
+                createdAt: '',
+            },
+        ],
+    },
     title: '',
     updatedAt: '',
     url: '',
@@ -281,8 +289,7 @@ export const githubSearchQuery = /* GraphQL */ `
             login
             url
         }
-        # first 42 = cost of 3
-        # first 41 = cost of 2
+        # first 41 = cost of 3
         search(
             first: 41
             after: $afterCursor
@@ -392,6 +399,13 @@ export const githubSearchQuery = /* GraphQL */ `
                             }
                             submittedAt
                             state
+                        }
+                    }
+                    timelineItems(last: 1, itemTypes: [READY_FOR_REVIEW_EVENT]) {
+                        nodes {
+                            ... on ReadyForReviewEvent {
+                                createdAt
+                            }
                         }
                     }
                     reviewRequests(first: 10) {

@@ -29,8 +29,8 @@ export type FetchGitDataFunction = (
  */
 export class GitAdapter extends TypedListenTarget<GitAdapterEvents> {
     protected intervalState = {
-        /** Set this to `false` if the query cost gets too high or if the query repeatedly fails. */
-        highestQueryCost: 0,
+        /** The highest query cost (across all auth tokens) of the most recent successful update. */
+        latestQueryCost: 0,
         queryFailureCount: 0,
         /** The number of times the query has been executed on an interval. */
         queryCount: 0,
@@ -62,29 +62,19 @@ export class GitAdapter extends TypedListenTarget<GitAdapterEvents> {
                     },
                 }),
             );
-        } else if (this.intervalState.highestQueryCost > this.queryCostMax) {
-            this.updateInterval = undefined;
-            this.dispatch(
-                new GitUpdatesStoppedEvent({
-                    detail: {
-                        reason: GitUpdatesStoppedReason.ExcessiveCost,
-                        message: `Query cost too high (${this.intervalState.highestQueryCost}), turning off auto-updates for '${this.serviceName}'.`,
-                    },
-                }),
-            );
         }
     }
 
     protected setNextUpdate() {
-        /** In practice this will never be `false` at this point but we need the type guard anyway. */
-        /* node:coverage ignore next 3 */
         if (!this.updateInterval) {
             return;
         }
 
-        const milliseconds = convertDuration(this.updateInterval, {
-            milliseconds: true,
-        }).milliseconds;
+        const costMultiplier = Math.max(1, this.intervalState.latestQueryCost / this.queryCostMax);
+        const milliseconds =
+            convertDuration(this.updateInterval, {
+                milliseconds: true,
+            }).milliseconds * costMultiplier;
 
         /** Ignore 0 milliseconds. */
         if (milliseconds) {
@@ -108,13 +98,14 @@ export class GitAdapter extends TypedListenTarget<GitAdapterEvents> {
             return;
         }
 
-        this.setNextUpdate();
-
         try {
             await this.updateData();
         } catch {
             /** Already dispatched via GitUpdateDoneEvent; swallow to avoid an unhandled rejection. */
         }
+
+        /** Schedule after the update so the wait accounts for the cost of the update that just ran. */
+        this.setNextUpdate();
     }
 
     public startAutoUpdates(interval: Readonly<AnyDuration>) {
@@ -124,7 +115,7 @@ export class GitAdapter extends TypedListenTarget<GitAdapterEvents> {
          * `validateInterval` immediately.
          */
         this.intervalState = {
-            highestQueryCost: 0,
+            latestQueryCost: 0,
             queryFailureCount: 0,
             queryCount: 0,
         };
@@ -152,25 +143,23 @@ export class GitAdapter extends TypedListenTarget<GitAdapterEvents> {
                 );
             }
 
-            const allData = (
-                await Promise.all(
-                    authTokens.map(async (authToken) => {
-                        const result = this.fetchGitData(authToken);
+            const results = await Promise.all(
+                authTokens.map(async (authToken) => {
+                    const result = this.fetchGitData(authToken);
 
-                        const {data, queryCost} = await wrapPromiseInTimeout(
-                            {
-                                minutes: 2,
-                            },
-                            check.isPromise(result) ? result : Promise.resolve(result),
-                        );
-                        if (queryCost > this.intervalState.highestQueryCost) {
-                            this.intervalState.highestQueryCost = queryCost;
-                        }
-
-                        return data;
-                    }),
-                )
-            ).flat();
+                    return await wrapPromiseInTimeout(
+                        {
+                            minutes: 2,
+                        },
+                        check.isPromise(result) ? result : Promise.resolve(result),
+                    );
+                }),
+            );
+            this.intervalState.latestQueryCost = Math.max(
+                0,
+                ...results.map((result) => result.queryCost),
+            );
+            const allData = results.flatMap((result) => result.data);
 
             this.dispatch(
                 new GitUpdateDoneEvent({

@@ -47,6 +47,7 @@ export const mockPullRequest: PullRequest = {
         closed: undefined,
         created: mockPullRequestDate,
         lastUpdated: mockPullRequestDate,
+        readyForReview: mockPullRequestDate,
     },
     id: {
         htmlUrl: 'pr url',

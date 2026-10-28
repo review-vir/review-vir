@@ -17,14 +17,14 @@ describe(createChainedPullRequests.name, () => {
 
     snapshotCases(testCreateChainedPullRequests, [
         {
-            it: 'sorts oldest updates to the top',
+            it: 'sorts oldest ready for review to the top',
             input: [
                 mergeDeep(mockPullRequest, {
                     id: {
                         prId: '2',
                     },
                     dates: {
-                        lastUpdated: calculateRelativeDate(mockPullRequestDate, {
+                        readyForReview: calculateRelativeDate(mockPullRequestDate, {
                             days: -2,
                         }),
                     },
@@ -39,7 +39,7 @@ describe(createChainedPullRequests.name, () => {
                         prId: '3',
                     },
                     dates: {
-                        lastUpdated: calculateRelativeDate(mockPullRequestDate, {
+                        readyForReview: calculateRelativeDate(mockPullRequestDate, {
                             days: -1,
                         }),
                     },
@@ -54,7 +54,7 @@ describe(createChainedPullRequests.name, () => {
                         prId: '1',
                     },
                     dates: {
-                        lastUpdated: calculateRelativeDate(mockPullRequestDate, {
+                        readyForReview: calculateRelativeDate(mockPullRequestDate, {
                             days: -3,
                         }),
                     },
