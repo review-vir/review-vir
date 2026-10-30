@@ -14,6 +14,11 @@ export default {
         '2',
         '3',
     ],
+    'createChainedPullRequests > sorts never reviewed to the top, then oldest review 1': [
+        '1',
+        '2',
+        '3',
+    ],
     'createChainedPullRequests > sorts oldest ready for review to the top 1': [
         '1',
         '2',

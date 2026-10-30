@@ -60,6 +60,7 @@ export const mockGithubSearch = {
                 },
                 createdAt: '2024-12-01T00:00:00Z',
                 updatedAt: '2024-12-01T00:00:00Z',
+                viewerLatestReview: null,
                 timelineItems: {
                     nodes: [],
                 },
@@ -241,6 +242,7 @@ export const mockGithubSearch = {
                 },
                 createdAt: '2024-12-01T00:00:00Z',
                 updatedAt: '2024-12-01T00:00:00Z',
+                viewerLatestReview: null,
                 timelineItems: {
                     nodes: [],
                 },

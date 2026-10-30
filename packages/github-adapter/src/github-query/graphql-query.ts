@@ -239,6 +239,10 @@ export const githubPullRequestShape = defineShape({
     title: '',
     updatedAt: '',
     url: '',
+    /** The current user's latest review of any kind. `submittedAt` is `null` while it's pending. */
+    viewerLatestReview: unionShape(null, {
+        submittedAt: unionShape(null, ''),
+    }),
 });
 export type GithubPullRequest = typeof githubPullRequestShape.runtimeType;
 
@@ -400,6 +404,9 @@ export const githubSearchQuery = /* GraphQL */ `
                             submittedAt
                             state
                         }
+                    }
+                    viewerLatestReview {
+                        submittedAt
                     }
                     timelineItems(last: 1, itemTypes: [READY_FOR_REVIEW_EVENT]) {
                         nodes {

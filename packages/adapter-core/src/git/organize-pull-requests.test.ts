@@ -196,6 +196,54 @@ describe(createChainedPullRequests.name, () => {
             ],
         },
         {
+            it: 'sorts never reviewed to the top, then oldest review',
+            input: [
+                mergeDeep(mockPullRequest, {
+                    id: {
+                        prId: '3',
+                    },
+                    dates: {
+                        latestCurrentUserReview: calculateRelativeDate(mockPullRequestDate, {
+                            days: -1,
+                        }),
+                    },
+                    branches: {
+                        headBranch: {
+                            branchName: 'head 3',
+                        },
+                    },
+                }),
+                mergeDeep(mockPullRequest, {
+                    id: {
+                        prId: '2',
+                    },
+                    dates: {
+                        latestCurrentUserReview: calculateRelativeDate(mockPullRequestDate, {
+                            days: -2,
+                        }),
+                    },
+                    branches: {
+                        headBranch: {
+                            branchName: 'head 2',
+                        },
+                    },
+                }),
+                mergeDeep(mockPullRequest, {
+                    id: {
+                        prId: '1',
+                    },
+                    branches: {
+                        headBranch: {
+                            branchName: 'head 1',
+                        },
+                    },
+                    status: {
+                        mergeStatus: PullRequestMergeStatus.Draft,
+                    },
+                }),
+            ],
+        },
+        {
             it: 'maintains sort with identical pull requests',
             input: [
                 mergeDeep(mockPullRequest, {

@@ -225,6 +225,14 @@ export function createChainedPullRequests(
             },
         )
         .sort((a, b) => {
+            const reviewOrder = compareLatestCurrentUserReviews({
+                a,
+                b,
+            });
+            if (reviewOrder) {
+                return reviewOrder;
+            }
+
             const bTimeOrder: number = isDateAfter({
                 fullDate: b.pullRequest.dates.readyForReview,
                 relativeTo: a.pullRequest.dates.readyForReview,
@@ -242,6 +250,34 @@ export function createChainedPullRequests(
 
             return bSort - aSort;
         });
+}
+
+/**
+ * Pull requests the current user never reviewed sort first, then the ones he reviewed longest ago.
+ * Returns `0` when neither was reviewed (or both at the same time) so the other sorting applies.
+ */
+function compareLatestCurrentUserReviews({
+    a,
+    b,
+}: Readonly<{a: Readonly<ChainedPullRequest>; b: Readonly<ChainedPullRequest>}>) {
+    const aReview = a.pullRequest.dates.latestCurrentUserReview;
+    const bReview = b.pullRequest.dates.latestCurrentUserReview;
+
+    if (!aReview || !bReview) {
+        return (aReview ? 1 : 0) - (bReview ? 1 : 0);
+    }
+
+    return isDateAfter({
+        fullDate: aReview,
+        relativeTo: bReview,
+    })
+        ? 1
+        : isDateAfter({
+                fullDate: bReview,
+                relativeTo: aReview,
+            })
+          ? -1
+          : 0;
 }
 
 function getPullRequestSortNumber(pullRequest: Readonly<ChainedPullRequest>): number {

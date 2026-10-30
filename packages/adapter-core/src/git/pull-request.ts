@@ -77,6 +77,8 @@ export const pullRequestShape = defineShape({
          * a draft.
          */
         readyForReview: fullDateShape,
+        /** When the current user last submitted a review of any kind on this pull request. */
+        latestCurrentUserReview: unionShape(undefined, fullDateShape),
         closed: unionShape(undefined, fullDateShape),
     },
     status: {
