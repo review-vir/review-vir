@@ -32,6 +32,7 @@
         "theme-vir": "^29.0.1",
         "type-fest": "^5.10.0",
         "typed-event-target": "^4.3.4",
+        "url-vir": "^2.2.2",
         "vira": "^33.7.0"
     },
     "devDependencies": {

@@ -2,10 +2,17 @@ import {organizePullRequests, type PullRequestsByOwner} from '@review-vir/adapte
 import {isDateAfter, type FullDate} from 'date-vir';
 import {type AllServiceGitData} from './all-adapters.js';
 
-export function organizeGitData(allData: AllServiceGitData): PullRequestsByOwner {
+export function organizeGitData(
+    allData: Readonly<AllServiceGitData>,
+    hiddenRepos: ReadonlyArray<string>,
+): PullRequestsByOwner {
+    const hiddenRepoSet = new Set(hiddenRepos);
     const allPullRequests = Object.values(allData)
         .flat()
-        .flatMap((entry) => entry.pullRequests);
+        .flatMap((entry) => entry.pullRequests)
+        .filter(
+            (pullRequest) => !hiddenRepoSet.has(pullRequest.branches.targetBranch.repo.htmlUrl),
+        );
 
     return organizePullRequests(allPullRequests);
 }
@@ -15,7 +22,7 @@ export function organizeGitData(allData: AllServiceGitData): PullRequestsByOwner
  * set when a fetch actually succeeds (and is persisted in the cache), so this reflects the last
  * successful update rather than the moment the data happened to be organized.
  */
-export function getEarliestUpdateTime(allData: AllServiceGitData): FullDate | undefined {
+export function getEarliestUpdateTime(allData: Readonly<AllServiceGitData>): FullDate | undefined {
     return Object.values(allData)
         .flat()
         .reduce((earliest: FullDate | undefined, entry) => {

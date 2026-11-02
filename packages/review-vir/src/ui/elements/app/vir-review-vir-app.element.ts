@@ -115,6 +115,9 @@ export const VirReviewVirApp = defineElement()({
                 router: state.router,
                 secretEncryptionKey,
                 currentRoute,
+                hiddenRepos: state.appSettings.isResolved()
+                    ? state.appSettings.value.hiddenRepos
+                    : [],
             })}
                 class=${classMap({
                     hidden: currentRoute.paths[0] !== ReviewVirMainPath.CodeReview,

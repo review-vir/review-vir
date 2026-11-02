@@ -21,6 +21,9 @@ const nonTokenSettingsShape = defineShape({
     lastSelectedOrg: optionalShape('org name', {
         alsoUndefined: true,
     }),
+
+    /** HTML URLs of repos whose pull requests should not be shown. */
+    hiddenRepos: [''],
 });
 
 const settingsClientPromise = LocalDbClient.createClient(
