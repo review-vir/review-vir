@@ -76,6 +76,7 @@
         "prettier-plugin-packagejson": "^3.0.2",
         "prettier-plugin-sort-json": "^4.2.0",
         "prettier-plugin-toml": "^3.0.2",
+        "pull-request-vir": "^1.8.5",
         "runstorm": "^1.1.0",
         "typescript": "^6.0.3",
         "typescript-eslint": "^8.71.2",

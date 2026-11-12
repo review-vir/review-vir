@@ -28,7 +28,7 @@ import {
     ViraRelativeTime,
     ViraSize,
 } from 'vira';
-import type {GitServiceName} from '../../../../data/all-adapters.js';
+import type {AllServiceGitData, GitServiceName} from '../../../../data/all-adapters.js';
 import {
     GitDataLoader,
     GitDataUpdated,
@@ -61,6 +61,8 @@ export const VirCodeReview = defineElement<{
     secretEncryptionKey: string;
     router: Readonly<ReviewVirRouter>;
     currentRoute: Readonly<ReviewVirFullRoute>;
+    /** HTML URLs of repos whose pull requests should be hidden. */
+    hiddenRepos: ReadonlyArray<string>;
 }>()({
     tagName: 'vir-code-review',
     styles: css`
@@ -117,7 +119,7 @@ export const VirCodeReview = defineElement<{
             gitLoader: undefined as GitDataLoader | undefined,
             errorMessage: undefined as string | undefined,
             pausedAdapters: {} as Partial<Record<GitServiceName, PausedAdapter>>,
-            data: undefined as undefined | PullRequestsByOwner,
+            data: undefined as undefined | Readonly<AllServiceGitData>,
             updateTime: undefined as undefined | FullDate,
             isUpdating: true,
             showCopiedSuccess: false,
@@ -154,7 +156,10 @@ export const VirCodeReview = defineElement<{
         gitLoader.listen(GitDataUpdated, (event) => {
             updateState({
                 isUpdating: Object.values(gitLoader.updatesInProgress).includes(true),
-                data: organizeGitData(event.detail.data),
+                /** Copy since the loader mutates and re-dispatches the same object. */
+                data: {
+                    ...event.detail.data,
+                },
                 updateTime: getEarliestUpdateTime(event.detail.data),
             });
         });
@@ -177,9 +182,7 @@ export const VirCodeReview = defineElement<{
         const latestData: PullRequestsByOwner =
             (offlineModeUseMockResponse
                 ? (getGitAdapterGlobalVars().mockResponse as PullRequestsByOwner)
-                : undefined) ||
-            state.data ||
-            {};
+                : undefined) || (state.data ? organizeGitData(state.data, inputs.hiddenRepos) : {});
 
         const allOrgNames = Object.keys(latestData).sort();
 

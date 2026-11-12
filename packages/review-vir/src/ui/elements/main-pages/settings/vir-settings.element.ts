@@ -4,6 +4,8 @@ import {
     getEnumValues,
     getObjectTypedEntries,
     log,
+    omitObjectKeys,
+    removeDuplicates,
     wait,
 } from '@augment-vir/common';
 import {
@@ -12,6 +14,7 @@ import {
     saveServiceAuthTokens,
 } from '@review-vir/adapter-core';
 import {
+    asyncProp,
     css,
     defineElement,
     defineElementEvent,
@@ -25,6 +28,7 @@ import {
 import {
     LoaderAnimated24Icon,
     ViraButton,
+    ViraCheckbox,
     ViraColorVariant,
     ViraEmphasis,
     ViraError,
@@ -32,8 +36,10 @@ import {
     ViraThemeSwitcher,
 } from 'vira';
 import {GitServiceName} from '../../../../data/all-adapters.js';
+import {getAllPullRequestDataCache} from '../../../../data/cache-store.js';
+import {getRepoLabel, listKnownRepos} from '../../../../data/repos.js';
 import {defaultReviewVirFullRoute} from '../../../../data/routing.js';
-import type {AppSettings} from '../../../../data/settings.js';
+import {saveSettings as saveAppSettings, type AppSettings} from '../../../../data/settings.js';
 import {ChangeRouteEvent} from '../../../events/change-route.event.js';
 import {VirAuthTokenEntry} from './auth-token-entry/vir-auth-token-entry.element.js';
 
@@ -62,12 +68,25 @@ export const VirSettings = defineElement<{
             align-items: center;
             gap: 8px;
         }
+
+        .repo-list {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .repo-description {
+            opacity: 0.6;
+        }
     `,
     state() {
         return {
             saveError: undefined as string | undefined,
             isSaving: false,
             editedSettings: undefined as undefined | AppSettings,
+            cachedGitData: asyncProp({
+                defaultValue: getAllPullRequestDataCache(),
+            }),
         };
     },
     render({inputs, state, updateState, dispatch, events}) {
@@ -93,6 +112,68 @@ export const VirSettings = defineElement<{
                             });
                         })}
                     ></${VirAuthTokenEntry}>
+                `;
+            },
+        );
+
+        const reposEntry = renderAsync(
+            inputs.currentAppSettings,
+            html`
+                <span>Loading repos...</span>
+            `,
+            (resolvedSettings) => {
+                const currentSettings = state.editedSettings || resolvedSettings;
+                const hiddenRepos = new Set(currentSettings.hiddenRepos);
+                const knownRepoUrls = state.cachedGitData.isResolved()
+                    ? listKnownRepos(state.cachedGitData.value).map((repo) => repo.htmlUrl)
+                    : [];
+                /** Keep hidden repos listed even once they have no PRs, so they can be un-hidden. */
+                const repoUrls = removeDuplicates([
+                    ...knownRepoUrls,
+                    ...hiddenRepos,
+                ]).toSorted((a, b) => getRepoLabel(a).localeCompare(getRepoLabel(b)));
+
+                if (!repoUrls.length) {
+                    return html`
+                        <p class="repo-description">
+                            No repos found yet. Repos show up here once their pull requests load.
+                        </p>
+                    `;
+                }
+
+                const repoTemplates = repoUrls.map((repoUrl) => {
+                    return html`
+                        <${ViraCheckbox.assign({
+                            value: !hiddenRepos.has(repoUrl),
+                            label: getRepoLabel(repoUrl),
+                            useHorizontalLabel: true,
+                            isDisabled: state.isSaving,
+                        })}
+                            title=${repoUrl}
+                            ${listen(ViraCheckbox.events.valueChange, (event) => {
+                                const isShown = event.detail;
+                                const newHiddenRepos = new Set(currentSettings.hiddenRepos);
+                                if (isShown) {
+                                    newHiddenRepos.delete(repoUrl);
+                                } else {
+                                    newHiddenRepos.add(repoUrl);
+                                }
+                                updateState({
+                                    editedSettings: {
+                                        ...currentSettings,
+                                        hiddenRepos: [...newHiddenRepos],
+                                    },
+                                });
+                            })}
+                        ></${ViraCheckbox}>
+                    `;
+                });
+
+                return html`
+                    <p class="repo-description">
+                        Uncheck a repo to hide its pull requests. (${hiddenRepos.size} hidden)
+                    </p>
+                    <div class="repo-list">${repoTemplates}</div>
                 `;
             },
         );
@@ -137,6 +218,8 @@ export const VirSettings = defineElement<{
                     );
 
                     await removeUnusedServiceAuthTokens(getEnumValues(GitServiceName));
+
+                    await saveAppSettings(omitObjectKeys(state.editedSettings, ['authTokens']));
                 } catch (error) {
                     const errorMessage = extractErrorMessage(error);
                     log.error(errorMessage);
@@ -220,6 +303,8 @@ export const VirSettings = defineElement<{
             ${errorElement}
             <h2>Auth tokens</h2>
             ${authTokensEntry}
+            <h2>Repos</h2>
+            ${reposEntry}
         `;
     },
 });
