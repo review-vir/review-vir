@@ -6,6 +6,7 @@ const maintainer = 'electrovir';
 export const config: Config = {
     assignToAuthor: true,
     blockNoMerge: true,
+    checkPrimaryReviewer: false,
     ignoreDraft: true,
     reviewRules: [
         {
